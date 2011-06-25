@@ -5,10 +5,10 @@ layout: default
  
 <div class="post">
 	<h2 id="post-1">{{ page.title }}</h2> 
-	<small>{{ page.date }}</small> 
+	<small>{{ page.date|date: "%d %B %Y" }}</small> 
  
 	<div class="entry"> 
-		{{ page.content }}
+		{{ content }}
 	</div>
  
 </div>
