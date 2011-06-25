@@ -2,7 +2,13 @@
 layout: default
 ---
 
-<div id="post">
-{{ content }}
+ 
+<div class="post">
+	<h2 id="post-1">{{ page.title }}</h2> 
+	<small>{{ page.date }}</small> 
+ 
+	<div class="entry"> 
+		{{ page.content }}
+	</div>
+ 
 </div>
-

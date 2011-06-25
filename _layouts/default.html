@@ -1,12 +1,48 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
-<head>
-   <title>{{ page.title }}</title>
-</head>
-
-<body>
-
-  {{ content }}
-
+<!DOCTYPE html> 
+<html> 
+ 
+<head> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+ 
+	<title>Wilfred Hughes | High signal, Low Noise</title> 
+ 
+	<link rel="stylesheet" href="/static/style.css" type="text/css" media="all" /> 
+	<link rel="stylesheet" href="/static/print.css" type="text/css" media="print" /> 
+</head> 
+ 
+<body> 
+<div id="page"> 
+	<div id="header"> 
+		<h1><a href="/">Wilfred Hughes::Blog</a></h1> 
+		<small>high signal, low noise</small> 
+ 	</div>
+ 
+	<div id="content">
+		{{ content }}
+	</div>
+ 
+	<div id="sidebar">
+		<ul>
+			<li id="pages-2" class="widget widget_recent_entries">
+				<h2 class="widgettitle">Recent Blog Posts</h2> 
+				<ul>
+					{% for post in site.posts limit: 5 %}
+					<li class="page_item"><a href="{{ post.url }}">{{ post.title }}</a></li>
+					{% endfor %}
+				</ul> 
+			</li> 
+			<li id="recent-posts-2" class="widget widget_pages">
+				<h2 class="widgettitle">Meta</h2> 
+				<ul> 
+					<li><a href="/">About</a></li>
+					<li><a href="/">Contact Me</a></li>
+				</ul> 
+			</li> 
+		</ul>
+	</div>
+ 
+</div>
+ 
 </body>
+
 </html>
