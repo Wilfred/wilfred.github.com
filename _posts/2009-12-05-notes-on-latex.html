@@ -1,0 +1,154 @@
+--- 
+layout: post
+title: Notes On LaTeX
+tags: 
+- Notes
+---
+Why use LaTeX? <a href="http://nitens.org/taraborelli/latex">LaTeX gives consistently stunning results</a>. There is something of learning curve with LaTeX, so I hope this is helpful. The best reference for learning LaTeX is unquestionably the <a href="http://en.wikibooks.org/wiki/LaTeX/">LaTeX Wikibook</a>.
+<h3>Bare minimum for a valid document:</h3>
+
+<pre lang="latex">
+\documentclass{article}
+
+\begin{document}
+Hello world.
+\end{document}
+</pre>
+
+<h3>Full featured example:</h3>
+
+<pre lang="latex">
+% specify paper size for fullpage package
+\documentclass[a4paper]{article}
+ 
+% enable verbatimtab command
+\usepackage{moreverb}
+% wider margins
+\usepackage{fullpage}
+ 
+% characters 'eaten' by latex: ﬁ ﬂ ﬀ ﬃ é “
+ 
+% nicer paragraphs with whitespace between and no indent
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{\medskipamount}
+ 
+\begin{document}
+
+\title{Main Title of Document}
+\author{Joe Bloggs}
+\maketitle
+ 
+Hello world.
+ 
+\subsection*{Big section}
+A major section title is above. Note the asterisk to stop latex using
+a numbering scheme.
+
+\subsubsection*{Smaller heading}
+More verbage.
+ 
+\begin{enumerate}
+\item The first numbered point
+\item Another numbered point
+\end{enumerate}
+
+\begin{itemize}
+\item This is a bullet point
+\end{itemize}
+  
+\end{document}
+</pre>
+
+<h3>Slides</h3>
+
+<pre lang="latex">
+\documentclass{beamer}
+
+\usetheme{Warsaw}
+
+\title[Main title]{Big Title:\\Blah blah}
+
+\author{Joe Bloggs}
+\institute{Someplace}
+
+\begin{document}
+  
+\begin{frame}
+\titlepage
+\end{frame}
+ 
+\begin{frame}
+Hello world!
+\end{frame}
+ 
+\end{document}
+</pre>
+
+<h2>Going from good to great</h2> 
+<p>The default font was created some time ago, and is not ideal. Consider using a newer font (code below). You can see a comparison of fonts with full maths support <a href="http://ctan.tug.org/tex-archive/info/Free_Math_Font_Survey/survey.html">here</a>.</p> 
+
+<pre lang="latex">
+\include{mathpazo}
+</pre>
+
+<p>For documents that are not laden with maths, you can go further. Using XeTex with the fontspec package you can use any TrueType font on the system (including typing unicode properly, useful for foreign text). I recommend the <a href="http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&amp;item_id=Gentium">Gentium font</a> for more attractive results.</p> 
+
+<p>Header for documents is now as follows:</p>
+
+<pre lang="latex">
+\documentclass[a4paper]{article}
+
+\usepackage{fullpage}
+\usepackage{fontspec}
+
+\setmainfont[Mapping=tex-text]{Gentium}
+
+\setmonofont[Scale=0.86]{Droid Sans Mono}
+ 
+% newline between paragraphs, no indent
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{\medskipamount}
+  
+\begin{document}
+</pre>
+
+<p>Simply feed this into the xelatex command to produce your pdf as you would with pdflatex.</p> 
+<h3>Hyperlinks</h3> 
+<p>To produce a pdf document with links (e.g. contents pages) then consider the package hyperref.</p> 
+<h3>Redefining the numbering scheme for lists</h3> 
+
+<pre lang="latex">
+\renewcommand{\labelenumi}{(\alph{enumi})}
+\renewcommand{\lableenumii}{(\roman{enumii})}
+</pre>
+
+<h3>Redefining the numbering scheme for subsubsections</h3>
+
+<pre lang="latex">
+% simple numbering scheme 1. 2. 3. etc
+\def\thesubsubsection{\arabic{subsubsection}.}
+% or use (a) (b) (c) and so on instead
+\def\thesubsubsection{(\alph{subsubsection})}
+</pre>
+
+<h2>Other useful LaTeX tools</h2> 
+<h3>Including code samples</h3> 
+<p>The verbatim environment stops you needing to escape LaTeX reserved characters and is formatted using a monospaced font. Sadly it ignores tabs, so you may instead want to use the verbatimtab environment from the moreverb package.</p> 
+<p>For proper language highlighting, there is a listings package but it uses rather strange fonts. A better solution is <a href="http://pygments.org/">Pygments</a>, a generic highlighter that can ouput LaTeX code.</p> 
+<h3>Using IPA</h3> 
+<p>See the tipa package</p> 
+<h3>Parse trees</h3> 
+<p>Linguistics style, using the parsetree package:</p> 
+
+<pre lang="latex">
+\begin{parsetree}
+    ( .S. 
+        (.NP.  `we')
+        ( .VP.
+            (.V.    `gave' )
+            (.NP.   `them')
+            (.NP. ~ `a toy')
+         )
+    )
+\end{parsetree}
+</pre>
