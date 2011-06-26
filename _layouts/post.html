@@ -2,6 +2,21 @@
 layout: default
 ---
 
+<div class="navigation">
+	{% if page.previous %}
+	<div class="alignleft">
+		&laquo; <a href="{{ page.previous.url }}">{{ page.previous.title }}</a>
+	</div>
+	{% endif %}
+
+	{% if page.next %}
+	<div class="alignright">
+		<a href="{{ page.next.url }}">{{ page.next.title }}</a> &raquo;
+	</div>
+	{% endif %}
+
+	<div class="snap-to-fit"></div> 
+</div> 
  
 <div class="post">
 	<h2 id="post-1">{{ page.title }}</h2> 

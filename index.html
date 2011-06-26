@@ -2,14 +2,25 @@
 layout: default
 ---
 
+{% assign page = site.posts.first %}
+
+<div class="navigation">
+	<div class="alignleft">
+		&laquo; <a href="{{ page.previous.url }}">{{ page.previous.title }}</a>
+	</div>
+
+	<div class="snap-to-fit"></div> 
+</div> 
+
+
 <div class="post">
 	<h2 id="post-1">
-		<a href="{{ site.posts.first.url }}">{{ site.posts.first.title }}</a>
+		<a href="{{ page.url }}">{{ page.title }}</a>
 	</h2>
-	<small>{{ site.posts.first.date|date: "%d %B %Y" }}</small> 
+	<small>{{ page.first.date|date: "%d %B %Y" }}</small> 
  
 	<div class="entry"> 
-		{{ site.posts.first.content }}
+		{{ page.content }}
 	</div>
 </div>
 
