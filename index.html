@@ -3,4 +3,16 @@ layout: default
 title: Hello world
 ---
 
-hello world
+<div class="post">
+	<h2 id="post-1">
+		<a href="{{ site.posts.first.url }}">{{ site.posts.first.title }}</a>
+	</h2>
+	<small>{{ site.posts.first.date|date: "%d %B %Y" }}</small> 
+ 
+	<div class="entry"> 
+		{{ site.posts.first.content }}
+	</div>
+</div>
+
+
+
