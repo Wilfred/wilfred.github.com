@@ -168,9 +168,8 @@ intended. On the frontend I describe this as an 'imprecise search'. An
 advantage of this approach is that I can always show similarly spelt
 words, even if the search term is spelt correctly.
 
-<a href="https://github.com/Wilfred/simpla-vortaro/blob/master/vortaro/spelling.py">As
-I implemented the spell checker</a>, it allowed a word to be incorrect
-because of:
+[As I implemented the spell checker](https://github.com/Wilfred/simpla-vortaro/blob/master/vortaro/spelling.py),
+it allowed a word to be incorrect because of:
 
 
 * a letter being deleted;
