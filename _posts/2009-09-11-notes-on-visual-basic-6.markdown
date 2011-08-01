@@ -1,6 +1,6 @@
 --- 
 layout: post
-title: Notes On Visual Basic 6
+title: "Notes On Visual Basic 6"
 ---
 
 VB6, like IE6 and household damp, doesn't seem to go away easily. I had the interesting experience recently of writing a medium size piece of code in VB6, and I've documented how I reduced inconveniences.
