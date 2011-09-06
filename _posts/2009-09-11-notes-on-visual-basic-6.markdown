@@ -19,7 +19,7 @@ At this point its worth mentioning VB.Net. VB.Net has had many of kinks worked o
 
 <h3>Some language quirks</h3>
 
-{% higlight vbnet %}
+{% highlight vbnet %}
 ' apostrophes denote comments
 REM keyword also does this
 
