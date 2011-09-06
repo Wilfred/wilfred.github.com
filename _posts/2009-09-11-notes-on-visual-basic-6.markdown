@@ -69,7 +69,7 @@ Private Sub Foo(ByVal A As Integer, ByRef B As String)
     On Error GoTo Panic
     ' yes, goto is available
 
-    If A &lt;&gt; 0 And Test(A) Then ' not equal to zero
+    If A <>; 0 And Test(A) Then ' not equal to zero
        ' Boolean logic does not use short circuiting
        ' so Test(A) is always evaluated
        Exit Sub
