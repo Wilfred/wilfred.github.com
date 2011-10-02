@@ -18,3 +18,7 @@ full stack trace, do:
     
 Note that the traceback in stock Jekyll is not as always helpful as it
 could be ([issue #388](https://github.com/mojombo/jekyll/issues/388)).
+
+Furthermore, no warnings or errors are produced when a layout is named
+incorrectly
+([issue #353](https://github.com/mojombo/jekyll/issues/353)).
