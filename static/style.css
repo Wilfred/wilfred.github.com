@@ -7,7 +7,6 @@
 	Version: 1.2
 
 	October 2007
-	Requires Wordpress 2.3+
 	
 	Note that a few rules are subsequently overriden by print.css for print media
 	The .ui class is only used by print media (to prevent display of user interface elements)
@@ -20,13 +19,6 @@
 
 	The CSS, XHTML and design is released under GPL:
 	http://www.opensource.org/licenses/gpl-license.php
-
-	Fonts requested:
-		Lucida Grande
-		Trebuchet MS
-		New Courier
-
-		with Verdana & Arial as secondary choices
 
 	Colours used:
 		#fff	clean white for the background, of course
@@ -41,24 +33,6 @@
 		#ddd	to top and tail alt text & for blockquote bars
 */
 
-
-/*
-	Short pages don't require a scroll bar, but long pages do. And since a scroll bar consumes
-	some horizontal screen space, and since our rendering is centred within the screen
-	an irritating sideways jump occurs when navigating between long and short pages.
-
-	This hack forces the scroll bar to always appear by making the page want to be one pixel
-	taller than it is. This prevents the jumping but you end up with an irritating ugly
-	scroller hanging about when it's not wanted.
-
-	Personally, I'd rather have clean short pages & a little jumping.
-	If your preferences differ then uncomment this rule:
-
-html {
-	height: 100%;
-	margin-bottom: 1px;
-}
-*/
 
 /*	Some defaults. Change the font size here to shrink or enlarge the whole design */
 @font-face {
