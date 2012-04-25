@@ -35,35 +35,12 @@
 
 
 /*	Some defaults. Change the font size here to shrink or enlarge the whole design */
-@font-face {
-    font-family: 'UbuntuRegular';
-    src: url('fonts/Ubuntu-R-webfont.eot');
-    src: url('fonts/Ubuntu-R-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/Ubuntu-R-webfont.woff') format('woff'),
-         url('fonts/Ubuntu-R-webfont.ttf') format('truetype'),
-         url('fonts/Ubuntu-R-webfont.svg#UbuntuRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-@font-face {
-    font-family: 'UbuntuMonoRegular';
-    src: url('fonts/UbuntuMono-R-webfont.eot');
-    src: url('fonts/UbuntuMono-R-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/UbuntuMono-R-webfont.woff') format('woff'),
-         url('fonts/UbuntuMono-R-webfont.ttf') format('truetype'),
-         url('fonts/UbuntuMono-R-webfont.svg#UbuntuMonoRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
 
 body {
 	background-color: #fff;
 	color: #888;
 	font-size: 0.8em;
-	font-family: 'UbuntuRegular', 'Lucida Grande', Verdana, Arial, Sans-Serif;
+	font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif;
 	line-height: 1.4;
 	margin: 0;
 	padding: 0;
@@ -83,7 +60,7 @@ a:hover {
 	}
 
 h1, h2, h3, h4, h5 {
-	font-family: 'UbuntuRegular', 'Lucida Grande', Verdana, Arial, Sans-Serif;
+	font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif;
 	font-weight: bold;
 	line-height: normal;
 	margin: 0;
@@ -152,7 +129,7 @@ p {
 
 /*	The main headers within the side bar are in upper case & in the wider font */
 #sidebar h2 {
-	font-family: 'UbuntuRegular', 'Lucida Grande', Verdana, Arial, Sans-Serif;
+	font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif;
 	font-size: 1.2em;
 	text-transform: uppercase;
 	margin: 0;
@@ -200,7 +177,7 @@ p {
 /*	The text box of the search form has space above it, and a little below too
 	Can't say font: inherit as IE don't get it */
 #searchform .s {
-	font: 1em 'UbuntuRegular', 'Lucida Grande', Verdana, Arial, Sans-Serif;
+	font: 1em 'Lucida Grande', Verdana, Arial, Sans-Serif;
 	width: 8em;
 	margin: 1em 0 0.24em 0;
 	padding: 0;
@@ -218,7 +195,7 @@ p {
 	margin: 4em 0 1em 0;
 	padding: 0.2em 0 0 0;
 	border-top: 1px solid #888;
-	font-family: 'UbuntuRegular', 'Lucida Grande', Arial, Verdana, Sans-Serif;
+	font-family: 'Lucida Grande', Arial, Verdana, Sans-Serif;
 	}
 
 /*	content includes everything between the header and the footer. Body text dark gray */
@@ -240,7 +217,7 @@ h2.pagetitle {
 .navigation {
 	margin: 0 0 1.6em 0;
 	padding: 0 0 1px 0;
-	font-family: 'UbuntuRegular', 'Lucida Grande', Arial, Verdana, Sans-Serif;
+	font-family: 'Lucida Grande', Arial, Verdana, Sans-Serif;
 	font-size: 1.2em;
 	}
 
@@ -358,7 +335,7 @@ h3.comments {
 
 /*	Can't say font: inherit; as IE don't get it */
 .commentlist li, #commentform input, #commentform textarea {
-	font: 1em 'UbuntuRegular', 'Lucida Grande', Verdana, Arial, Sans-Serif;
+	font: 1em 'Lucida Grande', Verdana, Arial, Sans-Serif;
 	}
 
 /*	Comment paragraphs are indented by 0.6em */
@@ -485,7 +462,7 @@ ol li {
 
 /*	Code should be used for just a few words.. */
 code {
-	font: 1.1em 'UbuntuMonoRegular', 'Courier New', Courier, Monospace;
+	font: 1.1em 'Courier New', Courier, Monospace;
 	}
 
 /*	..and the pre tag works better for whole code excerpts */
@@ -494,7 +471,7 @@ pre {
 	color: black;
 	padding: 0.6em 0 0.6em 0.6em;
 	margin: 0 0 1em 0;
-	font: 1.1em 'UbuntuMonoRegular', 'Courier New', Courier, Monospace;
+	font: 1.1em 'Courier New', Courier, Monospace;
 	white-space: pre;
 	overflow: auto;
 	border: 1px solid #ddd;
@@ -543,7 +520,7 @@ em, i {
 /*	Match the sidebar h2 settings so the month caption appears as any other heading.
 	Width 100% seems required for Firefox to right-align the caption. */
 #wp-calendar caption {
-	font-family: 'UbuntuRegular', 'Lucida Grande', Verdana, Arial, Sans-Serif;
+	font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif;
 	font-size: 1.2em;
 	font-style: normal;
 	font-weight: bold;
