@@ -35,20 +35,26 @@ whilst the CS version was ~300 lines. Keywords are more readable too
 
 CS allows you to escape boilerplate and ceremony. Rather than:
 
-    for (var i=0; i<arr.length; i++) {
-        doSomething(arr[i]);
-    }
+{% highlight javascript %}
+for (var i=0; i<arr.length; i++) {
+    doSomething(arr[i]);
+}
+{% endhighlight %}
     
 you can simply use `in` in a way that JS won't support until
 1.6. If we're lucky.
 
-    for element in arr
-      doSomething(element)
+{% highlight coffeescript %}
+for element in arr
+  doSomething(element)
+{% endhighlight %}
         
 Virtually everything returns a value in CS. Want an array of 1s?
 
-    arr = for i in [0...arraySize]
-      1
+{% highlight coffeescript %}
+arr = for i in [0...arraySize]
+  1
+{% endhighlight %}
         
 This was a major benefit in my code.
 
@@ -59,11 +65,13 @@ sidesteps many of these. `==` in CS compiles to `===`, so type
 coercion can't catch you out. Variables do *not* leak to the global
 object. CS even sidesteps the many gotchas of object literals:
 
-     # no issue with 'class' as a keyword interfering with key names
-     myObject = {school: "St Thomas", class: "Maths"}
-     
-     # no issue with object literals at the top level (try this in firebug)
-     {x: 1, y:2}
+{% highlight coffeescript %}
+# no issue with 'class' as a keyword interfering with key names
+myObject = {school: "St Thomas", class: "Maths"}
+
+# no issue with object literals at the top level (try this in firebug)
+{x: 1, y:2}
+{% endhighlight %}
 
 ### It's young and imperfect
 
@@ -77,11 +85,15 @@ brackets optional.
 
 The following code:
 
-    if not 1 in [2, 3]
+{% highlight coffeescript %}
+if not 1 in [2, 3]
+{% endhighlight %}
     
 is equivalent to:
 
-    if (not 1) in [2, 3]
+{% highlight coffeescript %}
+if (not 1) in [2, 3]
+{% endhighlight %}
     
 which can lead to some nasty bugs.
 
@@ -93,13 +105,17 @@ similar but do different things.
 It's also tempting to go further with things that CS *should* do. I
 spend a lot of time chasing a bug of the form:
 
-    if foo.length < bar.length:
-      doSomething()
+{% highlight coffeescript %}
+if foo.length < bar.length:
+  doSomething()
+{% endhighlight %}
       
 which should have been:
 
-    if foo.length < bar.baz.length:
-       doSomething()
+{% highlight coffeescript %}
+if foo.length < bar.baz.length:
+   doSomething()
+{% endhighlight %}
        
 CS largely does not change the semantics of the language. This makes
 compiled code simpler, but holds back some of the [more interesting
