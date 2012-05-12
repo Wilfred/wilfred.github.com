@@ -78,7 +78,7 @@ front. This is hard for a beginner.
 For the persistent learner, Haskell helps you think about the effects
 and assumptions of code in a rigorous way.
 
-For instsance, using only pure functions for the core of a program does
+For instance, using only pure functions for the core of a program does
 produce more predictable, debug-friendly, testing friendly code. This
 is a perspective that has improved my code in impure languages.
 
