@@ -25,7 +25,7 @@ understanding of at least the type system and the IO monad. There is a
 substantial amount of syntax in just this. For example, you will want
 to learn the `do` notation
 ([though some consider it harmful](http://www.haskell.org/haskellwiki/Do_notation_considered_harmful))
-which includes the unfortunately named `return` keyword.
+which includes the unfortunately named `return` function.
 
 For example:
 
@@ -36,17 +36,16 @@ greetingForUser = do
     return greeting
 {% endhighlight %}
 
-This is a function definition that takes a line of input from stdin
-and returns a string containing that name wrapped in a friendly
-message.
+`greetingForUser` is a value that, when evaluated, takes a line of
+input from stdin and returns a string containing that name wrapped in
+a friendly message.
 
-So, what's going here? `getLine` returns a value of `IO String`, a
+So, what's going here? `getLine` has type `IO String`, a
 string which is marked as having come from the outside, impure
-world. You can call it twice with the same input and get different
-outputs. `do` notation allows us to use the string as an untainted
-`String`, enabling us to keep `IO` actions out of the core
-functionality. `return` then wraps the final value in `IO` again since
-ultimately `greetingForUser` is an impure function.
+world. You can call it evaluate it twice and get different
+outputs. `do` notation allows us to use the string as a simple
+`String`, enabling us to keep `IO` actions out of the third line.
+`return` then wraps `greeting` in `IO` again.
 
 Got that? Understanding `IO` is a conceptual hurdle you must overcome
 before you can start writing useful code.
