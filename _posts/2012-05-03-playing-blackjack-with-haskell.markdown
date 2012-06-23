@@ -42,7 +42,7 @@ a friendly message.
 
 So, what's going here? `getLine` has type `IO String`, a
 string which is marked as having come from the outside, impure
-world. You can call it evaluate it twice and get different
+world. You can evaluate it twice and get different
 outputs. `do` notation allows us to use the string as a simple
 `String`, enabling us to keep `IO` actions out of the third line.
 `return` then wraps `greeting` in `IO` again.
