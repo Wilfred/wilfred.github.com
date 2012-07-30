@@ -12,7 +12,7 @@ Markdown, and used a variety of Markdown sites. I've concluded that
 Markdown is ill-suited for wikis, and often a poor choice in
 general. Let me count the ways.
 
-## You don't want normal markdown
+### You don't want normal markdown
 
 Out of the box, a standards-compliant markdown parser is confusing,
 insecure and limited in functionality. The largest users of markdown,
@@ -20,7 +20,7 @@ such as GitHub, all end up providing their own modified version. This
 produces fragmentation and prevents reliable, bug-free implementations
 gaining traction.
 
-## Security
+### Security
 
 Markdown allows embedded HTML. Since this is part of the markdown
 standard, simply enabling markdown rendering on your site will
@@ -33,7 +33,7 @@ too many developers are not even aware there is an issue. Using a
 templating language with XSS protection does not help, since the
 rendered Markdown must be marked as not needing escaping.
 
-## Gotchas
+### Gotchas
 
 I built a wiki for a software development company where even the
 developers would get caught out by the syntax. The Markdown syntax is
@@ -116,7 +116,7 @@ and renumbering lists. I saw one user write the following:
 Markdown renumbers this, so every point is number one. This is not
 what a simple reading of the input would lead you to expect.
 
-## Limited features
+### Limited features
 
 Despite Markdown's ubiquity, it is missing several features that my
 users frequently wanted. It does not support tables, unless the user
@@ -148,7 +148,7 @@ several plugins I tried, as they hadn't though about nesting
 correctly. For example, a user wants their code snippets to be rendered
 as written, even if the syntax overlaps with table plugin's syntax.
 
-## Evolution
+### Evolution
 
 The Markdown specification is essentially unchanged from 2004. There's
 no standard test suite, no updates to resolve ambiguities, and no work
@@ -156,7 +156,7 @@ being done to standardise the syntax for these language
 extensions. This would greatly benefit the language today, and make it
 easier to use in the future.
 
-## Alternative 1: ReStructuredText
+### Alternative 1: ReStructuredText
 
 ReStructuredText (ReST) is a popular text markup developed by the
 Python community. It provides many more features than Markdown, in a
@@ -220,7 +220,7 @@ require a heavyweight syntax:
 For many uses of online text markup, this is too common a use case to
 require so many characters. Links are a fundamental part of HTML.
 
-## Alternative 2: Creole (recommended)
+### Alternative 2: Creole (recommended)
 
 None of the largest wiki engines (MediaWiki, MoinMoin, etc) use
 Markdown. Most provide their own markup language, but the syntax
