@@ -1,0 +1,26 @@
+---
+layout: nil
+---
+<?xml version="1.0"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Wilfred Hughes::Blog</title>
+    <link>http://www.wilfred.me.uk/</link>
+    <description>High signal, low noise technology blogging</description>
+    <language>en-gb</language>
+    <pubDate>{{ site.time | date: "%a, %d %b %Y %H:%M:%S %z" }}</pubDate>
+    <lastBuildDate>{{ site.time | date: "%a, %d %b %Y %H:%M:%S %z" }}</lastBuildDate>
+
+    {% for post in site.posts %}
+    <item>
+      <title>{{ post.title }}</title>
+      <link>http://wilfred.me.uk{{ post.url }}</link>
+      <pubDate>{{ post.date | date: "%a, %d %b %Y %H:%M:%S %z" }}</pubDate>
+      <author>me@wilfred.me.uk (Wilfred Hughes)</author>
+      <guid>http://wilfred.me.uk{{ post.url }}</guid>
+      <description>{{ post.content | xml_escape }}</description>
+    </item>
+    {% endfor %}
+
+  </channel> 
+</rss>
