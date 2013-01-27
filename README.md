@@ -13,6 +13,14 @@ Start Jekyll:
 
 Note that changes to `_config.yml` may require restarting the server.
 
+### Minifying CSS
+
+I use clean-css, which requires node.js:
+
+    $ sudo npm install -g clean-css
+    $ cd static
+    $ cat style.css syntax.css wilfred.css | cleancss -o min.css
+
 ## Known gotchas
 
 Liquid templating errors do not produce stack traces when running
