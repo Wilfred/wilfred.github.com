@@ -3,6 +3,12 @@ wilfred.me.uk blog. All content is under the GFDL 1.3.
 
 ## Running the server
 
+You need Jekyll installed:
+
+    $ sudo gem install jekyll
+    
+Start Jekyll:
+
     $ jekyll --server
 
 Note that changes to `_config.yml` may require restarting the server.
