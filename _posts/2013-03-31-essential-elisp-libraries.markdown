@@ -24,6 +24,9 @@ even include a traditional `(map 'some-function some-list)` operation
 -- there's only `cl-map`, but it requires another argument and using
 `'cl` at runtime is frowned upon.
 
+**Edit**: Several people have pointed out that stock Emacs has
+`mapcar`, which does exactly this.
+
 The documentation is excellent (it's generated automatically from the
 test suite), but my favourite feature is the anaphoric macros. Rather
 than writing:
