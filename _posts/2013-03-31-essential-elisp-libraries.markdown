@@ -48,7 +48,7 @@ As with dash.el, s.el introduces a more contemporary style to elisp. All
 s.el functions are pure, returning a new string, despite elisp
 supporting mutable strings. Some common string operations include
 `s-trim`, `s-replace` and `s-join`. It's not that these operations are
-impossible in elisp -- you can replace a literal literal strings using
+impossible in elisp -- you can replace literal strings using
 `replace-regexp-in-string` and `regexp-quote`, but s.el makes this
 much easier.
 
@@ -58,9 +58,9 @@ Hash tables are a rarely used datastructure in elisp. It's more common
 to see lists of pairs used, despite their slower performance. This is
 mostly because lists are easier to work with: creating a list is
 trivial, but `make-hash-table` has an intimidating docstring with five
-different keyword arguments. Common operations (can you see
-a theme here?) for hash tables, such as iterating over keys, is not as easy as it should
-be.
+different keyword arguments. Common operations (can you see a theme
+here?) for hash tables, such as iterating over keys, are not as easy
+as they should be.
 
 [ht.el](https://github.com/Wilfred/ht.el) solves this. `ht-create` has
 only one argument, and it can be omitted. ht.el also provides common
