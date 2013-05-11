@@ -12,33 +12,8 @@ into elisp to showcase this diversity.
 
 ### Iterating over a sequence
 
-Suppose we want to double every item in a list. In Java, we'd probably
-use a for-each loop.
-
-    import java.util.Arrays;
-    import java.util.ArrayList;
-    import java.util.List;
-    
-    // inside our function
-    List<Integer> someList = Arrays.asList(1, 2, 3);
-    List<Integer> resultList = new ArrayList();
-
-    for (Integer x : someList) {
-        resultList.add(x * 2);
-    }
-    
-We can do this in elisp using the loop macro (originally from Common
-Lisp):
-
-    (eval-when-compile (require 'cl))
-
-    (setq some-list '(1 2 3))
-    (setq result-list)
-    (loop for x in some-list do
-          (add-to-list 'result-list (* 2 x) t))
-          
-In other languages though, we wouldn't mutate objects. In Ruby, we
-might write it like this, using map:
+Suppose we want to double every item in a list. In Ruby, we might
+write it like this, using map:
 
     some_list = [1, 2, 3]
     some_list.map{|x| x*2 }
@@ -58,7 +33,7 @@ Elisp has the loop macro (originally from Common Lisp):
     (eval-when-compile (require 'cl))
 
     (setq some-list '(1 2 3))
-    (loop for x in some-list collect (* 2 x))
+    (loop for x in some-list collect (* x 2))
 
 In Scala, we can use special arguments to denote the function
 arguments:
@@ -73,6 +48,49 @@ Using anaphoric macros we can do this in elisp:
     (setq some-list '(1 2 3))
     (--map (* it 2) some-list)
     
+### Searching a sequence
+
+Suppose we want to find the first integer in a list that's lower than
+some value.  In Java, we'd probably use a for-each loop, terminating
+as soon as we find the value we're looking for.
+
+    import java.util.List;
+    
+    // inside some class
+    public Integer findLessThan(Integer threshold, List<Integer> list) {
+        for (Integer item: list) {
+            if (item < threshold) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+We can do this in elisp using dolist and return:
+
+    (eval-when-compile (require 'cl))
+    
+    (defun find-less-than (threshold list)
+      (dolist (item list)
+        (when (< item threshold)
+          (return item))))
+          
+In Haskell, we'd write this in a functional style, composing
+functions:
+
+    findLessThan :: Ord c => c -> [c] -> c
+    findLessThan threshold = head . filter . (< threshold)
+    
+We can do this in elisp too:
+
+    (eval-when-compile (require 'cl))
+    (require 'dash)
+    
+    (defun find-less-than (threshold list)
+      (->> list
+        (--filter (< it threshold))
+        first))
+
 ### Function arguments
 
 Suppose we want to find the mean of several numbers. In C, we might
@@ -85,11 +103,11 @@ write:
 No sweat in elisp:
 
     (defun mean (x y)
-        (/ (+ x y) 2))
+      (/ (+ x y) 2))
         
-C doesn't support variadic functions without also passing in the
-number of arguments. In JavaScript, we can write a function that takes
-any number of arguments:
+However, C doesn't support variadic functions without also passing in the
+number of arguments. In many other languages, we can write a function that takes
+any number of arguments. In JavaScript:
 
     function mean() {
         var sum = 0;
@@ -109,30 +127,36 @@ translation:
       (let ((sum (apply '+ args)))
         (/ sum (length args))))
         
-In Haskell, there's no straightforward way (but see [this](okmij.org/ftp/Haskell/polyvariadic.html) if you're
-feeling adventurous) to write a variadic function. However, in
-Haskell, we might write our mean function without any explicit
-arguments at all! This is called 'point-free style':
+In Python, we might use keyword arguments when calling functions. This
+can make function calls clearer (we can see which argument is which)
+and facilitates optional arguments:
 
-    import Control.Arraow
+    def greet(greeting='Hello', name='anonymous'):
+        return "%s %s!" % (greeting, name)
+        
+    greet() # "Hello anonymous!"
+    greet(greeting='Hi') # "Hi anonymous!"
+    greet(name='Wilfred', greeting='Hey') # "Hey Wilfred!"
 
-    mean :: [Double] -> Double
-    -- explicit arguments:
-    mean xs = sum xs / fromIntegral (length xs)
-    -- point-free alternative:
-    mean = sum &&& fromIntegral . length >>> uncurry (/)
+defun* allows this in elisp too:
+
+    (defun* greet (&key (greeting "Hello") (name "anonymous"))
+      (format "%s %s!" greeting name))
+
+    (greet)
+    (greet :greeting "Hi")
+    (greet :name "Wilfred" :greeting "Hey")
+
+### Pattern matching and destructuring
+
+    pcase
+    destructuring-bind
     
-In elisp:
-
-    (defun comp (f g)
-      "Compose function F with function G."
-      (lambda (x)
-        (funcall f (funcall g x))))
-    
-
 Pattern matching:
 
 (example and link)
+
+### Monads
 
 Scheme's and-let:
 
@@ -142,9 +166,9 @@ Generalising to monads (and-let is roughly Maybe monad):
 
 (example)
 
-Object-oriented:
+### Objects
 
-(eieio example)
+EIEIO.
 
 Classical Inheritance:
 
@@ -154,17 +178,30 @@ Prototypical inheritance:
 
 (eieio example)
 
+Mixins:
+
+    example
+
 Metaclasses:
 
 (python example?)
 (eieio example)
 
+### Namespaces
+
 Lisp-1:
 
 (macro example)
 
-Scheme pure macros?
+### What elisp doesn't have
 
-Scheme's infix notation proposal?
+Hygenic macros, reader macros, logic programming (miniKanren), infix notation (but
+see SRFI 105), a type system (Clojure and Racket)
 
-Type system: none yet, but Clojure and Scheme have it.
+### Should I use these?
+
+There's certainly more than one way to do it in elisp. Generally,
+favouring idiomatic code is going to make it easier for others (and
+the future you) to maintain code. I learnt this the hard way when
+writing experimental packaging macros and making my code resistant to
+debugging or jumping to the definition.
