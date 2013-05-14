@@ -117,9 +117,8 @@ any number of arguments. In JavaScript:
         return sum / arguments.length;
     }
     
-We can use defun* (another feature originally from Common Lisp) to
-write variadic functions in elisp. This gives us a straightforward
-translation:
+We can use defun* to write variadic functions in elisp. This gives us
+a straightforward translation:
 
     (eval-when-compile (require 'cl))
 
@@ -147,28 +146,94 @@ defun* allows this in elisp too:
     (greet :greeting "Hi")
     (greet :name "Wilfred" :greeting "Hey")
 
-### Pattern matching and destructuring
+### Destructuring and Pattern Matching
 
-    pcase
-    destructuring-bind
+In CoffeeScript, it's possible to destructure an array like this:
+
+    sumPair = (pair) ->
+        [first, second] = pair
+        first + second
+        
+Elisp has you covered:
+
+    (eval-when-compile (require 'cl))
+
+    (defun sum-pair (pair)
+      (destructuring-bind (first second) pair
+        (+ first second)))
+
+In functional languages like Ocaml, we can use a more general
+technique of pattern matching:
+
+    -- check me
+    fun sumList []     = 0
+    fun sumList (x:xs) = x + sumList xs
     
-Pattern matching:
+Elisp can do pattern matching too, with pcase:
 
-(example and link)
+    (defun sum-list (list)
+      (pcase list
+        (`nil 0)
+        ;; note that elisp does not do TCO
+        (`(,x . ,xs) (+ x (sum-list xs)))))
 
 ### Monads
 
-Scheme's and-let:
+Monads, as popularised by Haskell, don't really make sense without
+type classes (we'll come to those later). However, the Maybe monad has
+a natural elisp equivalent. A naive Haskell programmer might write:
 
-(macro and example)
+    maybeAdd :: Maybe Int -> Maybe Int -> Maybe Int
+    maybeAdd x y =
+      case x of
+        Just x' ->
+          case y of
+            Just y' -> Just $ x' + y'
+            _ -> Nothing
+        _ -> Nothing
+        
+There's a lot of wrapping and unwrapping here, which a monad can do
+for us:
 
-Generalising to monads (and-let is roughly Maybe monad):
+    maybeAdd :: Maybe Int -> Maybe Int -> Maybe Int
+    maybeAdd x y = do
+      x' <- x
+      y' <- y
+      return $ x' + y'
+      
+(An experienced Haskeller would just use `liftM2 (+)`, but that's not
+relevant here.)
 
-(example)
+dash.el provides `-when-let*` (equivalent to Scheme's `and-let`) which
+allows us to mimic this behaviour:
 
+    (require 'dash)
+
+    (defun maybe-add (x y)
+      (-when-let* ((x* x)
+                   (y* y))
+        (+ x* y*)))
+        
 ### Objects
 
-EIEIO.
+Basic example:
+
+    (require 'eieio)
+
+    (defclass person ()
+      ((name :initarg :name
+             :initform "Anonymous")
+       (color :initarg :color
+              :type string)))
+
+    (defmethod describe-them ((p person))
+      (format
+       "%s prefers the color %s."
+       (oref p name)
+       (oref p color)))
+
+    (describe-them
+     (person "example-person" :name "Bob" :color "psychadelic pink"))
 
 Classical Inheritance:
 
