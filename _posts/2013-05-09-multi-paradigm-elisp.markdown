@@ -247,26 +247,94 @@ Mixins:
 
     example
 
-Metaclasses:
-
-(python example?)
-(eieio example)
-
 ### Namespaces
 
-Lisp-1:
+Elisp has separate namespaces for functions and variables. So if we
+store a function in a variable, we have to use `funcall` to use
+it. Scheme, however, is a lisp-1 with a single namespace. In Scheme we
+can write:
 
-(macro example)
+    ;; check me
+    ;; assign a function to the symbol
+    (define add-two
+      (lambda (x) (+ x 2)))
+
+    ;; assign a value to a symbol
+    (define two 2)
+
+    (add-two two) ;; 4
+
+With a short macro, we can actually execute this code virtually
+unchanged:
+
+    (defmacro define (name object)
+      `(setq ,name (fset ',name ,object)))
+
+    ;; assign a function to the symbol add-two
+    (define add-two
+      (lambda (x) (+ x 2)))
+    ;; assign a function to the symbol times-two
+    (define times-two
+      (lambda (x) (* x 2)))
+
+    ;; normal function definition
+    (define compose (f g)
+      (lambda (x) (f (g x))))
+
+    ((compose times-two add-two) 2) ;; 8
+
+In Clojure, we can use the `ns` macro separate code into
+namespaces. This prevents us having to worry about name clashes.
+
+    ;; example
+    
+There's a [codex.el](https://github.com/sigma/codex) package that
+allows us to do this in elisp:
+
+    (require 'codex)
+
+    (defcodex hello
+      (:use emacs)
+      (:export "greet"))
+
+    (in-codex hello
+      (defun say () "Hello world"))
+
+    (defcodex goodbye
+      (:use hello))
+
+    (in-codex hello
+      (defun say () "Goodbye world")
+      (hello:say))
 
 ### What elisp doesn't have
 
-Hygenic macros, reader macros, logic programming (miniKanren), infix notation (but
+A proper package system, hygenic macros, reader macros, logic programming (miniKanren), infix notation (but
 see SRFI 105), a type system (Clojure and Racket)
 
 ### Should I use these?
 
-There's certainly more than one way to do it in elisp. Generally,
-favouring idiomatic code is going to make it easier for others (and
-the future you) to maintain code. I learnt this the hard way when
-writing experimental packaging macros and making my code resistant to
-debugging or jumping to the definition.
+Elisp can't do everything. There are some languages features that
+simply can't be implemented by the users. For example, reader macros:
+
+    ;; example
+    
+Then there are language features that haven't been implemented yet,
+such as metaclasses
+([implemented in CLOS](http://www.lispworks.com/documentation/HyperSpec/Body/07_.htm)),
+hygenic macros
+([implemented in Common Lisp](http://www.p-cos.net/documents/hygiene.pdf)),
+logic programming
+([implemented in Clojure](https://github.com/clojure/core.logic)) or a
+type system
+([implemented in Scheme](http://docs.racket-lang.org/ts-guide/)). For
+the features I have demonstrated, some examples are very carefully
+chosen to . For example, the `define` macro still won't allow you to
+write `((foo) bar)`, it's a syntax error. Other examples are
+impractical (codex.el make edebug unusable) or simply not idiomatic
+and you'll find it very hard to get contributors.
+
+All that aside, elisp is an immensely flexible, deeply hackable
+language. Not only is it the fastest language to be productive in
+(fixme: link), it also provides a whole zoo of language features, providing
+an elegant way of expressing virtually any program.
