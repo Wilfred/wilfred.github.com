@@ -180,8 +180,8 @@ Elisp can do pattern matching too, with pcase:
 ### Monads
 
 Monads, as popularised by Haskell, don't really make sense without
-type classes (we'll come to those later). However, the Maybe monad has
-a natural elisp equivalent. A naive Haskell programmer might write:
+type classes. However, the Maybe monad has a natural elisp
+equivalent. A naive Haskell programmer might write:
 
     maybeAdd :: Maybe Int -> Maybe Int -> Maybe Int
     maybeAdd x y =
@@ -216,36 +216,80 @@ allows us to mimic this behaviour:
         
 ### Objects
 
-Basic example:
+A classic example of a class-based code structure might be a monster
+in a game:
+
+    class Monster(object):
+        def __init__(self):
+            self.health = 100
+            self.alive = True
+
+        def take_damage(damage):
+            self.health -= damage
+
+            if self.health =< 0:
+                self.alive = 10
+
+Elisp has EIEIO (Enhanced Implementation of Emacs Interpreted
+Objects), which is an implementation of CLOS (the Common Lisp Object
+System). So, we can straightforwardly translate this:
 
     (require 'eieio)
+    (eval-when-compile (require 'cl))
 
-    (defclass person ()
-      ((name :initarg :name
-             :initform "Anonymous")
-       (color :initarg :color
-              :type string)))
+    (defclass monster ()
+      ((health :initform 100)
+       (alive :initform t)))
 
-    (defmethod describe-them ((p person))
-      (format
-       "%s prefers the color %s."
-       (oref p name)
-       (oref p color)))
+    (defmethod take-damage ((m monster) damage)
+      "hello world"
+      (decf (oref m health) damage)
+      (when (<= (oref m health) 0)
+        (setf (oref m alive) nil)))
 
-    (describe-them
-     (person "example-person" :name "Bob" :color "psychadelic pink"))
+No discussion of object oriented code would be complete, of course,
+without an example of class-based inheritance:
+
+    class BossMonster(Monster):
+        def __init__(self):
+            super(BossMonster, self).__init__()
+            self.health = 500
 
 Classical Inheritance:
 
-(eieio example)
+    class BossMonster(Monster):
+        def __init__(self):
+            super(BossMonster, self).__init__()
+            self.health = 500
 
-Prototypical inheritance:
+EIEIO version:
 
-(eieio example)
+    (defclass boss-monster (monster)
+      ((health :initform 500)))
 
-Mixins:
+Finally, EIEIO also has support for more exotic object-oriented
+features, such as mixins:
 
-    example
+    class TalksMixin(object):
+        catchphrase = "Rawr!"
+
+        def say(self, player):
+            return self.catchphrase
+
+
+    class NoisyMonster(Monster, TalksMixin):
+        pass
+
+EIEIO:
+
+    (defclass talks-mixin ()
+      ((catchphrase :initform "Rawr!")))
+
+    (defmethod say ((thing talks-mixin))
+      (oref thing catchphrase))
+
+    (defclass noisy-monster (monster talks-mixin)
+      ())
 
 ### Namespaces
 
