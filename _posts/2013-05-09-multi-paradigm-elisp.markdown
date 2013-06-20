@@ -228,7 +228,7 @@ in a game:
             self.health -= damage
 
             if self.health =< 0:
-                self.alive = 10
+                self.alive = False
 
 Elisp has EIEIO (Enhanced Implementation of Emacs Interpreted
 Objects), which is an implementation of CLOS (the Common Lisp Object
