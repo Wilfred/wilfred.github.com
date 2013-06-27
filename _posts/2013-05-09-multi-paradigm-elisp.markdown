@@ -288,7 +288,6 @@ store a function in a variable, we have to use `funcall` to use
 it. Scheme, however, is a lisp-1 with a single namespace. In Scheme we
 can write:
 
-    ;; check me
     ;; assign a function to the symbol
     (define add-two
       (lambda (x) (+ x 2)))
