@@ -1,9 +1,7 @@
 --- 
 layout: post
-title: "Multi Paradigm Programming With Elisp"
+title: "Adventures in Multi Paradigm Programming"
 ---
-
-Alternative title: Adventures in Multi Paradigm Programming
 
 It's remarkable just how many types of programming are possible with
 Emacs lisp. In fact, it's hard to find a style of programming that
@@ -165,9 +163,9 @@ Elisp has you covered:
 In functional languages like Ocaml, we can use a more general
 technique of pattern matching:
 
-    -- check me
-    fun sumList []     = 0
-    fun sumList (x:xs) = x + sumList xs
+    let rec sum_list list = match list with
+      | [] -> 0
+      | (x::xs) -> 1 + (sum_list xs);
     
 Elisp can do pattern matching too, with pcase:
 
@@ -175,6 +173,7 @@ Elisp can do pattern matching too, with pcase:
       (pcase list
         (`nil 0)
         ;; note that elisp does not do TCO
+        ;; but see https://github.com/Wilfred/tco.el
         (`(,x . ,xs) (+ x (sum-list xs)))))
 
 ### Monads
@@ -242,20 +241,12 @@ System). So, we can straightforwardly translate this:
        (alive :initform t)))
 
     (defmethod take-damage ((m monster) damage)
-      "hello world"
       (decf (oref m health) damage)
       (when (<= (oref m health) 0)
         (setf (oref m alive) nil)))
 
 No discussion of object oriented code would be complete, of course,
 without an example of class-based inheritance:
-
-    class BossMonster(Monster):
-        def __init__(self):
-            super(BossMonster, self).__init__()
-            self.health = 500
-
-Classical Inheritance:
 
     class BossMonster(Monster):
         def __init__(self):
@@ -275,7 +266,6 @@ features, such as mixins:
 
         def say(self, player):
             return self.catchphrase
-
 
     class NoisyMonster(Monster, TalksMixin):
         pass
