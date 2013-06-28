@@ -26,7 +26,7 @@ In Python, we might use a list comprehension:
     some_list = [1, 2, 3]
     [x * 2 for x in some_list]
     
-Elisp has the loop macro (originally from Common Lisp):
+Elisp has the `loop` macro (originally from Common Lisp):
 
     (eval-when-compile (require 'cl))
 
@@ -64,7 +64,7 @@ as soon as we find the value we're looking for.
         return null;
     }
 
-We can do this in elisp using dolist and return:
+We can do this in elisp using `dolist` and `return`:
 
     (eval-when-compile (require 'cl))
     
@@ -115,7 +115,7 @@ any number of arguments. In JavaScript:
         return sum / arguments.length;
     }
     
-We can use defun* to write variadic functions in elisp. This gives us
+We can use `defun*` to write variadic functions in elisp. This gives us
 a straightforward translation:
 
     (eval-when-compile (require 'cl))
@@ -180,7 +180,7 @@ Elisp can do pattern matching too, with pcase:
 
 Monads, as popularised by Haskell, don't really make sense without
 type classes. However, the Maybe monad has a natural elisp
-equivalent. A naive Haskell programmer might write:
+equivalent. An inexperienced Haskell programmer might write:
 
     maybeAdd :: Maybe Int -> Maybe Int -> Maybe Int
     maybeAdd x y =
@@ -225,7 +225,6 @@ in a game:
 
         def take_damage(damage):
             self.health -= damage
-
             if self.health =< 0:
                 self.alive = False
 
@@ -245,7 +244,7 @@ System). So, we can straightforwardly translate this:
       (when (<= (oref m health) 0)
         (setf (oref m alive) nil)))
 
-No discussion of object oriented code would be complete, of course,
+No discussion of object-oriented code would be complete, of course,
 without an example of class-based inheritance:
 
     class BossMonster(Monster):
@@ -342,32 +341,32 @@ allows us to do this in elisp:
 
 ### What elisp doesn't have
 
-A proper package system, hygenic macros, reader macros, logic programming (miniKanren), infix notation (but
-see SRFI 105), a type system (Clojure and Racket)
-
-### Should I use these?
-
 Elisp can't do everything. There are some languages features that
-simply can't be implemented by the users. For example, reader macros:
+simply can't be implemented by the users. There are no reader macros,
+there's no FFI, and there's no multithreading (though threads are
+being worked on).
 
-    ;; example
-    
-Then there are language features that haven't been implemented yet,
-such as metaclasses
+There are also powerful language features that could be implemented,
+but haven't yet been implemented in elisp. For example, metaclasses
 ([implemented in CLOS](http://www.lispworks.com/documentation/HyperSpec/Body/07_.htm)),
 hygenic macros
 ([implemented in Common Lisp](http://www.p-cos.net/documents/hygiene.pdf)),
 logic programming
-([implemented in Clojure](https://github.com/clojure/core.logic)) or a
-type system
-([implemented in Scheme](http://docs.racket-lang.org/ts-guide/)). For
-the features I have demonstrated, some examples are very carefully
-chosen to . For example, the `define` macro still won't allow you to
-write `((foo) bar)`, it's a syntax error. Other examples are
-impractical (codex.el make edebug unusable) or simply not idiomatic
-and you'll find it very hard to get contributors.
+([implemented in Clojure](https://github.com/clojure/core.logic)) or
+even a type system
+([implemented in Scheme](http://docs.racket-lang.org/ts-guide/)).
+
+### Should I write code like this?
+
+For the features I have demonstrated, some examples are carefully
+chosen to showcase the capabilities of elisp. For example, the
+`define` macro still won't allow you to write `((foo) bar)`, it's a
+syntax error. Other examples are impractical (codex.el makes edebug
+unusable), whilst still others are so rarely used that other elisp
+developers will need time to understand the code.
 
 All that aside, elisp is an immensely flexible, deeply hackable
 language. Not only is it the fastest language to be productive in
-(fixme: link), it also provides a whole zoo of language features, providing
-an elegant way of expressing virtually any program.
+("[learning any amount of elisp makes your life better immediately](http://joelmccracken.github.io/entries/why-you-should-learn-elisp/)"),
+it also provides a whole zoo of language features, providing an
+elegant way of expressing virtually any program.
