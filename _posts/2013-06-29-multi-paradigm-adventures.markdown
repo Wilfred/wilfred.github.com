@@ -431,9 +431,13 @@ even a type system
 For the features I have demonstrated, some examples are carefully
 chosen to showcase the capabilities of elisp. For example, the
 `define` macro still won't allow you to write `((foo) bar)`, it's a
-syntax error. Other examples are impractical (codex.el makes edebug
-unusable), whilst still others are so rarely used that other elisp
-developers will need time to understand the code.
+syntax error. Other examples are impractical (codex.el currently makes
+edebug unusable), whilst still others are so rarely used that other
+elisp developers will need time to understand the code.
+
+Used in moderation however, these are all excellent tools which an elisp
+programmer can use. He or she can bend the language according to the
+problem at hand, rather than the other way round.
 
 All that aside, elisp is an immensely flexible, deeply hackable
 language. Not only does it enable you to be productive extremely quickly
