@@ -370,10 +370,23 @@ With a short macro, we can actually execute this code unchanged:
 (add-two two) ;; 4
 {% endhighlight %}
 
-In Clojure, we can use the `ns` macro separate code into
-namespaces. This prevents us having to worry about name clashes.
+In Clojure, we can use explicit namespaces to separate code. This
+prevents us having to worry about name clashes.
 
-    ;; example
+{% highlight clojure %}
+;; idiomatic clojure would use the ns macro here instead
+(in-ns 'hello)
+
+(clojure.core/defn say []
+  "Hello world")
+
+(in-ns 'goodbye)
+
+(clojure.core/defn say []
+  "Goodbye world")
+
+(hello/say)
+{% endhighlight %}
     
 There's a [codex.el](https://github.com/sigma/codex) package that
 allows us to do this in elisp:
@@ -382,17 +395,17 @@ allows us to do this in elisp:
 (require 'codex)
 
 (defcodex hello
-  (:use emacs)
-  (:export "greet"))
+  (:use emacs))
 
 (in-codex hello
-  (defun say () "Hello world"))
+  (emacs:defun say () "Hello world"))
 
 (defcodex goodbye
-  (:use hello))
+  (:use hello)
+  (:use emacs))
 
 (in-codex hello
-  (defun say () "Goodbye world")
+  (emacs:defun say () "Goodbye world")
   (hello:say))
 {% endhighlight %}
 
