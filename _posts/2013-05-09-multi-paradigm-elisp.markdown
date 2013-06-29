@@ -436,7 +436,7 @@ unusable), whilst still others are so rarely used that other elisp
 developers will need time to understand the code.
 
 All that aside, elisp is an immensely flexible, deeply hackable
-language. Not only is it the fastest language to be productive in
+language. Not only does it enable you to be productive extremely quickly
 ("[learning any amount of elisp makes your life better immediately](http://joelmccracken.github.io/entries/why-you-should-learn-elisp/)"),
 it also provides a whole zoo of language features, providing an
 elegant way of expressing virtually any program.
