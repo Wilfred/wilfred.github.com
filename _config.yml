@@ -1,3 +1,2 @@
 pygments: true # syntax highlighting with pygments
-auto: true # automatically update _site when anything changes
 permalink: /blog/:year/:month/:day/:title
