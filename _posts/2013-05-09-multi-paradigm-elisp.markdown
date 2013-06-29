@@ -18,7 +18,7 @@ some_list = [1, 2, 3]
 some_list.map{|x| x*2 }
 {% endhighlight %}
     
-In Elisp, we can use mapcar:
+In Elisp, we can use `mapcar`:
 
 {% highlight common-lisp %}
 (setq some-list '(1 2 3))
@@ -419,7 +419,7 @@ being worked on).
 There are also powerful language features that could be implemented,
 but haven't yet been implemented in elisp. For example, metaclasses
 ([implemented in CLOS](http://www.lispworks.com/documentation/HyperSpec/Body/07_.htm)),
-hygenic macros
+hygienic macros
 ([implemented in Common Lisp](http://www.p-cos.net/documents/hygiene.pdf)),
 logic programming
 ([implemented in Clojure](https://github.com/clojure/core.logic)) or
