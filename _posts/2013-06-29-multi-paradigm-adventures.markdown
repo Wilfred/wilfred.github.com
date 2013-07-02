@@ -1,6 +1,8 @@
 --- 
 layout: post
 title: "Adventures in Multi Paradigm Programming"
+tags:
+ - emacs
 ---
 
 It's remarkable just how many types of programming are possible with

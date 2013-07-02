@@ -1,6 +1,8 @@
 --- 
 layout: post
 title: "Essential Elisp Libraries"
+tags:
+ - emacs
 ---
 
 Recently, I've been writing a lot of Emacs Lisp. I've been trying to write
