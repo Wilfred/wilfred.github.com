@@ -24,7 +24,7 @@ In Elisp, we can use `mapcar`:
 
 {% highlight common-lisp %}
 (setq some-list '(1 2 3))
-(mapcar (lambda (x) (* x 2) some-list)
+(mapcar (lambda (x) (* x 2)) some-list)
 {% endhighlight %}
     
 In Python, we might use a list comprehension:
@@ -143,13 +143,11 @@ function mean() {
 }
 {% endhighlight %}
     
-We can use `defun*` to write variadic functions in elisp. This gives us
+Elisp supports variadic functions out of the box. This gives us
 a straightforward translation:
 
 {% highlight common-lisp %}
-(eval-when-compile (require 'cl))
-
-(defun* mean (&rest args)
+(defun mean (&rest args)
   (let ((sum (apply '+ args)))
     (/ sum (length args))))
 {% endhighlight %}
@@ -167,9 +165,11 @@ greet(greeting='Hi') # "Hi anonymous!"
 greet(name='Wilfred', greeting='Hey') # "Hey Wilfred!"
 {% endhighlight %}
 
-`defun*` allows this in elisp too:
+We can use `defun*` to do this in elisp:
 
 {% highlight common-lisp %}
+(eval-when-compile (require 'cl))
+
 (defun* greet (&key (greeting "Hello") (name "anonymous"))
   (format "%s %s!" greeting name))
 
