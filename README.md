@@ -9,7 +9,7 @@ You need Jekyll installed:
     
 Start Jekyll:
 
-    $ jekyll --server
+    $ jekyll serve
 
 Note that changes to `_config.yml` may require restarting the server.
 
