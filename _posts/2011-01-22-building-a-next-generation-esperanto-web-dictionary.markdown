@@ -459,12 +459,11 @@ compromise.
 The final product was released after three months of development and
 fulfilled all my initial objectives. I learnt a huge amount about web
 programming, dipped my toes into natural language processing and
-pushed the state of the art. Interested users are welcome to <a
-href="http://wilfredwordpress.nfshost.com/?page_id=68">contact me</a>,
-<a href="https://github.com/Wilfred/simpla-vortaro">checkout the
-code</a> or just <a href="http://www.simplavortaro.org/">play with the
-site</a>. If nothing else, I find it an indispensable tool for my
-needs.
+pushed the state of the art. Interested users are welcome to
+[contact me](http://wilfredwordpress.nfshost.com/?page_id=68),
+[checkout the code](https://github.com/Wilfred/simpla-vortaro) or just
+[play with the site](http://www.simplavortaro.org/). If nothing else,
+I find it an indispensable tool for my needs.
 
 <blockquote>Every good work of software starts by scratching a developer's personal itch.
 
