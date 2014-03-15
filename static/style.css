@@ -74,6 +74,7 @@ h1, h2, h3, h4, h5 {
 h1 {
 	font-size: 3.2em;
 	line-height: 1em;
+        font-family: sans-serif;
 	}
 
 /*	Page title at top of content, and post titles in index and single */
