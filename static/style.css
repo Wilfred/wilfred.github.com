@@ -59,8 +59,13 @@ a:hover {
 	color: #0b3;
 	}
 
+#post-1 {
+	font-size: 3em;
+        margin-bottom: -5px;
+}
+
 h1, h2, h3, h4, h5 {
-	font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif;
+	font-family: serif;
 	font-weight: bold;
 	line-height: normal;
 	margin: 0;
@@ -75,17 +80,17 @@ h1 {
 
 /*	Page title at top of content, and post titles in index and single */
 h2 {
-	font-size: 1.8em;
+	font-size: 1.3em;
 	}
 
 /*	Post titles in archive and search, certain headers in comments */
 h3 {
-	font-size: 1.5em;
+	font-size: 1em;
 	}
 
 /*	For user use */
 h4 {
-	font-size: 1.3em;
+	font-size: 1em;
 	margin: 0 0 0.5em 0;
 	}
 
