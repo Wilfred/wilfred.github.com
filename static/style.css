@@ -6,8 +6,6 @@
 	Author URI: http://thortz.com
 	Version: 1.2
 
-	October 2007
-	
 	Note that a few rules are subsequently overriden by print.css for print media
 	The .ui class is only used by print media (to prevent display of user interface elements)
 
@@ -25,8 +23,8 @@
 		#484848 serious dark gray for body text and many headers
 		#ff7010	cheerful orange for most links
 		#0b3	eco-friendly green for link hover states only
-		#c40	murky brown for visited links in entries & comments
-		#c00	alarming red to border comments awaiting moderation & for 404 titles
+		#c40	murky brown for visited links in entries
+		#c00	alarming red for 404 titles
 		#888	a low key mid gray for low key text
 		#f0f0f0 light gray wash under page titles
 		#f9f9f9	alt text blocks have a lighter wash
@@ -49,7 +47,7 @@ body {
 /*	Links in orange. Background explicitly specified just to keep css validator happy */
 a {
 	background-color: inherit;
-	color: #009999; /* 2007-10-15, was: #ff7010; */
+	color: #009999;
 	text-decoration: none;
 	}
 
@@ -83,7 +81,7 @@ h2 {
 	font-size: 1.3em;
 	}
 
-/*	Post titles in archive and search, certain headers in comments */
+/*	Post titles in archive and search */
 h3 {
 	font-size: 1em;
 	}
@@ -155,7 +153,7 @@ p {
 
 /*	This places a right guillemot glyph before list items and
 	similarly before the search submit link (fails in IE) */
-#sidebar ul ul li:before, #searchform p:before {
+#sidebar ul ul li:before {
 	content: "\00BB  ";
 	}
 
@@ -177,15 +175,6 @@ p {
 /*	Sub-sub-pages & sub-sub-categories and sub-sub-sub-etc don't get any blips */
 #sidebar ul ul ul ul li:before {
 	content: "";
-	}
-
-/*	The text box of the search form has space above it, and a little below too
-	Can't say font: inherit as IE don't get it */
-#searchform .s {
-	font: 1em 'Lucida Grande', Verdana, Arial, Sans-Serif;
-	width: 8em;
-	margin: 1em 0 0.24em 0;
-	padding: 0;
 	}
 
 /*	The header guards its white space */
@@ -211,10 +200,7 @@ p {
 
 /*	Used for Archive & Search page headers as well as the top of 'Pages' */
 h2.pagetitle {
-	/* 2007-10-17, was: background-color: #f0f0f0; */
 	color: inherit;
-	/* 2007-10-17, was: padding: 0.5em 0 0.4em 0.2em; */
-	/* 2007-10-17, was: margin: 0 0 2em 0; */
 	}
 
 /*	This class holds the next posts/previous posts links
@@ -266,7 +252,7 @@ h2.pagetitle {
 /*	..so we highlight them in orange as they are moused over */
 .post h2 a:hover, .post h3 a:hover {
 	background-color: inherit;
-	color: #009999; /* 2007-10-15, was: #ff7010; */
+	color: #009999;
 	}
 
 /*	This sizes the main body text of posts.
@@ -280,18 +266,14 @@ h2.pagetitle {
 	overflow: auto;
 	}
 
-.entry a:visited, .commentlist p a:visited {
+.entry a:visited {
 	background-color: inherit;
 	color: #c40;
 	}
 
-/*	small is used for blog tag line, the time below post titles, the footer text,
-	and in comments for form labels and comment metadata */
+/*	small is used for blog tag line, the time below post titles, the footer text.
+ */
 small, .postmetadata, blockquote, strike {
-
-
-
-
 	font-size: 1em;
 	line-height: 1.5em;
 	color: #888;
@@ -317,79 +299,6 @@ small, .postmetadata, blockquote, strike {
 /*	Used to hold phrases such as "Read more >>" together */
 .nowrap {
 	white-space: nowrap;
-	}
-
-/*	For Number-of-Comments and Leave-a-Comment headers below single post */
-h3.comments {
-	margin: 2em 0 1em 0;
-	}
-
-/*	Contains all the comments, and gives them a neat right margin by justifying the text */
-.commentlist {
-	padding: 0;
-	text-align: justify;
-	}
-
-/*	Each comment is a list item in an ordered list; could be numbered but we choose not */
-.commentlist li {
-	margin: 1.6em 0 0.4em 0;
-	padding: 0.6em 1em 0.4em 1em;
-	list-style: none;
-	font-weight: normal;
-	}
-
-/*	Can't say font: inherit; as IE don't get it */
-.commentlist li, #commentform input, #commentform textarea {
-	font: 1em 'Lucida Grande', Verdana, Arial, Sans-Serif;
-	}
-
-/*	Comment paragraphs are indented by 0.6em */
-.commentlist p {
-	margin: 1em 0.6em 1em 0;
-	font-weight: normal;
-	line-height: 1.5em;
-	text-transform: none;
-	}
-
-/*	The name of the commenter is cited a little larger */
-.commentlist cite {
-	font-weight: bold;
-	font-style: normal;
-	font-size: 1.2em;
-	}
-
-/*	Spaces text in the form area */
-#commentform p {
-	margin: 0.6em 0;
-	}
-
-/*	Gives the name/mail/web text input boxes their width & spacing */
-#commentform input {
-	width: 16em;
-	padding: 0.25em;
-	margin: 0.6em 0.6em 0 0;
-	}
-
-/*	The main comment entry box fills the width of the content column */
-#commentform textarea {
-	width: 100%;
-	margin: 0.6em 0 0 0;
-	}
-
-/*	The text of the "Submit Comment" link should be on the right */
-#commentform #submitcomment {
-	margin: 0;
-	float: right;
-	}
-
-/*	Highlight comments in limbo */
-.awaitingmoderation {
-	border: 1px solid #c00;
-	}
-
-/*	A little more gravitas for the "comments are now closed" line */	
-.nocomments {
-	font-weight: bold;
 	}
 
 /*	For 404 & 'no posts found' page titles */
