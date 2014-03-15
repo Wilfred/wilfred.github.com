@@ -158,16 +158,6 @@ p {
 	margin: 0;
 	}
 
-/*	Sub-pages & sub-categories don't get a smaller guillemot thingie (not IE) */
-#sidebar ul ul ul li:before {
-	content: "\203a  ";
-	}
-
-/*	Sub-sub-pages & sub-sub-categories and sub-sub-sub-etc don't get any blips */
-#sidebar ul ul ul ul li:before {
-	content: "";
-	}
-
 #header {
 	margin: 4em 0 4em 0;
 	}
