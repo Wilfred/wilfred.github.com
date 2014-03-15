@@ -21,18 +21,13 @@
 	Colours used:
 		#fff	clean white for the background, of course
 		#484848 serious dark gray for body text and many headers
-		#ff7010	cheerful orange for most links
 		#0b3	eco-friendly green for link hover states only
 		#c40	murky brown for visited links in entries
 		#c00	alarming red for 404 titles
 		#888	a low key mid gray for low key text
-		#f0f0f0 light gray wash under page titles
 		#f9f9f9	alt text blocks have a lighter wash
 		#ddd	to top and tail alt text & for blockquote bars
 */
-
-
-/*	Some defaults. Change the font size here to shrink or enlarge the whole design */
 
 body {
 	background-color: #fff;
@@ -44,16 +39,14 @@ body {
 	padding: 0;
 	}
 
-/*	Links in orange. Background explicitly specified just to keep css validator happy */
+/*	Background explicitly specified just to keep css validator happy */
 a {
 	background-color: inherit;
 	color: #009999;
 	text-decoration: none;
 	}
 
-/*	Show green when mousing over a link */
 a:hover {
-	background-color: inherit;
 	color: #0b3;
 	}
 
@@ -98,7 +91,6 @@ h5 {
 	margin: 0 0 0.3em 0;
 	}
 
-/*	Paragraphs have some space below */
 p {
 	margin: 0 0 1.1em 0;
 	}
@@ -140,7 +132,6 @@ p {
 	padding: 0.5em 0 0.4em 0;
 	}
 
-/*	We don't want bullets drawn in our lists */
 #sidebar ul {
 	list-style-type: none;
 	margin: 0;
@@ -158,7 +149,6 @@ p {
 	content: "\00BB  ";
 	}
 
-/*	A touch of space to separate links */
 #sidebar ul ul li {
 	margin: 0 0 0.24em 0;
 	}
@@ -178,7 +168,6 @@ p {
 	content: "";
 	}
 
-/*	The header guards its white space */
 #header {
 	margin: 4em 0 4em 0;
 	}
@@ -229,7 +218,6 @@ h2.pagetitle {
 	visibility: hidden;
 	}
 
-/*	Each post has a some space below it */
 .post {
 	margin: 0 0 3em 0;
 	}
@@ -250,7 +238,6 @@ h2.pagetitle {
 	color: #484848;
 	}
 
-/*	..so we highlight them in orange as they are moused over */
 .post h2 a:hover, .post h3 a:hover {
 	background-color: inherit;
 	color: #009999;
