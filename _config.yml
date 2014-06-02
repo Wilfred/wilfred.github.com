@@ -1,2 +1,2 @@
-pygments: true # syntax highlighting with pygments
+higlighter: pygments
 permalink: /blog/:year/:month/:day/:title
