@@ -58,7 +58,7 @@ people. What makes them stay?
   changes on the live site, which is satisfying and motivating.
 
 3. Team culture. Great teams have internal mailing lists, an internal
-  chat room (typically IRC or a [HipChat](https://www.hipchat.com/))
+  chat room (typically IRC or [HipChat](https://www.hipchat.com/))
   and an internal wiki. These contribute to a shared identity, a
   shared culture, and a shared knowledgebase. Developers are more reluctant
   to leave companies when they feel part of it.
