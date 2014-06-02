@@ -15,10 +15,12 @@ So, you're thinking of writing a program in RPython. It's a great language, it p
 
 **Assert your types**. CPython is pretty forgiving about types. For example: `u"foo %s" % "bar"` is legal CPython, but RPython won't allow it. Since debugging CPython is easier, I like to write my classes with type assertions:
 
-    def BoxedInteger(object):
-        def __init__(self, value):
-            assert isinstance(value, int), "Expected a string but got a: %s" % value
-            self.value = value
+{% highlight python %}
+def BoxedInteger(object):
+    def __init__(self, value):
+        assert isinstance(value, int), "Expected a string but got a: %s" % value
+        self.value = value
+{% endhighlight %}
 
 **Use RPython's rlib**. RPython is limited in many respects. For example, its integer types are fixed size and can overflow, unlike CPython. However, rlib [includes a selection of useful modules](https://bitbucket.org/pypy/pypy/src/48e079c6da38d8a6245861844f6ad75fd2ecc86f/rpython/rlib/?at=default), including a bigint implementation.
 
