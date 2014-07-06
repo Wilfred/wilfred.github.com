@@ -6,7 +6,6 @@
 	Author URI: http://thortz.com
 	Version: 1.2
 
-	Note that a few rules are subsequently overriden by print.css for print media
 	The .ui class is only used by print media (to prevent display of user interface elements)
 
 	This theme was developed from
@@ -354,7 +353,7 @@ ol li {
 
 /*	Code should be used for just a few words.. */
 code {
-	font: 1.0em 'Courier New', Courier, Monospace;
+	font: 1.0em monospace;
 	}
 
 /*	..and the pre tag works better for whole code excerpts */
