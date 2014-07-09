@@ -4,12 +4,15 @@ p code {
   padding: 1px 3px;	
 }
 
-.all-posts ul li {
-	font-size: 1.2em;
-	list-style-type: none;
-	padding-bottom: 0.3em;
+.all-posts tr {
+    border: 1px solid black;
+
+    font-size: 1.2em;
+    padding-bottom: 0.3em;
 }
 
-.all-posts ul {
-	padding: 0;
+.all-posts tr td:first-child {
+    text-align: right;
+    padding-right: 10px;
 }
+
