@@ -90,9 +90,9 @@ anytime soon. SML does level the playing field between those who have
 programmed before and those who haven't. Sadly many of its tools are
 no longer maintained. There is also very little in the way of a
 community around the language. However, a good programmer is fluent in
-a number of languages with different paradigms and at Cambridge he
-will be exposed to several. SML programmers can move to OCaml or other
-functional programming languages without too much difficulty.
+a number of languages with different paradigms and at Cambridge he or
+she will be exposed to several. SML programmers can move to OCaml or
+other functional programming languages without too much difficulty.
 
 That being said, if Cambridge moves to another functional language
 tomorrow I wouldn't consider it a great loss.
