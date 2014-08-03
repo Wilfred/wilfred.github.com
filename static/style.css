@@ -351,9 +351,8 @@ ol li {
 	list-style: decimal outside;
 	}
 
-/*	Code should be used for just a few words.. */
 code {
-	font: 1.2em monospace;
+	font: 1.1em monospace;
 	}
 
 /*	..and the pre tag works better for whole code excerpts */
