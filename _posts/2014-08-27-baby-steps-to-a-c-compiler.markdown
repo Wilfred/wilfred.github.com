@@ -104,8 +104,8 @@ sophisticated. You'll need to build a more elaborate parse tree, then
 walk it to generate assembly. The next steps are (1) allowing
 arbitrary return values (`return 3;`) and then (2) adding support for
 negating values (`return ~1;`). Each additional step will teach you
-more about C, more about your computer works, and more of the world of
-compilers.
+more about C, more about how your computer really works, and more of
+the world of compilers.
 
 This is the approach babyc is taking. Babyc now has if statements, loops,
 variables, and basic arithmetic. You're welcome to
