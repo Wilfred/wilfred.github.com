@@ -124,12 +124,12 @@ p {
 
 /*	The main headers within the side bar are in upper case & in the wider font */
 #sidebar h2 {
-	font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif;
+	font-family: 'Lucida Grande', Sans-Serif;
+        font-style: italic;
 	font-size: 1.2em;
-	text-transform: uppercase;
 	margin: 0;
-	padding: 0.5em 0 0.4em 0;
-	}
+	padding: 0.5em 0 0 0;
+}
 
 #sidebar ul {
 	font-size: 15px;
@@ -151,11 +151,6 @@ p {
 
 #sidebar ul ul li {
 	margin: 0 0 0.24em 0;
-	}
-
-/*	Tighten up around sub-page & sub-category lists */
-#sidebar ul ul ul {
-	margin: 0;
 	}
 
 #header {
