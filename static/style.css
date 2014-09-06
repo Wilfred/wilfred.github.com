@@ -43,11 +43,19 @@ a {
 	background-color: inherit;
 	color: #009999;
 	text-decoration: none;
-	}
+}
 
 a:hover {
-	color: #0b3;
-	}
+	border-bottom: 1px dotted green;
+}
+
+a:visited {
+	color: rgba(41, 0, 153, 1);
+}
+
+a:visited:hover {
+	border-bottom: 1px dotted rgba(41, 0, 153, 1);
+}
 
 #post-1 {
 	font-family: serif;
@@ -67,7 +75,11 @@ h1 {
 	font-size: 3.2em;
 	line-height: 1em;
         font-family: sans-serif;
-	}
+}
+h1 a, h1 a:hover, h1 a:visited {
+	color: #888;
+        border-bottom: 0;
+}
 
 /*	Page title at top of content, and post titles in index and single */
 h2 {
@@ -218,15 +230,10 @@ h2.pagetitle {
 
 /*	Post titles are also links but are shown in normal text colour.
 	Have to give text colour explicitly (rather than inherit) for IE */ 
-.post h2 a, .post h3 a {
-	background-color: inherit;
+.post h2 a, .post h2 a:hover {
 	color: #484848;
-	}
-
-.post h2 a:hover, .post h3 a:hover {
-	background-color: inherit;
-	color: #009999;
-	}
+        border-bottom: 0;
+}
 
 /*	This sizes the main body text of posts.
 	The overflow declaration stops oversized items such as images from bursting out of the
@@ -237,11 +244,6 @@ h2.pagetitle {
 	font-size: 18px;
 	margin: 1em 0 0 0;
 	overflow: auto;
-	}
-
-.entry a:visited {
-	background-color: inherit;
-	color: #c40;
 	}
 
 /*	small is used for blog tag line, the time below post titles, the footer text.
