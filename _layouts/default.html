@@ -4,7 +4,7 @@
 <head> 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
  
-	<title>{% if page %}{{ page.title }} | {% endif %}Wilfred Hughes :: Blog</title> 
+	<title>{% if page and page.title %}{{ page.title }} | {% endif %}Wilfred Hughes :: Blog</title> 
  
 	<link rel="stylesheet" href="/static/min.css" type="text/css" media="all" /> 
 </head> 
