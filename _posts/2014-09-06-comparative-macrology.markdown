@@ -76,9 +76,9 @@ Whilst there's no way to write `each-it`, we can implement `swap`:
 
 {% highlight c %}
 #define SWAP(x, y) {        \
-        typeof (x) tmp = y; \
-        y = x;              \
-        x = tmp;            \
+        typeof (x) tmp = x; \
+        x = y;              \
+        y = tmp;            \
     }
 {% endhighlight %}
 
@@ -104,9 +104,9 @@ accidental variable capture.
 (defmacro swap (x y)
   (let ((tmp-sym (gensym)))
     `(let (,tmp-sym)
-       (setf ,tmp-sym ,y)
-       (setf ,y ,x)
-       (setf ,x ,tmp-sym))))
+       (setf ,tmp-sym ,x)
+       (setf ,x ,y)
+       (setf ,y ,tmp-sym))))
 {% endhighlight %}
 
 This implementation has the nice property that `setf` understands
