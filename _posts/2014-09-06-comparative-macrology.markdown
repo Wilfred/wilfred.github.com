@@ -145,8 +145,8 @@ TODO
 
 A major selling point of Scheme's macro system, in contrast to earlier
 systems, is that it's hygienic by default. Instead of a function with
-quasiquotes, `syntax-rules` is a sublanguage of its own. It's a little
-more to learn, but it gives us very robust macros.
+quasiquotes, `syntax-rules` is a 'pattern language'. This is
+declarative and slightly magical.
 
 {% highlight scheme %}
 (define-syntax swap!
@@ -157,17 +157,33 @@ more to learn, but it gives us very robust macros.
        (set! y tmp)))))
 {% endhighlight %}
 
-When we're writing hygienic macros, Scheme's `syntax-rules` can be
-pretty readable. In this example, it's able to work out that `tmp` is
+In this example, `syntax-rules` is able to work out that `tmp` is
 only used within the macro, so it should be renamed, but `x` and `y`
 should be substituted in.
 
+I don't believe it's possible to write unhygienic macros in R5RS
+Scheme. However, R6RS introduced `syntax-case`, which lets us write
+`each-it`.
 
+{% highlight scheme %}
+(define-syntax each-it
+  (lambda (x)
+    (syntax-case x ()
+      ((_ lst body)
+       (with-syntax ((it (datum->syntax x 'it)))
+         #'(for-each (lambda (it) body) lst))))))
+{% endhighlight %}
 
-I picked R5RS Scheme as I'm familiar with it. Later versions of Scheme
-and related dialects have experimented with many different ways of
-writing hygienic
-macros. [Here's one interesting system that tries to balance quasiquotes and hygiene](http://www.rntz.net/post/intuitive-hygienic-macros.html).
+This has become significantly more complex than our Common Lisp
+implementation. We have quasiquotes, explicit 'syntax' object
+wrapping, and generally more code.
+
+R6RS has been criticised for providing multiple macro systems without
+clear guidance on which to use. `syntax-case` is more powerful, and we
+can write `syntax-rules` in terms of it. Nonetheless, Scheme
+implementations are still experimenting. For example, Racket
+introduces the notion of a 'syntax parameter', which gives users fine
+grained control of where a parameter may be used.
 
 ## Clojure (2007)
 
