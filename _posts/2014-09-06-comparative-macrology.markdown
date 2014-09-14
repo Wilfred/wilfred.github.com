@@ -3,9 +3,6 @@ layout: post
 title: "Comparative Macrology"
 ---
 
-Macros are an extraordinary way to add expressive power to a
-language. They also excel at preventing boilerplate.
-
 I used to think that macros were just a feature that a language
 included or lacked. In practice, there's a huge design space of how
 macro systems can be implemented.
@@ -18,7 +15,7 @@ robustness and safety in each language.
 There are other problems macro systems must solve that we won't look at
 here. We won't look at macro-expansion performance, how informative
 error messages are, or the readability of backtraces in macro-expanded
-code. We also won't look at ensuring our editor correctly highlights
+code. We also won't consider ensuring our editor correctly highlights
 and indents code using our macros.
 
 ## The Macros
@@ -86,18 +83,18 @@ By using a nested scope, our macro is hygienic. We're also able to use
 `typeof` to ensure our `SWAP` macro works with any type.
 
 Other languages make use of similar preprocessors (C++, Haskell,
-Ocaml), but these are similarly limited. Let's move on to some
+OCaml), but these are similarly limited. Let's move on to some
 full-power macro systems.
 
 ## Common Lisp (1984)
 
-Common Lisp provides extensive macro facilities, and idiomatic code
-often uses macros extensively.
+Common Lisp (CL) provides extensive macro facilities, and idiomatic code
+often uses macros.
 
 Macros in CL are just functions that run at compile time, which makes
 their execution easy to reason about. CL also has a lightweight
 backquote syntax for building expressions. However, we have to be
-careful about our output, and manually generate symbols to avoid
+careful about our output, and manually generate fresh symbols to avoid
 accidental variable capture.
 
 {% highlight lisp %}
@@ -130,7 +127,7 @@ deliberately capture variables. `each-it` is very readable:
 newLisp supports f-expressions. These are similar to macros, but
 they're evaluated at runtime. A macro is a function that takes an
 abstract syntax tree (AST) and returns another AST. An f-expression is
-like a function except it can choose which of its arguments will be
+a runtime expression that can choose which of its arguments will be
 evaluated and when.
 
 F-expressions have largely fallen out of favour today (the definitive
@@ -167,16 +164,15 @@ so it's hard to catch errors early.
       (eval template)))
 {% endhighlight %}
 
-`each-it` also suffers from a lack of quasiquotes (if there's a nicer
-way to write this, please let me know). newLisp is unhygienic, so we
-don't need to do any extra work to capture `it`.
+`each-it` also suffers from a lack of quasiquotes. newLisp is
+unhygienic, so we don't need to do any extra work to capture `it`.
 
 ## R5RS Scheme (1998)
 
 A major selling point of Scheme's macro system, in contrast to earlier
 systems, is that it's hygienic by default. Instead of a function with
 quasiquotes, `syntax-rules` is a 'pattern language'. This is
-declarative and slightly magical.
+declarative and slightly magical when you first encounter it.
 
 {% highlight scheme %}
 (define-syntax swap!
@@ -189,13 +185,14 @@ declarative and slightly magical.
 
 In this example, `syntax-rules` is able to work out that `tmp` is
 only used within the macro, so it should be renamed, but `x` and `y`
-should be substituted in.
+should be substituted in. Unlike our CL macro, we're even safe from
+the user adding a macro or function called `set!`.
 
-I don't believe it's possible to write unhygienic macros in R5RS
-Scheme. However, R6RS introduced `syntax-case`, which lets us write
-`each-it`. Unfortunately, R7RS does not include `syntax-case`, so we
-can't guarantee that all conforming implementations will support our
-macro. In practice, `syntax-case` is widely implemented.
+R5RS provides no facilities to break hygiene. However, R6RS introduced
+`syntax-case`, which lets us write `each-it`. Unfortunately, R7RS does
+not include `syntax-case`, so we can't guarantee that all conforming
+implementations will support our macro. In practice, `syntax-case` is
+widely implemented.
 
 {% highlight scheme %}
 (define-syntax each-it
@@ -207,24 +204,25 @@ macro. In practice, `syntax-case` is widely implemented.
 {% endhighlight %}
 
 This has become significantly more complex than our Common Lisp
-implementation. We have quasiquotes, explicit 'syntax' object
-wrapping, and generally more code.
+implementation. We have explicit 'syntax' object wrapping, compile-time
+function calls and generally more code.
 
-R6RS has been criticised for providing multiple macro systems without
-clear guidance on which to use. `syntax-case` is more powerful, and we
-can write `syntax-rules` in terms of it. Nonetheless, Scheme
-implementations are still experimenting. For example, Racket
-[introduces the notion of a 'syntax parameter'](http://www.schemeworkshop.org/2011/papers/Barzilay2011.pdf),
+Scheme implementations are still experimenting with providing safe,
+readable macro systems. The most exciting system is Racket's notion of
+a 'syntax parameter'
+([great paper here](http://www.schemeworkshop.org/2011/papers/Barzilay2011.pdf)),
 which gives users fine grained control of where a parameter may be
 used. Syntax parameters have the amazing feature that you can write
-unhygienic macros that compose safely.
+unhygienic macros that compose safely. That said, the linked paper
+gives a few examples where even syntax parameters aren't enough, and you
+need to be fully unhygienic.
 
 ## Clojure (2007)
 
 Clojure's macro system is closest in spirit to Common Lisp's. However,
 we can't write a direct equivalent to `swap!` as Clojure has strict
 limits on mutability. Instead, we'll mutate refs, which are threadsafe
-shared mutable storage and can only be modified inside a transaction.
+shared mutable storage that can only be modified inside a transaction.
 
 {% highlight clojure %}
 ;; swap! already exists in Clojure.
@@ -255,15 +253,15 @@ expansion, all symbols are written in their fully qualified form
 (e.g. `user.core/tmp`). This makes accidental variable capture much
 harder. Furthermore, the language is compiled, and any references
 to undefined variables is a compile-time error. As a result, Clojure
-macros tend to be robust.
+macro problems tend to be caught early.
 
 For `each-it`, we have to unquote a quoted symbol to break
-hygiene. Our resulting macro is stil very readable.
+this hygiene. Our resulting macro is still very readable.
 
 ## sweet.js (2012)
 
 sweet.js is a tool for writing macros in JavaScript (allowing
-[some astounding sytax abuse](https://github.com/mozilla/sweet.js/issues/385)). Whilst
+[some astounding syntax abuse](https://github.com/mozilla/sweet.js/issues/385)). Whilst
 JS is interpreted, many JS projects have a 'compilation' workflow
 including concatenation and minification. This enables you to simply
 add sweet.js as another build step.
@@ -279,20 +277,20 @@ macro swap {
 {% endhighlight %}
 
 sweet.js macros are hygienic and reminiscent of `syntax-case`. The
-hygiene means we can just use a symbol called `tmp` safely. By
-default, it's over-aggressive about variable renaming (which makes
-the compiled output less readable). This is rarely an issue in
-practice as it supports source maps and has a `--readable-names` flag
-for ES5 implementations.
+hygiene again means we can just use a symbol called `tmp` safely. By
+default, it's over-aggressive about variable renaming, making the
+compiled output less readable. This is rarely an issue in practice as
+it supports source maps and has a `--readable-names` flag for ES5
+implementations.
 
 When using `--readable-names`, sweet.js produces impressively readable
 code. In the expansion of `swap` example, our variable `tmp` is not renamed
-unless the surrounding code defines a `tmp` variable. This is nicer
+unless the surrounding code defines a `tmp` variable! This is nicer
 than explicitly calling `gensym`, as that will always give us a random
-symbol name. It even preserves some comments in our macro template.
+symbol name. sweet.js even preserves some comments in our macro template.
 
 sweet.js also explicitly supports breaking hygiene, and the
-documentation includes examples. `eachIt` is written with `case`,
+documentation helpfully includes examples. `eachIt` is written with `case`,
 which is very similar to Scheme's `syntax-case`.
 
 {% highlight js %}
@@ -322,7 +320,7 @@ anonymous function to introduce a new scope for `it`.
 > `macro_rules` is very experimental with a few annoying bugs and
 > definitely scope for change (possibly arbitrarily large).
 > 
-> -- Huon Wilson (Rust core dev)
+> -- Huon Wilson (Rust core dev) [[source](http://www.reddit.com/r/rust/comments/2gcjhr/is_rust_more_concise_than_c/ckhvta3)]
 
 Much of Rust is still in flux, but these samples have all been tested
 against Rust 0.11.0. Since macros are still experimental, we have to
@@ -365,7 +363,7 @@ built-in syntax. However, macro calls have a @ prefix (e.g.
 and built-in functions/keywords.
 
 Whilst this makes code more explicit, it does force some keywords into
-the Julia compiler that could otherwsie live as macros in the standard
+the Julia compiler that could otherwise live as macros in the standard
 library.
 
 {% highlight julia %}
@@ -415,19 +413,28 @@ end
 
 ## Conclusion
 
-Adding any macro system is a wise thing to do when designing a language,
-as it allows users to improve the language itself. Designing a good
-macro system is hard.
+Designing a good macro system is really hard. It should allow templates that
+are visually similar to the expanded code, and provide convenient ways
+to substitute values in. The designer must strike a balance between
+hygiene that guarantees safety and hygiene that can be broken without
+hurting readability.
 
-Whilst it's tempting to see a parse tree as simply nested lists, it's
-insufficient in practice. A parse tree node should have line numbers
-(Clojure's macros can access this), and may have a type associated
-(Julia's macros can access this).
+I think the lowest ceremony, quasiquote based macros are the most
+readable versions that I've shown here. The further your syntax is
+from s-expressions, the harder this is to achieve.
 
-A language must expost a set of tools that empower the user to write,
-document and debug macros with minimal friction. If they're too hard
-to use, users won't use them. I had to cut a number of languages
-from early drafts of this post because their docs were so poor or I
-I needed extensive knowledge of the grammar or compiler itself!
+To make matters worse, a parse tree is never actually a nested list,
+making quasiquotes a convenient lie. A compiler's parse tree will
+include metadata such as line numbers. Scheme actually exposes a
+separate 'syntax' datatype, and Clojure exposes `&env` and `&form`
+with metadata.
 
-A language designer must decide what kind of datatype to expose to
+Finally, the ultimate measure of a macro system is its usage. How
+often do users write macros, and how robust is the resulting code? I
+had to cut a number of languages from early drafts of this post
+because their docs were so poor or I needed extensive knowledge of
+the grammar or even compiler itself!
+
+If a language has a macro system, and if users use it, that's a
+success in my book. I am always glad of the facility, even if I'm only
+using macros written by others.
