@@ -103,8 +103,7 @@ accidental variable capture.
 {% highlight lisp %}
 (defmacro swap (x y)
   (let ((tmp-sym (gensym)))
-    `(let (,tmp-sym)
-       (setf ,tmp-sym ,x)
+    `(let ((,tmp-sym ,x))
        (setf ,x ,y)
        (setf ,y ,tmp-sym))))
 {% endhighlight %}
