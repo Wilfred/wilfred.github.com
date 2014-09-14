@@ -196,6 +196,7 @@ limits on mutability. Instead, we'll mutate refs, which are threadsafe
 shared mutable storage and can only be modified inside a transaction.
 
 {% highlight clojure %}
+;; swap! already exists in Clojure.
 (defmacro my-swap! [x y]
   `(dosync
     (let [tmp# (deref ~x)]
@@ -209,14 +210,32 @@ syntax also differs from CL's, which can make this macro confusing
 initially. Note that Clojure uses commas as whitespace, so users can
 write `(1, 2, 3)` or `{1 2, 3 4}`. This means commas cannot be used as
 to splice values into our quasiquote, so CL's `,x` is written `~x`
-in Clojure.
+in Clojure. Finally, Clojure allows us to write `tmp#` to instruct the
+compiler to call `gensym("tmp")` and substitute it in.
+
+{% highlight clojure %}
+(defmacro each-it [lst & body]
+  `(doseq [~'it ~lst]
+     ~@body))
+{% endhighlight %}
+
+Clojure has a really interesting notion of hygiene. During macro
+expansion, all symbols are written in their fully qualified form
+(e.g. `user.core/tmp`). This makes accidental variable capture much
+harder. Furthermore, the language is compiled, and any references
+to undefined variables is a compile-time error. As a result, Clojure
+macros tend to be robust.
+
+For `each-it`, we have to unquote a quoted symbol to break
+hygiene. Our resulting macro is stil very readable.
 
 ## sweet.js (2012)
 
-sweet.js is a tool for writing macros in JavaScript. Whilst JS is
-interpreted, many JS projects have a 'compilation' workflow including
-concatenation and minification. This enables you to simply add
-sweet.js as another build step.
+sweet.js is a tool for writing macros in JavaScript (allowing
+[some astounding sytax abuse](https://github.com/mozilla/sweet.js/issues/385)). Whilst
+JS is interpreted, many JS projects have a 'compilation' workflow
+including concatenation and minification. This enables you to simply
+add sweet.js as another build step.
 
 {% highlight js %}
 macro swap {
