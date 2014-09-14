@@ -133,12 +133,43 @@ abstract syntax tree (AST) and returns another AST. An f-expression is
 like a function except it can choose which of its arguments will be
 evaluated and when.
 
-F-expressions have largely fallen out of favour today. With
+F-expressions have largely fallen out of favour today (the definitive
+criticism is [this paper](http://www.nhplace.com/kent/Papers/Special-Forms.html)). With
 conventional macros, you can expand all your code and do static
 analysis, e.g. check for undefined variables. With f-expressions, you
 lose this ability (though it is an active research topic).
 
-TODO
+{% highlight lisp %}
+;; gensym is not provided in newLisp, but here's an implementation
+;; based on an example by Lutz, the lead developer
+;; http://www.newlispfanclub.alh.net/forum/viewtopic.php?p=10534#p10534
+(define (gensym) (sym (string "gs" (uuid))))
+
+;; swap is already defined in newlisp
+(define-macro (my-swap x y)
+    (let ((tmp-sym (gensym)))
+      (eval (list 'setf tmp-sym x))
+      (eval (list 'setf x y))
+      (eval (list 'setf y tmp-sym))))
+{% endhighlight %}
+
+newLisp's f-expressions are challenging to write if you've only
+written normal macros. There's no `macroexpand`, no quasiquotes and
+scoping is dynamic. In `my-swap` we've manually built expressions with
+`list` instead. Accessing uninitialised variables just returns `nil`,
+so it's hard to catch errors early.
+
+{% highlight lisp %}
+(define-macro (each-it lst)
+    (let ((template (list 'dolist (list 'it lst))))
+      ;; args holds all the arguments we haven't bound in our parameter list
+      (extend template (args))
+      (eval template)))
+{% endhighlight %}
+
+`each-it` also suffers from a lack of quasiquotes (if there's a nicer
+way to write this, please let me know). newLisp is unhygienic, so we
+don't need to do any extra work to capture `it`.
 
 ## R5RS Scheme (1998)
 
