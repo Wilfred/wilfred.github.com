@@ -53,7 +53,7 @@ eachIt(myArray) {
 
 // Should be equivalent to this:
 var myArray = [1, 2, 3];
-for (int i=0; i<myArray.length; i++) {
+for (var i=0; i<myArray.length; i++) {
     var it = myArray[i];
     console.log(it);
 }
