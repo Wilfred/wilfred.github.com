@@ -163,15 +163,17 @@ should be substituted in.
 
 I don't believe it's possible to write unhygienic macros in R5RS
 Scheme. However, R6RS introduced `syntax-case`, which lets us write
-`each-it`.
+`each-it`. Unfortunately, R7RS does not include `syntax-case`, so we
+can't guarantee that all conforming implementations will support our
+macro. In practice, `syntax-case` is widely implemented.
 
 {% highlight scheme %}
 (define-syntax each-it
   (lambda (x)
     (syntax-case x ()
-      ((_ lst body)
+      ((_ lst body ...)
        (with-syntax ((it (datum->syntax x 'it)))
-         #'(for-each (lambda (it) body) lst))))))
+         #'(for-each (lambda (it) body ...) lst))))))
 {% endhighlight %}
 
 This has become significantly more complex than our Common Lisp
@@ -182,14 +184,68 @@ R6RS has been criticised for providing multiple macro systems without
 clear guidance on which to use. `syntax-case` is more powerful, and we
 can write `syntax-rules` in terms of it. Nonetheless, Scheme
 implementations are still experimenting. For example, Racket
-introduces the notion of a 'syntax parameter', which gives users fine
-grained control of where a parameter may be used.
+[introduces the notion of a 'syntax parameter'](http://www.schemeworkshop.org/2011/papers/Barzilay2011.pdf),
+which gives users fine grained control of where a parameter may be
+used. Syntax parameters have the amazing feature that you can write
+unhygienic macros that compose safely.
 
 ## Clojure (2007)
 
 ## sweet.js (2012)
 
+sweet.js is a tool for writing macros in JavaScript. Whilst JS is
+interpreted, many JS projects have a 'compilation' workflow including
+concatenation and minification. This enables you to simply add
+sweet.js as another build step.
 
+{% highlight js %}
+macro swap {
+    rule { ($x, $y) } => {
+        var tmp = $x;
+        $x = $y;
+        $y = tmp;
+    }
+}
+{% endhighlight %}
+
+sweet.js macros are hygienic and reminiscent of `syntax-case`. The
+hygiene means we can just use a symbol called `tmp` safely. By
+default, it's over-aggressive about variable renaming (which makes
+the compiled output less readable). This is rarely an issue in
+practice as it supports source maps and has a `--readable-names` flag
+for ES5 implementations.
+
+When using `--readable-names`, sweet.js produces impressively readable
+code. In the expansion of `swap` example, our variable `tmp` is not renamed
+unless the surrounding code defines a `tmp` variable. This is nicer
+than explicitly calling `gensym`, as that will always give us a random
+symbol name. It even preserves some comments in our macro template.
+
+sweet.js also explicitly supports breaking hygiene, and the
+documentation includes examples. `eachIt` is written with `case`,
+which is very similar to Scheme's `syntax-case`.
+
+{% highlight js %}
+macro eachIt {
+    case { $eachIt_name ($x) {$y...} } => {
+        // Create an `it` variable using the lexical context
+        // of `eachIt`.
+        var it = makeIdent("it", #{$eachIt_name});
+        letstx $it = [it];
+        return #{
+            for (var i=0; i<$x.length; i++) {
+                (function($it) {
+                    $y...
+                })($x[i]);
+            }
+        }
+    }
+}
+{% endhighlight %}
+
+As with our Scheme macros, it's more complex when we want to break
+hygiene. It's also slightly more verbose because we have to use an
+anonymous function to introduce a new scope for `it`.
 
 ## Rust (2012)
 
@@ -240,8 +296,15 @@ end
 {% endhighlight %}
 
 Surprisingly, Julia's hygiene cheerfully allows variable capture. It
-renames `it` in both the loop header and in `$body`. I suspect Julia's
-hygiene guarantees are weaker than Scheme's.
+renames `it` in both the loop header and in `$body`. It also saves us
+splicing in the `$body`, because we're passing in a `begin...end`
+block when we use it.
+
+{% highlight julia %}
+@each_it my_array begin
+    println("it: $it")
+end
+{% endhighlight %}
 
 ## Conclusion
 
