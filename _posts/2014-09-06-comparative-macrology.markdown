@@ -288,6 +288,43 @@ anonymous function to introduce a new scope for `it`.
 
 ## Rust (2012)
 
+> `macro_rules` is very experimental with a few annoying bugs and
+> definitely scope for change (possibly arbitrarily large).
+> 
+> -- Huon Wilson (Rust core dev)
+
+Much of Rust is still in flux, but these samples have all been tested
+against Rust 0.11.0. Since macros are still experimental, we have to
+explicitly enable the feature.
+
+{% highlight rust %}
+#![feature(macro_rules)]
+{% endhighlight %}
+
+Rust's macro system is again similar to Scheme's `syntax-rules`. It
+has the additional constraint that you must declare what they're
+expecting as each macro argument (identifier, expression, etc). This
+makes macros more explicit and enables better reporting when
+misused. However, it prevents you from writing generic macros that use
+any l-value -- we can't write `swap!(x[0], x[1])` as we could in
+Common Lisp.
+
+{% highlight rust %}
+macro_rules! swap {
+    ($x:ident, $y:ident) => {
+        {
+            let tmp = $x;
+            $x = $y;
+            $y = tmp;
+        }
+    }
+}
+{% endhighlight %}
+
+At time of writing, it's not possible to break hygiene without writing
+a compiler plugin. At this point it's not really a macro, and it's
+beyond my Rust knowledge.
+
 ## Julia (2012)
 
 Julia has a lot of Lisp influences, offering a hygienic macro system
@@ -363,5 +400,3 @@ from early drafts of this post because their docs were so poor or I
 I needed extensive knowledge of the grammar or compiler itself!
 
 A language designer must decide what kind of datatype to expose to
-
-
