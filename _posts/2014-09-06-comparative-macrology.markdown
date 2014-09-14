@@ -191,6 +191,27 @@ unhygienic macros that compose safely.
 
 ## Clojure (2007)
 
+Clojure's macro system is closest in spirit to Common Lisp's. However,
+we can't write a direct equivalent to `swap!` as Clojure has strict
+limits on mutability. Instead, we'll mutate refs, which are threadsafe
+shared mutable storage and can only be modified inside a transaction.
+
+{% highlight clojure %}
+(defmacro my-swap! [x y]
+  `(dosync
+    (let [tmp# @~x]
+      (ref-set ~x @~y)
+      (ref-set ~y tmp#))))
+{% endhighlight %}
+
+Working with the immutability has made this example a little more
+verbose. Clojure's surface syntax also differs from CL's, which can
+make this macro confusing initially. Note that `@` is just derefencing
+the refs, nothing to do with CL's `,@foo`. Clojure uses commas as
+whitespace, so users can write `(1, 2, 3)` or `{1 2, 3 4}`, so CL's
+`,x` is written `~x` instead.
+
+
 ## sweet.js (2012)
 
 sweet.js is a tool for writing macros in JavaScript. Whilst JS is
