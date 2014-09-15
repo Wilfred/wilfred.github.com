@@ -77,14 +77,41 @@ _start:
         int     $0x80 # Send an interrupt
 {% endhighlight %}
 
-Hook up the lexer and parser, write this assembly to a file, and
-congratulations! You're a compiler writer!
+Hook up the lexer and parser
+([source](https://github.com/Wilfred/babyc/blob/dffc393f3254468acfbb3539c2e0f8c464b40464/minimal_c.y#L43)),
+write this assembly to a file
+([source](https://github.com/Wilfred/babyc/blob/dffc393f3254468acfbb3539c2e0f8c464b40464/minimal_c.y#L17)),
+and congratulations! You're a compiler writer!
 
-[Babyc started out like this, and you can see this minimal version here](https://github.com/Wilfred/babyc/tree/dffc393f3254468acfbb3539c2e0f8c464b40464).
+Babyc started out like this, and you can see [this minimal version here](https://github.com/Wilfred/babyc/tree/dffc393f3254468acfbb3539c2e0f8c464b40464).
 
 Of course, the assembly file is no good if you can't run it. Let's
-check it actually works as it should. If you've saved the file as
-`out.s`:
+check our compiler actually generates the assembly we're expecting:
+
+    # Here's the file we want to compile.
+    $ cat return_two.c
+    #include <stdio.h>
+
+    int main() {
+        return 2;
+    }
+    
+    # Run the compiler with this file.
+    $ ./babyc return_two.c
+    Written out.s.
+
+    # Check the output looks sensible.
+    $ cat out.s
+    .text
+        .global _start
+
+    _start:
+        movl    $2, %ebx
+        movl    $1, %eax
+        int     $0x80
+    
+Great! Let's actually run this compiled code to ensure it's doing what
+we expected.
 
     # Assemble the file. We explicitly assemble as 32-bit
     # to avoid confusion on x86_64 machines.
@@ -104,10 +131,12 @@ From here, the sky's the limit. You can work through the Incremental
 Approach paper and gradually make your compiler more
 sophisticated. You'll need to build a more elaborate parse tree, then
 walk it to generate assembly. The next steps are (1) allowing
-arbitrary return values (`return 3;`) and then (2) adding support for
-negating values (`return ~1;`). Each additional step will teach you
-more about C, more about how your computer really works, and more of
-the world of compilers.
+arbitrary return values (e.g. `return 3;`
+[sample code here](https://github.com/Wilfred/babyc/commit/65f3a0171e25075db886f4d5cc4127ed04a77a88))
+and then (2) adding support for negating values (e.g. `return ~1;`
+[sample code here](https://github.com/Wilfred/babyc/commit/32a82562096873f67c4fb36198eba43abc4ea8d6)). Each
+additional step will teach you more about C, more about how your
+computer really works, and more of the world of compilers.
 
 This is the approach babyc is taking. Babyc now has if statements, loops,
 variables, and basic arithmetic. You're welcome to
