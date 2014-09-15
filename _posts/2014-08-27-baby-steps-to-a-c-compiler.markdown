@@ -88,44 +88,48 @@ Babyc started out like this, and you can see [this minimal version here](https:/
 Of course, the assembly file is no good if you can't run it. Let's
 check our compiler actually generates the assembly we're expecting:
 
-    # Here's the file we want to compile.
-    $ cat return_two.c
-    #include <stdio.h>
+{% highlight bash %}
+# Here's the file we want to compile.
+$ cat return_two.c
+#include <stdio.h>
 
-    int main() {
-        return 2;
-    }
-    
-    # Run the compiler with this file.
-    $ ./babyc return_two.c
-    Written out.s.
+int main() {
+    return 2;
+}
 
-    # Check the output looks sensible.
-    $ cat out.s
-    .text
-        .global _start
+# Run the compiler with this file.
+$ ./babyc return_two.c
+Written out.s.
 
-    _start:
-        movl    $2, %ebx
-        movl    $1, %eax
-        int     $0x80
+# Check the output looks sensible.
+$ cat out.s
+.text
+    .global _start
+
+_start:
+    movl    $2, %ebx
+    movl    $1, %eax
+    int     $0x80
+{% endhighlight %}
     
 Great! Let's actually run this compiled code to ensure it's doing what
 we expected.
 
-    # Assemble the file. We explicitly assemble as 32-bit
-    # to avoid confusion on x86_64 machines.
-    $ as out.s -o out.o --32
-    
-    # Link the file, again specifying 32-bit.
-    $ ld -m elf_i386 -s -o out out.o
-    
-    # Run it!
-    $ ./out
+{% highlight bash %}
+# Assemble the file. We explicitly assemble as 32-bit
+# to avoid confusion on x86_64 machines.
+$ as out.s -o out.o --32
 
-    # What was the return code?
-    $ echo $?
-    2 # Woohoo!
+# Link the file, again specifying 32-bit.
+$ ld -m elf_i386 -s -o out out.o
+
+# Run it!
+$ ./out
+
+# What was the return code?
+$ echo $?
+2 # Woohoo!
+{% endhighlight %}
 
 From here, the sky's the limit. You can work through the Incremental
 Approach paper and gradually make your compiler more
