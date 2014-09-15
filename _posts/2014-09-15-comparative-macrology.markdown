@@ -346,13 +346,11 @@ Rust's macro system is again similar to Scheme's `syntax-rules`. It
 has the additional constraint that you must declare what they're
 expecting as each macro argument (identifier, expression, etc). This
 makes macros more explicit and enables better reporting when
-misused. However, it prevents you from writing generic macros that use
-any l-value -- we can't write `swap!(x[0], x[1])` as we could in
-Common Lisp.
+misused.
 
 {% highlight rust %}
 macro_rules! swap {
-    ($x:ident, $y:ident) => {
+    ($x:expr, $y:expr) => {
         {
             let tmp = $x;
             $x = $y;
@@ -361,6 +359,11 @@ macro_rules! swap {
     }
 }
 {% endhighlight %}
+
+In this case, we've allowed `$x` and `$y` to be any expression, so we
+can use l-values (e.g. `swap!(foo[0], foo[1]);`). If want to limit our
+swap macro to simple variables, we would write `($x:ident, $y:ident)`
+instead.
 
 At time of writing, it's not possible to break hygiene without writing
 a compiler plugin. At this point it's not really a macro, and it's
