@@ -66,24 +66,35 @@ If you're interested in running this code, it's
 
 First, let's look at C's macro preprocessor. C's macros are textual
 (rather than manipulating a parse tree), and the preprocessor only
-does one pass through the file. As a result, we can't recurse, there
-are many things we can't express, and they're error prone.
-
-Whilst there's no way to write `each-it`, we can implement `swap`:
+does one pass through the file. As a result, we can't recurse
+([though co-recursion is possible](https://github.com/pfultz2/Cloak/wiki/C-Preprocessor-tricks,-tips,-and-idioms)),
+there are many things we can't express, and they're error prone.
 
 {% highlight c %}
-#define SWAP(x, y) {        \
-        typeof (x) tmp = x; \
-        x = y;              \
-        y = tmp;            \
+#define SWAP(x, y) {                            \
+        typeof (x) x##y = x;                    \
+            x = y;                              \
+            y = x##y;                           \
     }
 {% endhighlight %}
 
-By using a nested scope, our macro is hygienic. We're also able to use
-`typeof` to ensure our `SWAP` macro works with any type.
+By using a nested scope, our macro is hygienic. To ensure our
+temporary variable is fresh, we concatenate the variable names.  We're
+also able to use `typeof` operator (a GCC extension) to ensure our
+`SWAP` macro works with any type.
+
+{% highlight c %}
+#define EACH_IT(array)                                  \
+    for (typeof(*array)* it = array;                    \
+       it != array + sizeof(array)/sizeof(array[0]);    \
+       it++)
+{% endhighlight %}
+
+`EACH_IT` has no issues with being unhygienic, as the C preprocessor
+imposes no such restrictions on our output.
 
 Other languages make use of similar preprocessors (C++, Haskell,
-OCaml), but these are similarly limited. Let's move on to some
+OCaml), but those preprocessors are similarly limited. Let's move on to some
 full-power macro systems.
 
 ## Common Lisp (1984)
