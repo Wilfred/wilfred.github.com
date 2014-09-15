@@ -67,13 +67,15 @@ on your current machine. There's a
 
 Here's the assembly file we need to generate:
 
-    .text
-            .global _start # Tell the loader we want to start at _start.
+{% highlight gas %}
+.text
+        .global _start # Tell the loader we want to start at _start.
 
-    _start:
-            movl    $2,%ebx # The argument to our system call.
-            movl    $1,%eax # The system call numer of sys_exit is 1.
-            int     $0x80 # Send an interrupt
+_start:
+        movl    $2,%ebx # The argument to our system call.
+        movl    $1,%eax # The system call numer of sys_exit is 1.
+        int     $0x80 # Send an interrupt
+{% endhighlight %}
 
 Hook up the lexer and parser, write this assembly to a file, and
 congratulations! You're a compiler writer!
