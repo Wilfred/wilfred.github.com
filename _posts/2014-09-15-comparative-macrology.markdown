@@ -105,7 +105,7 @@ often uses macros.
 Macros in CL are just functions that run at compile time, which makes
 their execution easy to reason about. CL also has a lightweight
 backquote syntax for building expressions. However, we have to be
-careful about our output, and manually generate fresh symbols to avoid
+careful about our output, and manually generate fresh, uninterned symbols to avoid
 accidental variable capture.
 
 {% highlight lisp %}
@@ -122,15 +122,16 @@ place structures. This means we can write things like
 
 However, we could be more defensive. Using `gensym` protects us from
 accidentally shadowing a local `tmp` variable, but we're still
-assuming that the user hasn't shadowed `setf`.
+assuming that the user hasn't shadowed `setf`. Such code would be
+invalid according to the CL specification (and SBCL gives an error),
+but it still may occur in user code in macro expansions.
 
 By contrast, the lack of hygiene works really well when we want to
 deliberately capture variables. `each-it` is very readable:
 
 {% highlight lisp %}
 (defmacro each-it (list &rest body)
-  `(loop for it in ,list
-      do ,@body))
+  `(mapc (lambda (it) ,@body) ,list))
 {% endhighlight %}
 
 ## newLisp (1991)
