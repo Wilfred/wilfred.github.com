@@ -73,7 +73,7 @@ Here's the assembly file we need to generate:
 
 _start:
         movl    $2,%ebx # The argument to our system call.
-        movl    $1,%eax # The system call numer of sys_exit is 1.
+        movl    $1,%eax # The system call number of sys_exit is 1.
         int     $0x80 # Send an interrupt
 {% endhighlight %}
 
