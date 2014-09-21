@@ -60,13 +60,14 @@ platform (see `js2-additional-externs`).
 
 There are a number of improvements.
 
-<img src="/assets/highlight_sexp_fibs.png" class="screenshot">
+<img src="/assets/highlight_sexp.png" class="screenshot">
 
 Current s-expression.
 
 <img src="/assets/highlight_nested_parens.png" class="screenshot">
 
-Nested s-expression.
+Nested s-expression, heat from the cursor ('point' in Emacs
+terminology).
 
 ## Standard Library Highlighting
 
@@ -90,7 +91,11 @@ This is highlight-symbol-mode. Change the timeout.
 
 Symbol based (called 'semantic highlighting' in kdevelop)
 
+https://github.com/ankurdave/color-identifiers-mode
+
 paren based.
 
 <img src="/assets/rainbow_delimeters.png" class="screenshot">
 
+Rainbow delimeters uses a unique colour for depth. Need lots of
+colours before cycling. The default colours are too subtle.
