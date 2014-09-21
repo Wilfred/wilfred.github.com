@@ -16,3 +16,6 @@ p code {
     padding-right: 10px;
 }
 
+.screenshot {
+    border: 2px dotted gray;
+}
