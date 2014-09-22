@@ -76,6 +76,8 @@ platform (see `js2-additional-externs`).
 
 ## S-expression Highlighting
 
+<img src="/assets/paren_face.png" class="screenshot">
+
 Fade out.
 
 <img src="/assets/rainbow_delimeters.png" class="screenshot">
@@ -88,6 +90,12 @@ colours before cycling. The default colours are too subtle.
 Xah Lee's JS mode.
 
 ## Docstring Highlighting
+
+<img src="/assets/elisp_docstring.png" class="screenshot">
+
+Note that we have separate highlighting for comments, strings and
+docstrings (`font-lock-comment-face`, `font-lock-string-face` and
+`font-lock-doc-face` respectively).
 
 Elisp / clojure as grey, highlighting inline symbols
 
