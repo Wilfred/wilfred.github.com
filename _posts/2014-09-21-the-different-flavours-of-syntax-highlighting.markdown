@@ -4,14 +4,15 @@ title: "The Different Flavours of Syntax Highlighting"
 ---
 
 What do you expect your editor to highlight? What are the different
-ways that we can highlight code? There are some common solutions, but
-there are a variety of options.
+ways that we can highlight code without calling external tools? There
+are some common solutions, but there are a variety of options.
 
 The limitation of highlighting tools is that you can't use all of them
 at the same time. We'll explore what's available to help you choose.
 
 I'm taking these examples from Emacs, but many of these are available
-on other editors too.
+on other editors too. We'll limit ourselves to highlighting that the
+editor itself can do, ignoring lint tools and VCS integrations.
 
 ## Lexical Highlighting
 
@@ -34,9 +35,26 @@ chosen them to show off relevant parts of the syntax.
 
 ## Extended Lexical Highlighting
 
+Depending on your taste for 'angry fruit salad' highlighting, you
+might choose to distinguish more lexical classes. Emacs also has
+`font-lock-maximum-decoration` to adjust how many distinct things are
+highlighted, but it's rarely used in practice.
+
+What's great about these minor-modes is that they compose nicely,
+allowing them to be reused for highlighting many different languages.
+
+<img src="/assets/highlight_numbers.png" class="screenshot">
+
 Numbers
 
+<img src="/assets/highlight_quotes.png" class="screenshot">
+
 Quoted values.
+
+Escape sequences.
+
+Whilst these modes are great, in practice some major modes will bundle
+this behaviour anyway.
 
 ## Semantic Highlighting
 
@@ -58,16 +76,12 @@ platform (see `js2-additional-externs`).
 
 ## S-expression Highlighting
 
-There are a number of improvements.
+Fade out.
 
-<img src="/assets/highlight_sexp.png" class="screenshot">
+<img src="/assets/rainbow_delimeters.png" class="screenshot">
 
-Current s-expression.
-
-<img src="/assets/highlight_nested_parens.png" class="screenshot">
-
-Nested s-expression, heat from the cursor ('point' in Emacs
-terminology).
+Rainbow delimeters uses a unique colour for depth. Need lots of
+colours before cycling. The default colours are too subtle.
 
 ## Standard Library Highlighting
 
@@ -79,23 +93,35 @@ Elisp / clojure as grey, highlighting inline symbols
 
 javascript doxygen syntax
 
-## Symbol Highlighting
+## Contextual Highlighting
 
-symbol at point
+<img src="/assets/highlight_sexp.png" class="screenshot">
+
+Current s-expression.
+
+<img src="/assets/highlight_nested_parens.png" class="screenshot">
+
+Nested s-expression, heat from the cursor ('point' in Emacs
+terminology).
 
 <img src="/assets/highlight_current_symbol.png" class="screenshot">
 
 This is highlight-symbol-mode. Change the timeout.
 
-## Uniqueness Highlighting
+## Explicit Highlighting
+
+## Substitutions
+
+pretty symbols
+
+glasses mode
+
+## Hashed Highlighting
 
 Symbol based (called 'semantic highlighting' in kdevelop)
 
 https://github.com/ankurdave/color-identifiers-mode
 
-paren based.
+## Defined Highlighting
 
-<img src="/assets/rainbow_delimeters.png" class="screenshot">
-
-Rainbow delimeters uses a unique colour for depth. Need lots of
-colours before cycling. The default colours are too subtle.
+highlight-defined
