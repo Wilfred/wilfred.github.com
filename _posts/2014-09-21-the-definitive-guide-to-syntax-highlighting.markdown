@@ -152,28 +152,53 @@ methods whose name match built-in functions.
 
 <img src="/assets/elisp_docstring.png" class="screenshot">
 
-Note that we have separate highlighting for comments, strings and
+Docstrings are conceptually between strings and comments: they're for
+the reader (like comments), but they're available at runtime (like
+strings). Emacs exposes separate faces for  comments, strings and
 docstrings (`font-lock-comment-face`, `font-lock-string-face` and
 `font-lock-doc-face` respectively).
 
-Elisp / clojure as grey, highlighting inline symbols
+Docstrings may also contain additional syntax for
+cross-references. Emacs will highlight these differently too (though
+their main use is cross-references in `*Help*` buffers).
 
-javascript doxygen syntax
+<img src="/assets/elisp_docstring.png" class="screenshot">
+
+Some languages support elaborate syntax in their comments, both to
+help the reader and to aid automatic documentation tools. In this
+example, js2-mode offers additional highlighting of JSDoc comments.
 
 ## Contextual Highlighting
 
+Another important area of highlighting is to highlight elements based
+on where the cursor ('point' in Emacs terminology) is currently
+located.
+
+<img src="/assets/highlight_matching.png" class="screenshot">
+
+The most basic contextual highlighting is showing the matching bracket
+to the bracket currently at the cursor. This is part of Emacs, but off
+by default: `show-paren-mode` will switch it on.
+
 <img src="/assets/highlight_sexp.png" class="screenshot">
 
-Current s-expression.
+You can take this a step further with
+[hl-sexp](https://github.com/emacsmirror/hl-sexp). This shows the
+entire s-expression under point, showing where you are in the code.
 
 <img src="/assets/highlight_nested_parens.png" class="screenshot">
 
-Nested s-expression, heat from the cursor ('point' in Emacs
-terminology).
+[highlight-parentheses](https://github.com/nschum/highlight-parentheses.el)
+takes a more subtle approach. It highlights the current paren as
+'hot', and highlight outer parens in progressively 'cooler' colours.
 
 <img src="/assets/highlight_current_symbol.png" class="screenshot">
 
-This is highlight-symbol-mode. Change the timeout.
+The last example in this section is the superb
+[highlight-symbol](https://github.com/nschum/highlight-symbol.el). This
+is invaluable for showing you where else the current symbol is being
+used. highlight-symbol is conservative and only does when the point
+isn't moving, but set `highlight-symbol-idle-delay` to 0 to override this.
 
 ## Explicit Highlighting
 
