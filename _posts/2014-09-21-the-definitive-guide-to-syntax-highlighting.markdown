@@ -202,9 +202,15 @@ isn't moving, but set `highlight-symbol-idle-delay` to 0 to override this.
 
 ## Explicit Highlighting
 
+re-builder, or there's hi-lock
+
 ## Substitutions
 
+<img src="/assets/pretty_symbols.png" class="screenshot">
+
 pretty symbols
+
+<img src="/assets/glasses_mode.png" class="screenshot">
 
 glasses mode
 
