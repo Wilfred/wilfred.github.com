@@ -66,7 +66,7 @@ feature of Vim's stock highlighting is highlighting quoted
 values. This is available with
 [highlight-quoted](https://github.com/Fanael/highlight-quoted).
 
-<img src="/assets/highlight_quotes.png" class="screenshot">
+<img src="/assets/highlight_escapes.png" class="screenshot">
 
 [highlight-escape-sequences](https://github.com/dgutov/highlight-escape-sequences)
 is another minor mode that does exactly what its name suggests. It
@@ -123,6 +123,8 @@ If you like this mode,
 [rainbow-blocks](https://github.com/istib/rainbow-blocks) colours all
 the symbols the same colours as the parens.
 
+<img src="/assets/highlight_stages.png" class="screenshot">
+
 highlight-stages.
 
 ## Standard Library Highlighting
@@ -162,7 +164,7 @@ Docstrings may also contain additional syntax for
 cross-references. Emacs will highlight these differently too (though
 their main use is cross-references in `*Help*` buffers).
 
-<img src="/assets/elisp_docstring.png" class="screenshot">
+<img src="/assets/jsdoc_highlighting.png" class="screenshot">
 
 Some languages support elaborate syntax in their comments, both to
 help the reader and to aid automatic documentation tools. In this
@@ -202,7 +204,9 @@ isn't moving, but set `highlight-symbol-idle-delay` to 0 to override this.
 
 ## Explicit Highlighting
 
-re-builder, or there's hi-lock
+<img src="/assets/highlight_stages.png" class="screenshot">
+
+hi-lock-mode
 
 ## Substitutions
 
@@ -216,10 +220,14 @@ glasses mode
 
 ## Hashed Highlighting
 
+<img src="/assets/color_identifiers.png" class="screenshot">
+
 Symbol based (called 'semantic highlighting' in kdevelop)
 
 https://github.com/ankurdave/color-identifiers-mode
 
 ## Defined Highlighting
+
+<img src="/assets/highlight_defined.png" class="screenshot">
 
 highlight-defined
