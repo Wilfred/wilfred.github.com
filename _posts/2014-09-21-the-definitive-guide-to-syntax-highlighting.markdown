@@ -4,8 +4,9 @@ title: "The Definitive Guide To Syntax Highlighting"
 ---
 
 What do you expect your editor to highlight? What are the different
-ways that we can highlight code without calling external tools? There
-are some common solutions, but there are a variety of options.
+ways that we can highlight code without calling external tools? Whilst
+most editors have converged on a common set of base functionality,
+there's still innovation occurring in this field.
 
 The limitation of highlighting tools is that you can't use all of them
 at the same time. We'll explore what's available to help you choose.
@@ -24,18 +25,22 @@ this. Different lexical categories -- function names, keywords,
 comments and so on -- are each shown in a different colour. Virtually
 all editors provide this, with the notable exception of
 [Acme](https://en.wikipedia.org/wiki/Acme_%28text_editor%29). In
-Emacs, this is largely `font-lock-syntax-table`, though
+Emacs, this is largely done with `font-lock-syntax-table`, though
 `font-lock-keywords` is usually used too.
 
 Simple lexical highlighting is already useful. Syntactic mistakes,
 such as typos in keywords or unclosed string or comments, become
-obvious. The screenshot above is the default colour scheme in
-Emacs. It's interesting to note that Emacs does not choose a washed
-out grey for comments, preferring to
-[make comments prominent](https://medium.com/@MrJamesFisher/your-syntax-highlighter-is-wrong-6f83add748c9).
+obvious.
 
-Note that these code samples aren't particularly idiomatic or elegant, I've simply
-chosen them to show off relevant parts of the syntax.
+A note on screenshots: The above image is the default colour scheme in
+Emacs. In other images I've customised the styling to only show the
+highlighting that's related to the feature mentioned. The code samples
+aren't particularly idiomatic or elegant, I've simply chosen them to
+show off relevant parts of the syntax.
+
+It's interesting to see that default Emacs colour scheme does not
+choose a washed out grey for comments, preferring to
+[make comments prominent](https://medium.com/@MrJamesFisher/your-syntax-highlighter-is-wrong-6f83add748c9).
 
 ## Extended Lexical Highlighting
 
@@ -56,8 +61,6 @@ This is
 a simple, non-intrusive extension to highlighting that makes sense in
 pretty much every language.
 
-enh-ruby highlighting = and >>
-
 <img src="/assets/highlight_quotes.png" class="screenshot">
 
 Fun fact: Vim has better highlighting of Emacs lisp than Emacs itself!
@@ -69,28 +72,33 @@ values. This is available with
 <img src="/assets/highlight_escapes.png" class="screenshot">
 
 [highlight-escape-sequences](https://github.com/dgutov/highlight-escape-sequences)
-is another minor mode that does exactly what its name suggests. It
-only supports Ruby and JavaScript currently.
+is another minor mode with a simple goal. In this case, it highlights
+escape sequences inside strings. It currently only supports Ruby and JavaScript.
+
+<img src="/assets/enh_ruby_mode.png" class="screenshot">
 
 All these minor modes are matters of preference. If a major mode
 developer likes this extended highlighting, they tend to include it in
-their major mode anyway.
+their major mode anyway. In the above example, `enh-ruby-mode`
+highlights all infix operators (in addition the standard Ruby highlighting).
 
 ## Semantic Highlighting
 
 Some modes include a full parser rather than just a lexer. This
 enables more sophisticated highlighting techniques.
 
-<img src="/assets/semantic_fibs_js.png" class="screenshot">
+<img src="/assets/js2_mode.png" class="screenshot">
 
-In this example, [js2-mode](https://github.com/mooz/js2-mode) has
-highlighted `n` differently as it can distinguish between parameters
-and variable declarations. More impressively, it has highlighted
-`console` because it can see that `console` is not defined within this
-snippet of code.
+[js2-mode](https://github.com/mooz/js2-mode) is the best example of
+this. js2-mode includes a full-blown recursive-descent ECMAScript
+parser, including a number of common extensions. This enables js2-mode
+to distinguish more syntax types. For example, it can distinguish
+parameters and global variables.
 
-Highlighting globals is useful because use of globals is not an error,
-but it's useful information about the code. js2-mode can also be
+This is an amazing achievement and even allows the editor to do many
+checks that are traditionally done by lint tools. Highlighting globals
+is particularly useful because use of globals is not an error, but
+it's useful information about the code. js2-mode can also be
 configured to highlight globals specific to your current project or JS
 platform (see `js2-additional-externs`).
 
@@ -182,9 +190,15 @@ The most basic contextual highlighting is showing the matching bracket
 to the bracket currently at the cursor. This is part of Emacs, but off
 by default: `show-paren-mode` will switch it on.
 
+<img src="/assets/hl_line.png" class="screenshot">
+
+Highlighting the current line is a very common feature of editor
+highlighting, and Emacs provides `hl-line-mode` for this. This works
+well for line-oriented programming languages. 
+
 <img src="/assets/highlight_sexp.png" class="screenshot">
 
-You can take this a step further with
+For lisps, you can take this a step further with
 [hl-sexp](https://github.com/emacsmirror/hl-sexp). This shows the
 entire s-expression under point, showing where you are in the code.
 
@@ -200,13 +214,22 @@ The last example in this section is the superb
 [highlight-symbol](https://github.com/nschum/highlight-symbol.el). This
 is invaluable for showing you where else the current symbol is being
 used. highlight-symbol is conservative and only does when the point
-isn't moving, but set `highlight-symbol-idle-delay` to 0 to override this.
+isn't moving, but set `highlight-symbol-idle-delay` to 0 to override
+this.
+
+`highlight-symbol-mode` is particularly clever in that it's able to
+inspect the current syntax table. This prevents it from becoming
+confused with strings like `x-1` which is usually a single symbol in
+lisps but equivalent to `x - 1` in many other languages.
 
 ## Explicit Highlighting
 
-<img src="/assets/highlight_stages.png" class="screenshot">
+<img src="/assets/hi_lock_mode.png" class="screenshot">
 
-hi-lock-mode
+There comes a point where automatic highlighting isn't sufficient, and
+you want to explicitly highlight something. Emacs provides
+`hi-lock-mode` for this, and support a special comment syntax that
+allows other readers to see the same highlighting.
 
 ## Substitutions
 
@@ -231,3 +254,11 @@ https://github.com/ankurdave/color-identifiers-mode
 <img src="/assets/highlight_defined.png" class="screenshot">
 
 highlight-defined
+
+## Conclusions
+
+Composition is hard
+
+if you highlight everything, you end up highlighting nothing
+
+use lots of faces with inheritance.
