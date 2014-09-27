@@ -287,36 +287,6 @@ hr {
 	padding: 0;
 	}
 
-/*	Image defaults
-	Safari bug squishes image out of aspect when shrinking for max-width: 100% here
-	But current (November 06) Web-kit builds seem to have fixed this so next release might be OK
-	Removing the max-width line allows large images to be full size: scroll to see all */
-img {
-	max-width: 100%;
-	padding: 0;
-	margin: 0;
-	}
-
-a img {
-	border: none;
-	}
-
-/*	Using these classes with img elements is preferable to align="..." attribute */
-img.centered {
-	display: block;
-	margin: 0.6em auto 0.6em auto;
-	}
-
-/*	The actual alignment is done by the general .alignleft rule above
-	Typical usage would be for a leading  small picture with text flowing past its right edge */
-img.alignleft {
-	margin: 0.6em 0.9em 0.6em 0;
-	}
-
-img.alignright {
-	margin: 0.6em 0 0.6em 0.9em;
-	}
-
 /*	Lists inside posts
 	The html>body prefix is not understood by IE which therefore doesn't read these rules
 	as the stylized bullets don't work in IE anyway */

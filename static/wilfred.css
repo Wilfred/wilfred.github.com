@@ -17,5 +17,14 @@ p code {
 }
 
 .screenshot {
+}
+
+figure {
+    margin: 0 0 1.1em 0;
     border: 2px dotted gray;
+}
+figcaption {
+    color: gray;
+    font-style: italic;
+    text-align: center;
 }
