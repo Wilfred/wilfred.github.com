@@ -1,6 +1,8 @@
 --- 
 layout: post
 title: "The Definitive Guide To Syntax Highlighting"
+tags:
+ - emacs
 ---
 
 What do you expect your editor to highlight? What are the different
