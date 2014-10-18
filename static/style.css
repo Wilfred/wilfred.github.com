@@ -327,4 +327,14 @@ blockquote {
 	margin: 1.6em 2.8em 0 1.4em;
 	padding: 0 0 0 2em;
 	border-left: 0.6em solid #ddd;
-	}
+}
+
+/* Currently only used on the Fastest BigInt post. */
+table {
+    padding-bottom: 30px;
+}
+
+td, th {
+    padding-right: 20px;
+    margin-right: 20px;
+}
