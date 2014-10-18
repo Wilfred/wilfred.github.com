@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "This git respository houses the static blog content of the wilfred.me.uk blog. All content is under the GFDL 1.3.",
   "dependencies": {
-    "grunt": "^0.4.5"
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-cssmin": "^0.10.0",
+    "grunt-contrib-watch": "^0.6.1"
   },
   "devDependencies": {},
   "repository": {
