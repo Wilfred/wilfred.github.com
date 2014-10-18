@@ -185,11 +185,6 @@ p {
 	color: #484848;
 	}
 
-/*	Used for Archive & Search page headers as well as the top of 'Pages' */
-h2.pagetitle {
-	color: inherit;
-	}
-
 /*	This class holds the next posts/previous posts links
 	1px lower padding just required to get Opera to honour margin setting (!) */
 .navigation {
@@ -248,37 +243,10 @@ h2.pagetitle {
 
 /*	small is used for blog tag line, the time below post titles, the footer text.
  */
-small, .postmetadata, blockquote, strike {
+small, blockquote, strike {
 	font-size: 1em;
 	line-height: 1.5em;
 	color: #888;
-	background-color: inherit;
-	}
-
-/*	A little space above & below post metadata */
-.postmetadata {
-	margin: 0.3em 0 1em 0;
-	}
-
-/*	Both postmetadata on single, and alternate comments use this light backwash 
-	but comment padding & margin is set separately below */
-.alt {
-	background-color: #f9f9f9;
-	color: inherit;
-	border-top: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
-	padding: 0.5em 1em 0.5em 1em;
-	margin: 0;
-	}
-
-/*	Used to hold phrases such as "Read more >>" together */
-.nowrap {
-	white-space: nowrap;
-	}
-
-/*	For 404 & 'no posts found' page titles */
-.problem {
-	color: #c00;
 	background-color: inherit;
 	}
 
@@ -359,12 +327,4 @@ blockquote {
 	margin: 1.6em 2.8em 0 1.4em;
 	padding: 0 0 0 2em;
 	border-left: 0.6em solid #ddd;
-	}
-
-strong, b {
-	font-weight: bold;
-	}
-
-em, i {
-	font-style: italic;
 	}
