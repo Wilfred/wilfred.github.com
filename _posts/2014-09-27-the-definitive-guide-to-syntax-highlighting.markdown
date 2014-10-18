@@ -399,7 +399,7 @@ tool from the editor.
 ## Conclusions
 
 It's really hard to compose syntax highlighting tools. Some of the
-examples here are very intrusive (particularly rainbow-blocks
+examples here are very intrusive (particularly rainbow-blocks and
 color-identifiers-mode), preventing you from using them in addition to
 other tools. The contextual highlighting tools are the best in this
 regard.
