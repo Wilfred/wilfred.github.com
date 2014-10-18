@@ -1,13 +1,15 @@
 module.exports = function (grunt) {
+    var CSS_FILES = [
+        'static/style.css',
+        'static/syntax.css',
+        'static/wilfred.css'
+    ];
+    
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         concat: {
             css: {
-                src: [
-                    'static/style.css',
-                    'static/syntax.css',
-                    'static/wilfred.css'
-                ],
+                src: CSS_FILES,
                 dest: 'static/combined.css'
             }
         },
@@ -17,7 +19,11 @@ module.exports = function (grunt) {
                 dest: 'static/min.css'
             }
         },
-        clean: ['static/combined.css']
+        clean: ['static/combined.css'],
+        watch: {
+            files: CSS_FILES,
+            tasks: ['default']
+        }
     });
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
