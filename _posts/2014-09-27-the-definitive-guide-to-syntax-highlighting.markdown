@@ -300,7 +300,7 @@ lisps, but equivalent to `x - 1` in many other languages.
 
 There comes a point where automatic highlighting isn't sufficient, and
 you want to explicitly highlight something. Emacs provides
-`hi-lock-mode` for this, and support a special comment syntax that
+`hi-lock-mode` for this, and supports a special comment syntax that
 allows other readers to see the same highlighting.
 
 ## Substitutions
