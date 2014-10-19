@@ -6,8 +6,6 @@
 	Author URI: http://thortz.com
 	Version: 1.2
 
-	The .ui class is only used by print media (to prevent display of user interface elements)
-
 	This theme was developed from
 	White As Milk version 1.6 http://www.azeemazeez.com/stuff/themes/
 	by Azeem Azeez http://www.azeemazeez.com
@@ -29,14 +27,13 @@
 */
 
 body {
-	background-color: #fff;
 	color: #888;
 	font-size: 0.8em;
 	font-family: 'Lucida Grande', Sans-Serif;
 	line-height: 1.4;
 	margin: 0;
 	padding: 0;
-	}
+}
 
 /*	Background explicitly specified just to keep css validator happy */
 a {
@@ -129,14 +126,13 @@ p {
 
 /*	The main column contains everything except the side bar, and sits against the right
 	of the page */
-#header, #content, #footer {
+#header, #content {
 	width: 70%;
 	float: right;
-	}
+}
 
 /*	The main headers within the side bar are in upper case & in the wider font */
 #sidebar h2 {
-	font-family: 'Lucida Grande', Sans-Serif;
         font-style: italic;
 	font-size: 1.2em;
 	margin: 0;
@@ -168,16 +164,6 @@ p {
 #header {
 	margin: 20px 0 4em 0;
 }
-
-/*	The footer resides below both the main column and the side bar (WinIE not sidebar)
-	Arial preferred over Verdana to keep text narrow enough for wayward browsers */
-#footer {
-	clear: both;
-	margin: 4em 0 1em 0;
-	padding: 0.2em 0 0 0;
-	border-top: 1px solid #888;
-	font-family: 'Lucida Grande', Arial, Verdana, Sans-Serif;
-	}
 
 /*	content includes everything between the header and the footer. Body text dark gray */
 #content {
@@ -214,15 +200,6 @@ p {
 	margin: 0 0 3em 0;
 	}
 
-/*	Post titles on the index and single pages use h2 with a line above
-	(Post titles in searches and archives use unadorned h3)
-	Only posts following other posts (ie all but the first) have a line above
- 	Not understood (so ignored) by WinIE */
-.post+.post h2 {
-	padding: 0.2em 0 0 0;
-	border-top: 1px solid #888;
-	}
-
 /*	Post titles are also links but are shown in normal text colour.
 	Have to give text colour explicitly (rather than inherit) for IE */ 
 .post h2 a, .post h2 a:hover {
@@ -241,18 +218,13 @@ p {
 	overflow: auto;
 	}
 
-/*	small is used for blog tag line, the time below post titles, the footer text.
+/*	small is used for blog tag line, the time below post titles.
  */
 small, blockquote, strike {
 	font-size: 1em;
 	line-height: 1.5em;
 	color: #888;
 	background-color: inherit;
-	}
-
-hr {
-	margin: 0;
-	padding: 0;
 	}
 
 /*	Lists inside posts
