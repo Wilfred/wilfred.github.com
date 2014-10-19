@@ -44,27 +44,14 @@ was Linux x86_64 3.16.4 and
 
 So, let's look at the results!
 
-| Language | Implementation | Time in seconds |
-|----------|----------------|-------------:|
-| Common Lisp | SBCL 1.2.2 | 12.049 |
-| Go | Go 1.3.3 | 2.899 |
-| Haskell | GHC 7.8.3 | 1.583 |
-| Java | OpenJDK 1.7.0_71 | 19.618 |
-| Julia | Julia 0.3.1 |  7.395 |
-| PHP | PHP 5.6.2 | 438.732 |
-| Python3 | CPython 3.4.2 | 4.568 |
-| Python3 | pypy 2.3.1 | 8.881 |
-| Ruby | JRuby 1.7.16 | 29.197 |
-| Ruby | MRI 2.1.3p242 | 27.721 |
-| Ruby | Rubinius 2.2.10 | 19.010 |
-| Rust | Rust 0.12.0-dev | 11.793 |
-| Scheme | Chicken 4.9.0.1 | 8.350 |
-| Scheme | Gambit 4.7.3 | 14.631 |
-| Scheme | Guile 2.0.11 | 9.413 |
-| Scheme | Racket 6.1 | 17.369 |
+<figure>
+<div id="container" style="min-width: 310px; max-width: 800px; height:500px; margin: 0 auto"></div>
+    <figcaption>pidigits performance (GMP implementations in green)</figcaption>
+</figure>
 
-Wow, we can see a huge range of performance here. We'll take a look at
-how the different implementations work, starting with the slowest.
+Wow, we can see a huge range of performance here. Click and drag on
+the chart to zoom in. We'll take a look at how the different
+languages have been implemented, starting with the slowest.
 
 The slowest BigInt here is **PHP**. PHP doesn't have a BigInt data type,
 so its arbitrary size numerical functions take and return strings!
@@ -75,46 +62,59 @@ representing numbers. If you run the benchmark in a shell, the
 incremental slowdown is very clear.
 
 The next slowest is **JRuby**. JRuby depends on the BigInteger.java
-implementation provided by the JDK. This is very respectable
-performance for a BigInt implemented in the host language, the
-majority of the faster BigInt designs have been written in lower-level
-languages.
+implementation provided by the JDK. As a result, it's unlikely to
+outperform the Java test program. The performance difference between
+**OpenJDK** and JRuby must be due to the additional interpreter
+overhead in JRuby.
 
 **MRI** has its
-[own BigInt implementation written in C](https://github.com/ruby/ruby/blob/v2_1_3/ext/bigdecimal/bigdecimal.c).
+[own BigInt implementation written in C](https://github.com/ruby/ruby/blob/v2_1_3/bignum.c),
+which uses GMP (the GNU MP Bignum library) when available. `ldd` reports that `/usr/bin/ruby` is
+linked to libgmp on my system. In spite of this, performance is still
+fairly slow. I presume the interpreter overhead is high in this benchmark.
+
+**Rubinius** is the fastest Ruby implementation I benchmarked. The
+design of Rubinius is somewhat based on the design of Smalltalk-80 as
+described in the
+'[blue book](http://stephane.ducasse.free.fr/FreeBooks/BlueBook/Bluebook.pdf)'. Much
+of the interpreter is written in Ruby, but
+[the BigInt implementation is C++](https://github.com/rubinius/rubinius/blob/v2.2.10/vm/builtin/bignum.cpp). Beating
+a GMP based implementation is very impressive.
 
 We're seeing a significant range of speeds for Scheme
-implementations. It's interesting to note that **Guile** and **Racket** are
-JIT interpreters, **Chicken** is compiled, and **Gambit* is interpreted (I
+implementations. It's interesting to note that Guile and Racket are
+JIT interpreters, Chicken is compiled, and Gambit is interpreted (I
 couldn't get the compiler to run on my machine). The idea that
 compiled languages are always faster than interpreted is refuted here.
 
-Since Scheme requires integers to be arbitrary sized, we're exercising
-built-in functionality here rather than libraries. Gambit is a
-self-hosting Scheme compiler so
-[implements numerics in Scheme](https://github.com/feeley/gambit/blob/v4.7.0/lib/_num.scm). Chicken
-is also largely written in Scheme. Racket
+Gambit and Chicken are both self-hosting Scheme compilers. **Gambit**
+[implements numerics in Scheme](https://github.com/feeley/gambit/blob/v4.7.0/lib/_num.scm). **Chicken**
+is also largely written in Scheme, and my understanding of the
+`compiler.scm` is that Chicken implements BigInts in Scheme too. This
+is extremely impressive technically and makes these compilers more
+hackable.
+
+By contrast, **Racket**
 [uses GMP](https://github.com/plt/libs/blob/2f116c1b64af3f980a403cb4b57051457b2a9c39/math-x86_64-linux-natipkg/math/info.rkt),
-[as does Guile](http://git.savannah.gnu.org/gitweb/?p=guile.git;a=blob;f=README;h=92d786c069837d81126d598e93416a20fc68a0c2;hb=HEAD#l65).
-
-The implementations
-are generally written in C.
-
-Guile uses GMP.
-
-
-**Rust** also implements BigInt as a library. In fact, whilst BigInt
-is currently built-in, it will be
-[an external library](https://github.com/rust-lang/num) in a future
-release! Nonetheless, it's very impressive performance, especially for
-a young library.
+and **Guile**
+[does too](http://git.savannah.gnu.org/gitweb/?p=guile.git;a=blob;f=README;h=92d786c069837d81126d598e93416a20fc68a0c2;hb=HEAD#l65).
+GMP is capable of very high performance, and as a result these
+implementations are substantially faster.
 
 **SBCL** is a very well-optimised Common Lisp compiler, with
-[some rather elegant implementation features](http://www.pvk.ca/Blog/2014/08/16/how-to-define-new-intrinsics-in-sbcl/).
-This BigInt implementation is modestly described as
+[some rather elegant compiler implementation features](http://www.pvk.ca/Blog/2014/08/16/how-to-define-new-intrinsics-in-sbcl/).
+Its BigInt implementation is
+[written in Common Lisp](https://github.com/sbcl/sbcl/blob/sbcl-1.2.2/src/code/bignum.lisp)
+and is modestly described as
 "[reasonably simple but decent](http://www.sbcl.org/gsoc2013/ideas/#sec-1.2)". SBCL
 is exceptional at optimising fixed-size arithmetic, but the BigInt
 performance here is still very good.
+
+**Rust** demonstrates superb performance for a young language, with
+[BigInt being implemented in the host language](https://github.com/rust-lang/rust/blob/0.12.0/src/libnum/bigint.rs). Rust
+is seeking to be standalone systems language, and BigInts will
+actually be [an external library](https://github.com/rust-lang/num) in a future
+release.
 
 Python is often a slow language, but its performance here took me
 completely by surprise. All integers in Python are arbitrary
@@ -138,14 +138,95 @@ assembly. The extremely high performance produced reflects this.
 Haskell's **GHC** also uses GMP. Very fast and better fine-tuning than
 Julia. Considering moving away though, because of licensing constraints.
 
-GMP is optimum in many cases!
+## Conclusions
+
+GMP is optimum in many cases! In some cases, languages are moving away
+from it.
+
+Languages aren't slow; implementations are.
+
+Hackability is still important.
+
+Hardware is ultimately the limiting factor.
+
+Very hard to do a fair test.
 
 https://mail.mozilla.org/pipermail/rust-dev/2014-June/010363.html
 http://blog.regehr.org/archives/1154
 
-Note: All the code for these benchmarks is
-[available in this git repo](https://github.com/Wilfred/the_end_times)
-and the language implementations I used were:
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/highcharts/highcharts.js"></script>
+<script src="/bower_components/highcharts/modules/exporting.js"></script>
 
-
+<script>
+$('#container').highcharts({
+    chart: {
+        type: 'bar',
+        zoomType: 'y',
+    },
+    title: {
+        text: ''
+    },
+    xAxis: {
+        categories: ["SBCL", "Go", "GHC", "OpenJDK", "Julia", "PHP", "CPython", "pypy", "JRuby", "MRI", "Rubinius", "Rust", "Chicken", "Gambit", "Guile", "Racket"],
+        title: {
+            text: null
+        },
+        labels: {
+            style: {
+                fontSize: "16px"
+            }
+        }
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Time in seconds',
+            align: 'high'
+        },
+        labels: {
+            overflow: 'justify',
+            style: {
+                fontSize: "16px"
+            }
+        }
+    },
+    tooltip: {
+        enabled: false
+    },
+    legend: {
+        enabled: false,
+    },
+    exporting: {
+        enabled: false,
+    },
+    plotOptions: {
+        bar: {
+            dataLabels: {
+                enabled: true,
+                style: {
+                    fontSize: '16px',
+                }
+            }
+        }
+    },
+    credits: {
+        enabled: false
+    },
+    series: [{
+        name: 'pidigits',
+        data: [
+            12.049, 2.899,
+            {y: 1.583, color: "#55CC55"},
+            19.618,
+            {y: 7.395, color: "#55CC55"},
+            438.72, 4.568, 8.881, 29.197,
+            {y: 27.721, color: "#55CC55"},
+            19.010, 11.793, 8.350, 14.631,
+            {y: 9.431, color: "#55CC55"},
+            {y: 17.369, color: "#55CC55"}
+        ]
+    }]
+});
+</script>
 
