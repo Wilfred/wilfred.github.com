@@ -1,0 +1,21 @@
+{
+  "name": "wilfred.github.com",
+  "version": "0.0.0",
+  "homepage": "http://www.wilfred.me.uk",
+  "authors": [
+    "Wilfred Hughes <me@wilfred.me.uk>"
+  ],
+  "description": "Personal Blog",
+  "license": "GFDL",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "chartjs": "~0.2.0"
+  }
+}
