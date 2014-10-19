@@ -16,6 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "chartjs": "~0.2.0"
+    "highcharts": "~4.0.4",
+    "jquery": "~1.11"
   }
 }
