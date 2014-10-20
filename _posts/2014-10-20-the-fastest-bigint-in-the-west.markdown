@@ -50,8 +50,8 @@ So, let's look at the results!
     <figcaption>pidigits performance (GMP implementations in green)</figcaption>
 </figure>
 
-Wow, we can see a huge range of performance here. Click and drag on
-the chart to zoom in. We'll take a look at how the different
+Wow, we can see a huge range of performance here. **Click and drag on
+the chart to zoom in**. We'll take a look at how the different
 languages have been implemented, starting with the slowest.
 
 The slowest BigInt here is **PHP**. PHP
