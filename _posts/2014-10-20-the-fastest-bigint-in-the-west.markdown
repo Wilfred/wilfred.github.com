@@ -44,7 +44,7 @@ expense of another, and we have used those programs here.
 
 I ran these programs an AMD Phenom X4 965 with 4 GiB RAM. The kernel
 was Linux x86_64 3.16.4 and
-[the exact code I used was in this git commit](https://github.com/Wilfred/the_end_times/tree/b3f0d1861c8eed35d2743e2497700e5a4400d750).
+[the exact code I used was in this git commit](https://github.com/Wilfred/the_end_times/commit/574ec7ee5a07ea34c0e158584bdaa8af774d368b).
 
 So, let's look at the results!
 
@@ -210,7 +210,7 @@ $('#container').highcharts({
             "Julia 0.3.1",
             "PHP 5.6.2",
             "CPython 3.4.2",
-            "PyPy 2.3.1",
+            "PyPy 2.4.0",
             "JRuby 1.7.16",
             "MRI 2.1.3p242",
             "Rubinius 2.2.10",
@@ -271,7 +271,7 @@ $('#container').highcharts({
             {y: 1.583, color: "#55CC55"},
             19.618,
             {y: 7.395, color: "#55CC55"},
-            438.72, 4.568, 8.881, 29.197,
+            438.72, 4.568, 6.463, 29.197,
             {y: 27.721, color: "#55CC55"},
             19.010, 11.793, 14.631,
             {y: 9.431, color: "#55CC55"},
