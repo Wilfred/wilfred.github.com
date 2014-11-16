@@ -87,15 +87,13 @@ any GMP based implementation is very impressive.
 
 We're seeing a significant range of speeds for Scheme
 implementations. It's interesting to note that Guile and Racket are
-JIT interpreters, Chicken is compiled, and Gambit is interpreted (I
-couldn't get the compiler to run on my machine). The idea that
-compiled languages are always faster than interpreted is refuted here.
+JIT interpreters, and Gambit is interpreted in this benchmark (I
+couldn't get the compiler to run on my machine).
 
-Gambit and Chicken are both self-hosting Scheme compilers. **Gambit**
-[implements numerics in Scheme](https://github.com/feeley/gambit/blob/v4.7.0/lib/_num.scm). **Chicken**
-is also largely written in Scheme, and my understanding of its
-`compiler.scm` is that Chicken implements BigInts in Scheme too. This
-is extremely impressive technically and makes these compilers more
+**Gambit** is a self-hosting Scheme compiler (although it offers an
+interpreter too). Gambit
+[implements numerics in Scheme](https://github.com/feeley/gambit/blob/v4.7.0/lib/_num.scm). This
+is extremely impressive technically and makes this compiler more
 hackable.
 
 By contrast, **Racket**
@@ -214,7 +212,6 @@ $('#container').highcharts({
             "MRI 2.1.3p242",
             "Rubinius 2.2.10",
             "Rust 0.12.0-dev",
-            "Chicken 4.9.0.1",
             "Gambit 4.7.3",
             "Guile 2.0.11",
             "Racket 6.1"
@@ -273,7 +270,7 @@ $('#container').highcharts({
             {y: 7.395, color: "#55CC55"},
             438.72, 4.568, 8.881, 29.197,
             {y: 27.721, color: "#55CC55"},
-            19.010, 11.793, 8.350, 14.631,
+            19.010, 11.793, 14.631,
             {y: 9.431, color: "#55CC55"},
             {y: 17.369, color: "#55CC55"}
         ]
