@@ -62,7 +62,7 @@ expression to step over the curly brackets.
 
     function elsize{T}(::AbstractArray{T})
         sizeof(T)
-        end
+    end
 
 <img src="/assets/julia_function_type_vars.png">
 
