@@ -33,11 +33,14 @@ significantly limits the number of languages we can test. I decided to
 include multiple implementations of the same language to see the
 variation within the same language.
 
-Unlike the Benchmarks Game, we aren't requiring all the test programs
-for the same language to be
-identical. [This is a controversial rule](https://alexgaynor.net/2011/apr/03/my-experience-computer-language-shootout/)
-and I wasn't able to run the same program on all Scheme
+We aren't requiring all the test programs for the same language to be
+identical. I wasn't able to run the same program on all Scheme
 implementations anyway.
+
+By default, The Benchmarks Game shows the same
+test program for different implementations. It also allows users to
+submit programs that improve performance for one implementation at the
+expense of another, and we have used those programs here.
 
 I ran these programs an AMD Phenom X4 965 with 4 GiB RAM. The kernel
 was Linux x86_64 3.16.4 and
