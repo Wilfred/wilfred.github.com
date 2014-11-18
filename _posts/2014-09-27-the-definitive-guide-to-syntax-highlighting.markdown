@@ -305,7 +305,7 @@ allows other readers to see the same highlighting.
 
 ## Substitutions
 
-It's also possible to configure Emacs to change how it display the
+It's also possible to configure Emacs to change how it displays the
 text itself.
 
 <figure>
