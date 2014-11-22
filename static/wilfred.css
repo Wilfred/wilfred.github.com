@@ -4,18 +4,6 @@ p code {
   padding: 1px 3px;	
 }
 
-.all-posts tr {
-    border: 1px solid black;
-
-    font-size: 17px;
-    padding-bottom: 0.3em;
-}
-
-.all-posts tr td:first-child {
-    text-align: right;
-    padding-right: 10px;
-}
-
 figure {
     margin: 0 0 1.1em 0;
     border: 2px dotted gray;
