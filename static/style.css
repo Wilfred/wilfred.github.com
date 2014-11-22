@@ -59,6 +59,15 @@ a:visited:hover {
     font-size: 36px;
     margin-bottom: -5px;
 }
+.title a {
+    color: inherit;
+}
+.title a:hover {
+    border-bottom: 0;
+}
+.title a:active {
+    border-bottom: 0;
+}
 
 h1, h2, h3, h4, h5 {
 	font-weight: bold;
