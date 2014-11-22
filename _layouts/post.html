@@ -2,6 +2,16 @@
 layout: default
 ---
 
+<div class="post">
+	<h2 id="post-1">{{ page.title }}</h2> 
+	<small>{{ page.date|date: "%d %B %Y" }}</small> 
+ 
+	<div class="entry"> 
+		{{ content }}
+	</div>
+ 
+</div>
+
 <div class="navigation">
 	{% if page.previous %}
 	<div class="alignleft">
@@ -16,14 +26,4 @@ layout: default
 	{% endif %}
 
 	<div class="snap-to-fit"></div> 
-</div> 
- 
-<div class="post">
-	<h2 id="post-1">{{ page.title }}</h2> 
-	<small>{{ page.date|date: "%d %B %Y" }}</small> 
- 
-	<div class="entry"> 
-		{{ content }}
-	</div>
- 
 </div>
