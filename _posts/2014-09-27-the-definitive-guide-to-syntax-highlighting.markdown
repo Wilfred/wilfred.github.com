@@ -76,7 +76,7 @@ pretty much every language.
 
 Fun fact: Vim has a Common Lisp highlighting mode that highlights more
 syntax classes that Emacs does!
-[Here's a screenshot](http://i.imgur.com/WtmoEbz.png). One great
+[Here's a screenshot](/assets/vim_vs_emacs_editing_lisp.png). One great
 feature of Vim's mode is highlighting quoted values. This is available
 with
 [highlight-quoted](https://github.com/Fanael/highlight-quoted). As
