@@ -126,7 +126,7 @@ p {
 
 /*	The main column contains everything except the side bar, and sits against the right
 	of the page */
-#header, #content {
+header, #content {
 	width: 70%;
 	float: right;
 }
@@ -161,7 +161,7 @@ p {
 	margin: 0 0 0.24em 0;
 	}
 
-#header {
+header {
 	margin: 20px 0 30px 0;
 }
 
