@@ -2,15 +2,12 @@
 layout: default
 ---
 
-<div class="post">
-	<h2 id="post-1">{{ page.title }}</h2> 
+<article>
+	<h2 class="title">{{ page.title }}</h2> 
 	<small>{{ page.date|date: "%d %B %Y" }}</small> 
  
-	<div class="entry"> 
-		{{ content }}
-	</div>
- 
-</div>
+	{{ content }}
+</article>
 
 <div class="navigation">
 	{% if page.previous %}

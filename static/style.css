@@ -54,10 +54,10 @@ a:visited:hover {
 	border-bottom: 1px dotted rgba(41, 0, 153, 1);
 }
 
-#post-1 {
-	font-family: serif;
-	font-size: 2.5em;
-        margin-bottom: -5px;
+.title {
+    font-family: serif;
+    font-size: 36px;
+    margin-bottom: -5px;
 }
 
 h1, h2, h3, h4, h5 {
@@ -123,9 +123,17 @@ p {
 /*	The main column contains everything except the side bar, and sits against the right
 	of the page */
 header, #content {
-	width: 70%;
-	float: right;
+    width: 70%;
+    float: right;
 }
+header {
+    margin: 30px 0 40px 0;
+}
+
+header > * {
+    padding-left: 2px;
+}
+
 
 /*	The main headers within the side bar are in upper case & in the wider font */
 #sidebar h2 {
@@ -156,10 +164,6 @@ header, #content {
 #sidebar ul ul li {
 	margin: 0 0 0.24em 0;
 	}
-
-header {
-	margin: 30px 0 40px 0;
-}
 
 /*	content includes everything between the header and the footer. Body text dark gray */
 #content {
@@ -208,12 +212,12 @@ header {
 	The overflow declaration stops oversized items such as images from bursting out of the
 	page bounds; a local scroll bar is provided on demand instead
 	Width 100% required by WinIE else it just lets the overflow occur */
-.entry {
+article {
 	width: 100%;
 	font-size: 18px;
-	margin: 1em 0 0 0;
+	margin: 0;
 	overflow: auto;
-	}
+}
 
 /*	small is used for blog tag line, the time below post titles.
  */
@@ -227,27 +231,27 @@ small, blockquote, strike {
 /*	Lists inside posts
 	The html>body prefix is not understood by IE which therefore doesn't read these rules
 	as the stylized bullets don't work in IE anyway */
-html>body .entry ul {
+html>body article ul {
 	margin: 0;
 	padding: 0 0 0 2em;
 	list-style: none;
 	text-indent: -1em;
 	}
 
-html>body .entry li {
+html>body article li {
 	margin: 0.8em 0 0.9em 1.1em;
 	}
 
-.entry ul li:before {
+article ul li:before {
 	content: "\00BB  ";
 	}
 
-.entry ol {
+article ol {
 	padding: 0 0 0 2em;
 	margin: 0;
 	}
 
-.entry ol li {
+article ol li {
 	margin: 0;
 	padding: 0;
 	}
