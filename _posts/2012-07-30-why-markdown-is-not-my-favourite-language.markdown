@@ -229,7 +229,7 @@ well specified, and the only existing renderer is an inseparable part
 of the engine. (This is a common problem for people seeking to do
 natural language processing of Wikipedia.)
 
-[Creole](http://wikicreole.org/) is a project to find a common syntax
+[Creole](http://www.wikicreole.org/) is a project to find a common syntax
 between these different wiki engines. They have produced a
 comprehensive specification, and many implementations
 exist. Importantly, there are JavaScript implementations, making it
