@@ -144,7 +144,7 @@ Several Markdown implementations offer plugins for some of these
 missing features. Sadly, some implementations do not support plugins
 at all, and most do not have plugins for all the features I have
 listed here. I have also been disappointed with the bugginess of
-several plugins I tried, as they hadn't though about nesting
+several plugins I tried, as they hadn't thought about nesting
 correctly. For example, a user wants their code snippets to be rendered
 as written, even if the syntax overlaps with table plugin's syntax.
 
