@@ -238,8 +238,12 @@ export ES_HEAP_SIZE=31G
 {% endhighlight %}
 
 If your heap is more than 6GiB,
-[you should use the G1GC garbage collector](http://jprante.github.io/2012/11/28/Elasticsearch-Java-Virtual-Machine-settings-explained.html)
-(see the 'Some Recommendations' section).
+[you may benefit from using the G1GC garbage collector](http://jprante.github.io/2012/11/28/Elasticsearch-Java-Virtual-Machine-settings-explained.html)
+(see the 'Some Recommendations' section). Note that
+[the ES team don't recommend this](http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_don_8217_t_touch_these_settings.html#_garbage_collector)
+(and
+[the Lucene people strongly recommend against it](https://wiki.apache.org/lucene-java/JavaBugs)),
+although [ES is regularly tested with G1GC](http://build-us-00.elasticsearch.org/job/es_g1gc_master_metal/).
 
 {% highlight bash %}
 # ELASTICSEARCH STARTUP SCRIPT
