@@ -40,10 +40,7 @@ useful.
 
 ## Known gotchas
 
-Note that the traceback in stock Jekyll is not as always helpful as it
-could be ([issue #388](https://github.com/mojombo/jekyll/issues/388)).
-
-Also, syntax highlighting fails if `python` doesn't point to a
+Syntax highlighting fails if `python` doesn't point to a
 Python 2.x executable (see
 [octopress/1028](https://github.com/imathis/octopress/issues/1028),
 amongst others).
