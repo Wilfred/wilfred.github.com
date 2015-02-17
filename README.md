@@ -43,10 +43,6 @@ useful.
 Note that the traceback in stock Jekyll is not as always helpful as it
 could be ([issue #388](https://github.com/mojombo/jekyll/issues/388)).
 
-Furthermore, no warnings or errors are produced when a layout is named
-incorrectly
-([issue #353](https://github.com/mojombo/jekyll/issues/353)).
-
 Also, syntax highlighting fails if `python` doesn't point to a
 Python 2.x executable (see
 [octopress/1028](https://github.com/imathis/octopress/issues/1028),
