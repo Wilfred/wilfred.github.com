@@ -42,15 +42,46 @@ int main() {
 {% endhighlight %}
 
 We can generate a `forty_two.ll` file by simply running `clang -S
--emit-llvm forty_two.c`. This looks like the following:
+-emit-llvm -O3 forty_two.c`. We specify `-O3` to avoid getting
+redundant instructions in our main function. Our main function now
+looks like this:
 
-{% highlight c %}
-
+{% highlight llvm %}
 define i32 @main() {
-  %1 = alloca i32, align 4
-  store i32 0, i32* %1
   ret i32 42
 }
 {% endhighlight %}
 
+Easy! We can use `lli` to run this file:
 
+```
+$ lli forty_two.ll 
+$ echo $?
+42
+```
+
+## Working out what to generate
+
+Now we know how to write and run an LLVM IR program, we need to figure
+out what LLVM IR we want to generate.
+
+{% highlight llvm %}
+define i32 @main() nounwind {
+       %cells = call i8* @calloc(i32 3000, i32 1)
+       %cell_index = alloca i8
+       store i8 0, i8* %cell_index
+
+       %cell_index_val = load i8* %cell_index
+
+       ; we implement the BF program '+'
+       %cell_ptr = getelementptr i8* %cells, i8 %cell_index_val
+       %tmp = load i8* %cell_ptr
+       %tmp2 = add i8 %tmp, 1
+       store i8 %tmp2, i8* %cell_ptr
+
+       ; exit the stored value, as a sanity check
+       %exit_code_byte = load i8* %cell_ptr
+       %exit_code = zext i8 %exit_code_byte to i32
+       ret i32 %exit_code
+}
+{% endhighlight %}
