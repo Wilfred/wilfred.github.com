@@ -174,3 +174,9 @@ store i8 %input_byte, i8* %cell_ptr
 %current_value_int = sext i8 %current_value to i32
 %dont_care = call i32 @putchar(i32 %current_value_int)
 {% endhighlight %}
+
+## Loops
+
+LLVM is pretty strict with conditional: you can only jump to the start
+of a basic block, and all basic blocks must end with a return or a
+jump (checkme).
