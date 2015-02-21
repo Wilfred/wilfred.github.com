@@ -13,13 +13,24 @@ module.exports = function (grunt) {
                 dest: 'static/combined.css'
             }
         },
+        autoprefixer: {
+            options: {
+                safe: true
+            },
+            single_file: {
+                src: 'static/combined.css',
+                dest: 'static/prefixed.css'
+            }
+        },
         cssmin: {
             css: {
-                src: 'static/combined.css',
+                src: 'static/prefixed.css',
                 dest: 'static/min.css'
             }
         },
-        clean: ['static/combined.css'],
+        clean: ['static/combined.css',
+                'static/prefixed.css'
+               ],
         watch: {
             files: CSS_FILES,
             tasks: ['default']
@@ -29,5 +40,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.registerTask('default', ['concat:css', 'cssmin:css', 'clean']);
+    grunt.loadNpmTasks('grunt-autoprefixer');
+    grunt.registerTask('default',
+                       ['concat:css', 'autoprefixer', 'cssmin:css', 'clean']);
 };
