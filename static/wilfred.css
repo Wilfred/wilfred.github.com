@@ -4,6 +4,10 @@ p code {
     padding: 1px 3px;
 }
 
+a code {
+    color: inherit;
+}
+
 figure {
     margin: 0 0 1.1em 0;
     border: 2px dotted gray;
