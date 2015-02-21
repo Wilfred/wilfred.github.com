@@ -27,31 +27,31 @@
 */
 
 body {
-	color: #888;
-	font-size: 0.8em;
-	font-family: 'Lucida Grande', Sans-Serif;
-	line-height: 1.4;
-	margin: 0;
-	padding: 0;
+    color: #888;
+    font-size: 0.8em;
+    font-family: 'Lucida Grande', Sans-Serif;
+    line-height: 1.4;
+    margin: 0;
+    padding: 0;
 }
 
 /*	Background explicitly specified just to keep css validator happy */
 a {
-	background-color: inherit;
-	color: #009999;
-	text-decoration: none;
+    background-color: inherit;
+    color: #009999;
+    text-decoration: none;
 }
 
 a:hover {
-	border-bottom: 1px dotted green;
+    border-bottom: 1px dotted green;
 }
 
 a:visited {
-	color: rgba(41, 0, 153, 1);
+    color: rgba(41, 0, 153, 1);
 }
 
 a:visited:hover {
-	border-bottom: 1px dotted rgba(41, 0, 153, 1);
+    border-bottom: 1px dotted rgba(41, 0, 153, 1);
 }
 
 .title {
@@ -59,74 +59,78 @@ a:visited:hover {
     font-size: 36px;
     margin-bottom: -5px;
 }
+
 .title a {
     color: inherit;
 }
+
 .title a:hover {
     border-bottom: 0;
 }
+
 .title a:active {
     border-bottom: 0;
 }
 
 h1, h2, h3, h4, h5 {
-	font-weight: bold;
-	line-height: normal;
-	margin: 0;
-	padding: 0;
+    font-weight: bold;
+    line-height: normal;
+    margin: 0;
+    padding: 0;
 }
 
 /*	Blog title in header */
 h1 {
-	font-size: 2em;
-	line-height: 1em;
-        font-family: sans-serif;
+    font-size: 2em;
+    line-height: 1em;
+    font-family: sans-serif;
 }
+
 h1 a, h1 a:hover, h1 a:visited {
-	color: #888;
-        border-bottom: 0;
+    color: #888;
+    border-bottom: 0;
 }
 
 /*	Page title at top of content, and post titles in index and single */
 h2 {
-	font-size: 1.3em;
-	}
+    font-size: 1.3em;
+}
 
 /*	Post titles in archive and search */
 h3 {
-	font-size: 1em;
-	}
+    font-size: 1em;
+}
 
 /*	For user use */
 h4 {
-	font-size: 1em;
-	margin: 0 0 0.5em 0;
-	}
+    font-size: 1em;
+    margin: 0 0 0.5em 0;
+}
 
 h5 {
-	font-size: 1.1em;
-	margin: 0 0 0.3em 0;
-	}
+    font-size: 1.1em;
+    margin: 0 0 0.3em 0;
+}
 
 p {
-	margin: 0 0 1.1em 0;
-	}
+    margin: 0 0 1.1em 0;
+}
 
 /*	The page contains everything, it centres itself horizontally within the browser */
 #page {
-	width: 66em;
-	min-width: 25em;
-	max-width: 98%;
-	text-align: left;
-	margin: 0 auto 0 auto;
-	}
+    width: 66em;
+    min-width: 25em;
+    max-width: 98%;
+    text-align: left;
+    margin: 0 auto 0 auto;
+}
 
 #sidebar {
-	width: 25%;
-	float: left;
-	text-align: right;
-	text-transform: lowercase;
-	overflow: visible;
+    width: 25%;
+    float: left;
+    text-align: right;
+    text-transform: lowercase;
+    overflow: visible;
 }
 
 /*	The main column contains everything except the side bar, and sits against the right
@@ -135,6 +139,7 @@ header, #content {
     width: 70%;
     float: right;
 }
+
 header {
     margin: 30px 0 40px 0;
 }
@@ -146,48 +151,48 @@ header > * {
 
 /*	The main headers within the side bar are in upper case & in the wider font */
 #sidebar h2 {
-        font-style: italic;
-	font-size: 1.2em;
-	margin: 0;
-	padding: 0.5em 0 0 0;
+    font-style: italic;
+    font-size: 1.2em;
+    margin: 0;
+    padding: 0.5em 0 0 0;
 }
 
 #sidebar ul {
-	font-size: 15px;
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
+    font-size: 15px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 /*	Some space below each sublist, separating it from the next h2 header */
 #sidebar ul ul {
-	margin: 0 0 1em 0;
-	}
+    margin: 0 0 1em 0;
+}
 
 /*	This places a right guillemot glyph before list items and
 	similarly before the search submit link (fails in IE) */
 #sidebar ul ul li:before {
-	content: "\00BB  ";
-	}
+    content: "\00BB  ";
+}
 
 #sidebar ul ul li {
-	margin: 0 0 0.24em 0;
-	}
+    margin: 0 0 0.24em 0;
+}
 
 /*	content includes everything between the header and the footer. Body text dark gray */
 #content {
-	background-color: inherit;
-	color: #484848;
-	}
+    background-color: inherit;
+    color: #484848;
+}
 
 /*	This class holds the next posts/previous posts links
 	1px lower padding just required to get Opera to honour margin setting (!) */
 .navigation {
-	margin: 0 0 1.0em 0;
-	padding: 0 0 1px 0;
-	font-family: 'Lucida Grande', Arial, Verdana, Sans-Serif;
-	font-size: 1.2em;
-	}
+    margin: 0 0 1.0em 0;
+    padding: 0 0 1px 0;
+    font-family: 'Lucida Grande', Arial, Verdana, Sans-Serif;
+    font-size: 1.2em;
+}
 
 .alignright {
     float: right;
@@ -195,26 +200,26 @@ header > * {
 }
 
 .alignleft {
-	float: left;
+    float: left;
 }
 
 /*	Blocks containing only floating child elements seem to have no height. This hack allows
 	an empty, non-floating, div to be appended to give the container its true height.
 	Used in #page and .navigation */
 .snap-to-fit {
-	clear: both;
-	visibility: hidden;
-	}
+    clear: both;
+    visibility: hidden;
+}
 
 .post {
-	margin: 0 0 3em 0;
-	}
+    margin: 0 0 3em 0;
+}
 
 /*	Post titles are also links but are shown in normal text colour.
 	Have to give text colour explicitly (rather than inherit) for IE */ 
 .post h2 a, .post h2 a:hover {
-	color: #484848;
-        border-bottom: 0;
+    color: #484848;
+    border-bottom: 0;
 }
 
 /*	This sizes the main body text of posts.
@@ -222,83 +227,83 @@ header > * {
 	page bounds; a local scroll bar is provided on demand instead
 	Width 100% required by WinIE else it just lets the overflow occur */
 article {
-	width: 100%;
-	font-size: 18px;
-	margin: 0;
-	overflow: auto;
+    width: 100%;
+    font-size: 18px;
+    margin: 0;
+    overflow: auto;
 }
 
 /*	small is used for blog tag line, the time below post titles.
  */
 small, blockquote, strike {
-	font-size: 1em;
-	line-height: 1.5em;
-	color: #888;
-	background-color: inherit;
-	}
+    font-size: 1em;
+    line-height: 1.5em;
+    color: #888;
+    background-color: inherit;
+}
 
 /*	Lists inside posts
 	The html>body prefix is not understood by IE which therefore doesn't read these rules
 	as the stylized bullets don't work in IE anyway */
 html>body article ul {
-	margin: 0;
-	padding: 0 0 0 2em;
-	list-style: none;
-	text-indent: -1em;
-	}
+    margin: 0;
+    padding: 0 0 0 2em;
+    list-style: none;
+    text-indent: -1em;
+}
 
 html>body article li {
-	margin: 0.8em 0 0.9em 1.1em;
-	}
+    margin: 0.8em 0 0.9em 1.1em;
+}
 
 article ul li:before {
-	content: "\00BB  ";
-	}
+    content: "\00BB  ";
+}
 
 article ol {
-	padding: 0 0 0 2em;
-	margin: 0;
-	}
+    padding: 0 0 0 2em;
+    margin: 0;
+}
 
 article ol li {
-	margin: 0;
-	padding: 0;
-	}
+    margin: 0;
+    padding: 0;
+}
 
 ol li {
-	list-style: decimal outside;
-	}
+    list-style: decimal outside;
+}
 
 code {
-	font: 15px monospace;
+    font: 15px monospace;
 }
 
 /*	..and the pre tag works better for whole code excerpts */
 pre {
-	background-color: #f9f9f9;
-	color: black;
-	padding: 0.6em 0 0.6em 0.6em;
-	margin: 0 0 1em 0;
-	font: 1.1em 'Courier New', Courier, Monospace;
-	white-space: pre;
-	overflow: auto;
-	border: 1px solid #ddd;
-	}
+    background-color: #f9f9f9;
+    color: black;
+    padding: 0.6em 0 0.6em 0.6em;
+    margin: 0 0 1em 0;
+    font: 1.1em 'Courier New', Courier, Monospace;
+    white-space: pre;
+    overflow: auto;
+    border: 1px solid #ddd;
+}
 
 acronym, abbr, span.caps {
-	font-size: 1em;
-	letter-spacing: .08em;
-	cursor: help;
-	}
+    font-size: 1em;
+    letter-spacing: .08em;
+    cursor: help;
+}
 
 acronym, abbr {
-	border-bottom: 0.2em solid #ddd;
-	}
+    border-bottom: 0.2em solid #ddd;
+}
 
 blockquote {
-	margin: 1.6em 2.8em 0 1.4em;
-	padding: 0 0 0 2em;
-	border-left: 0.6em solid #ddd;
+    margin: 1.6em 2.8em 0 1.4em;
+    padding: 0 0 0 2em;
+    border-left: 0.6em solid #ddd;
 }
 
 /* Currently only used on the Fastest BigInt post. */

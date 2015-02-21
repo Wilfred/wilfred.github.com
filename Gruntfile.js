@@ -7,6 +7,9 @@ module.exports = function (grunt) {
     
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        cssbeautifier : {
+            files: CSS_FILES
+        },
         concat: {
             css: {
                 src: CSS_FILES,
@@ -41,6 +44,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-autoprefixer');
-    grunt.registerTask('default',
-                       ['concat:css', 'autoprefixer', 'cssmin:css', 'clean']);
+    grunt.loadNpmTasks('grunt-cssbeautifier');
+    grunt.registerTask('default', [
+        'cssbeautifier',
+        'concat:css', 'autoprefixer', 'cssmin:css', 'clean'
+    ]);
 };
