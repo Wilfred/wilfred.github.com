@@ -24,11 +24,11 @@ a:hover {
 }
 
 a:visited {
-    color: rgba(41, 0, 153, 1);
+    color: rgb(41, 0, 153);
 }
 
 a:visited:hover {
-    border-bottom: 1px dotted rgba(41, 0, 153, 1);
+    border-bottom: 1px dotted rgb(41, 0, 153);
 }
 
 .title {
