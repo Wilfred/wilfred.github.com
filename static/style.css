@@ -283,6 +283,11 @@ blockquote {
     border-left: 0.6em solid #ddd;
 }
 
+::selection {
+    background: #009999;
+    color: white;
+}
+
 /* Currently only used on the Fastest BigInt post. */
 table {
     padding-bottom: 30px;
