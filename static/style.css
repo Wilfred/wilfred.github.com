@@ -1,29 +1,6 @@
 /*
-	Theme Name: Skimmed Milk
-	Theme URI: http://thortz.com/skimmed-milk/
-	Description: Another clean, white theme for WordPress
-	Author: Thortz
-	Author URI: http://thortz.com
-	Version: 1.2
-
-	This theme was developed from
-	White As Milk version 1.6 http://www.azeemazeez.com/stuff/themes/
-	by Azeem Azeez http://www.azeemazeez.com
-	which was based on WordPress Default http://wordpress.org/
-	itself based on Kubrick by Michael Heilemann http://binarybonsai.com/kubrick/
-
-	The CSS, XHTML and design is released under GPL:
-	http://www.opensource.org/licenses/gpl-license.php
-
-	Colours used:
-		#fff	clean white for the background, of course
-		#484848 serious dark gray for body text and many headers
-		#0b3	eco-friendly green for link hover states only
-		#c40	murky brown for visited links in entries
-		#c00	alarming red for 404 titles
-		#888	a low key mid gray for low key text
-		#f9f9f9	alt text blocks have a lighter wash
-		#ddd	to top and tail alt text & for blockquote bars
+Based on the Skimmed Milk design http://thortz.com/skimmed-milk/
+under GPL license.
 */
 
 body {
