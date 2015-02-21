@@ -285,16 +285,6 @@ pre {
 	border: 1px solid #ddd;
 	}
 
-/*	Horrible hack to try to stop IE6 overflowing on long lines in pre elements.
-	IE needs a width to turn on overflow, but 100% here with padding leads to the
-	overflow scroller itself causing the entry to overflow in turn. Nasty.
-	So this just truncates the pre block. Also nasty, but slightly less ugly.
-	(The * html prefix selects IE out of all browsers as its the only one to think
-	there is a super-element surrounding the html one) */
-* html pre {
-	width: 30em;
-	}
-
 acronym, abbr, span.caps {
 	font-size: 1em;
 	letter-spacing: .08em;
