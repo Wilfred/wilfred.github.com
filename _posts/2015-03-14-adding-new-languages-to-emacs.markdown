@@ -13,7 +13,7 @@ You decide to roll up your sleeves and plug this hole in the Emacs
 ecosystem. How do you write a major mode? What will make your major mode
 great?
 
-## 1: A basic syntax table
+## 1: Getting Started
 
 The bare minimum for a major mode is a syntax table. If you can
 highlight comments and strings, your mode is useful.
@@ -56,12 +56,12 @@ From here, there's huge scope to expand. You'll want to look at
 [sophisticated syntax highlighting](/blog/2014/09/27/the-definitive-guide-to-syntax-highlighting/)
 to cover all the features of the language.
 
-As you make your major mode more sophisticated, you should worry about
-writing tests for it. Many major modes have no tests, but a
+As you make your major mode more sophisticated, you should think about
+testing it. Many major modes have no tests, but a
 self-respecting hacker like you likes bugs to stay fixed.
 
 The first step is to create a sample file of syntax corner-cases and
-just open it. This doesn't scale, so you will eventually want
+just open it. This becomes repetitive, so you will eventually want
 programmatic tests. Fortunately,
 [puppet-mode has some great examples](https://github.com/lunaryorn/puppet-mode/blob/1813c7bc46f178aeab5d78d5268dda0dd756c305/test/puppet-mode-test.el#L107).
 
@@ -71,35 +71,30 @@ Next, you'll want to tackle indentation. Users expect Emacs to indent
 code correctly, which requires calculating how deeply nested the
 current code is.
 
-This is essentially a matter of searching the buffer backwards from
+This is usually a matter of searching the buffer backwards from
 point, counting `{` (or equivalent). You then adjust the current line
 to be indented `(* count my-indent-width)`.  Provided you're careful
 with `{` in strings and comments, this works.
 
 Alternatively, Emacs provides
-[SMIE](https://www.gnu.org/software/emacs/manual/html_node/elisp/SMIE.html),
-the Simple Minded Indentation Engine. You write a BNF grammar and you
-get basic indentation and movement commands for free.
+the [Simple Minded Indentation Engine (SMIE)](https://www.gnu.org/software/emacs/manual/html_node/elisp/SMIE.html). You
+write a BNF grammar and you get basic indentation and movement
+commands for free.
 
 > You could be a total lunatic, and *Emacs has to make you happy*.
 >
 > -- [Steve Yegge on indentation](http://steve-yegge.blogspot.com/2008_03_01_archive.html)
 
-In practise, users will disagree on what the 'correct' indentation is,
-so you will ultimately need to provide settings for different
+In practice, users will disagree on what the 'correct' indentation is,
+so you will have to provide settings for different
 styles. If you get it right, you should be able to open a large file
 from an existing project, run `(indent-region (point-min)
 (point-max))` and nothing should change.
 
 Indentation logic is very easy to test, and you can see some
-[examples in julia-mode](https://github.com/JuliaLang/julia/blob/76df7f48b3956de7d2eb07a15c995c9304d5361f/contrib/julia-mode.el#L441).
-
-Your indentation code needs to handle invalid syntax, which is
-common when the user is typing.
-
-Indentation also needs to be fast. Make sure you test your indenting
-logic on large files, as indentation performance often needs careful
-optimising.
+[examples in julia-mode](https://github.com/JuliaLang/julia/blob/76df7f48b3956de7d2eb07a15c995c9304d5361f/contrib/julia-mode.el#L441). You
+will also need to test that indentation is quick in large files,
+because it's easy to end up with a slow algorithm.
 
 ## 4: Flycheck
 
@@ -119,8 +114,9 @@ as-you-type is very helpful.
 
 ## 5: Completion
 
-You should also look at providing a [company](http://company-mode.github.io/) backend for
-completion. Here are some examples to inspire you:
+Great major modes provide autocompletion. You can provide completion
+by writing a [company](http://company-mode.github.io/) backend. Here
+are some examples to inspire you:
 
 <figure>
     <img src="/assets/c_member_completion.png">
@@ -150,9 +146,13 @@ completion. Here are some examples to inspire you:
 ## 6: Eldoc
 
 [Eldoc](http://www.gnu.org/software/emacs/manual/html_node/emacs/Lisp-Doc.html)
-is an elisp 
+is a minor mode that displays information in the minibuffer about the
+thing at point. It's typically used for function signatures or types,
+but you can use it for anything.
 
-eldoc
+Assuming you have some sort of static analysis available for your
+major mode, eldoc provides a great way of providing relevant
+contextual information.
 
 <figure>
     <img src="/assets/elisp_eldoc.png">
@@ -172,19 +172,30 @@ eldoc
 
 ## 7: REPL integration
 
-comint vs cider/slime
+Finally, the best major modes let you run code interactively from
+inside Emacs.
+
+Emacs provides `comint-mode`, which allows you to define your
+interpreter and start interacting with it. Many major modes,
+especially inside Emacs core, derive from `comint-mode`.
+
+Projects like [cider](https://github.com/clojure-emacs/cider) and
+[sly](https://github.com/capitaomorte/sly) offer even more
+sophisticated REPL integration. They allow allowing you to query the
+interpreter process for docstrings, autocompletion, macroexpansion,
+and much more.
 
 <figure>
     <img src="/assets/cider.png">
     <figcaption>
-    alternatively, you may want to use eldoc to show
-    docstrings
+    cider offers deep integration of Emacs and the Clojure REPL
     </figcaption>
 </figure>
 
 ## It's a labour of love
 
-It doesn't take much effort to write a basic major mode. However,
-there is infinite scope for polish. Whilst Emacs has supported
-programming in C since its inception, even
-[in 2015 it has been improved](https://github.com/emacs-mirror/emacs/commits/master/lisp/progmodes/cc-mode.el)!
+There is almost infinite scope for polish in a major mode. Emacs core
+has supported programming in C since the beginning, yet
+[it's still being improved in 2015](https://github.com/emacs-mirror/emacs/commits/master/lisp/progmodes/cc-mode.el)!
+Release early, release often, and steal good ideas shamelessly. It's
+all open source.
