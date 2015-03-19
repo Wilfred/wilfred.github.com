@@ -1,6 +1,6 @@
 --- 
 layout: post
-title: "Adding New Languages to Emacs"
+title: "Adding A New Language to Emacs"
 tags:
  - emacs
 ---
@@ -54,11 +54,11 @@ new mode.
 
 From here, there's huge scope to expand. You'll want to look at
 [sophisticated syntax highlighting](/blog/2014/09/27/the-definitive-guide-to-syntax-highlighting/)
-to cover all the features of the language.
+to cover the entire syntax of the language.
 
-As you make your major mode more sophisticated, you should think about
-testing it. Many major modes have no tests, but a
-self-respecting hacker like you likes bugs to stay fixed.
+As your major mode becomes more sophisticated, you should think about
+testing it. Many major modes have no tests, but a self-respecting
+hacker like you likes bugs to stay fixed.
 
 The first step is to create a sample file of syntax corner-cases and
 just open it. This becomes repetitive, so you will eventually want
@@ -68,13 +68,13 @@ programmatic tests. Fortunately,
 ## 3: Indentation
 
 Next, you'll want to tackle indentation. Users expect Emacs to indent
-code correctly, which requires calculating how deeply nested the
-current code is.
+code correctly regardless of its current state. You'll need to examine
+the syntax around point to calculate the current nesting level.
 
-This is usually a matter of searching the buffer backwards from
-point, counting `{` (or equivalent). You then adjust the current line
-to be indented `(* count my-indent-width)`.  Provided you're careful
-with `{` in strings and comments, this works.
+This is usually a matter of searching the buffer backwards from point,
+counting instances of `{` (or equivalent scope delimiter). You then
+adjust the current line to be indented `(* my-mode-tab-width count)`.
+Provided you're careful with `{` in strings and comments, this works.
 
 Alternatively, Emacs provides
 the [Simple Minded Indentation Engine (SMIE)](https://www.gnu.org/software/emacs/manual/html_node/elisp/SMIE.html). You
@@ -188,14 +188,12 @@ and much more.
 <figure>
     <img src="/assets/cider.png">
     <figcaption>
-    cider offers deep integration of Emacs and the Clojure REPL
+    cider offers deep integration between Emacs and a Clojure REPL
     </figcaption>
 </figure>
 
-## It's a labour of love
+## &infin;: Polish
 
-There is almost infinite scope for polish in a major mode. Emacs core
-has supported programming in C since the beginning, yet
+Emacs core has supported programming in C since the beginning, yet
 [it's still being improved in 2015](https://github.com/emacs-mirror/emacs/commits/master/lisp/progmodes/cc-mode.el)!
-Release early, release often, and steal good ideas shamelessly. It's
-all open source.
+Release early, release often, and you'll create something wonderful.
