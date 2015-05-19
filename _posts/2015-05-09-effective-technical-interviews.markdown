@@ -1,13 +1,39 @@
 --- 
 layout: post
-title: "Effective Technical Interviews"
+title: "Effective Developer Interviews"
 ---
 
-## Avoid 'The Interview Question'
+How do you interview developers effectively? How do you get to know
+them, assess their skill level, and make it a positive experience?
+
+I've interviewed over 50 people for different developer roles. Here's
+what I've learnt.
+
+## Side with the candidate
+
+The candidate has agreed to meet unfamiliar people, in an unfamiliar
+place, and answer questions. You want to do your best to put them at
+ease.
+
+Don't jump straight into questions: introduce yourself (and any other
+interviewers) and chat a little. Set expectations about what will
+happen during the interview (especially important in phone
+interviews).  Not only is this the right thing to do, relaxed
+candidates are smarter and more fun to spend time with.
+
+You shouldn't have more than two interviewers with a candidate at any
+one point.
+
+An interview is a two-way process: candidates are also considering
+whether they want to work with you. The best candidates often have
+multiple job offers, so it's important that they like the idea of role
+you're offering.
+
+## Avoid 'Big Bang' Questions
 
 It's easy to look for a single great interview question. This 'all or
 nothing' approach leads to questions that are too big, and candidates
-are likely to get struck and stress.
+are likely to get stuck and stress.
 
 Instead, break questions into smaller parts. Candidates enter an
 interview with no idea what to expect, so warmup questions set
@@ -62,17 +88,6 @@ counterexample.
 Discussing code is great, but it's important you have some actual
 coding questions. You learn a lot about how a candidate thinks and how
 comfortable they are with different technologies.
-
-## Side with the candidate
-
-Learn about them, find out a little bit about them. You want them at
-their best. You want them to desire to work with you (the best
-candidates often have multiple job offers).
-
-Help them relax: don't jump in to questions. Set expectations,
-especially with phone interviews (time taken, what you'll chat
-about). Don't have more than two people interviewing a candidate at
-once. 
 
 ## Write feedback immediately afterwards
 
