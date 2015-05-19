@@ -83,6 +83,12 @@ If they give an answer that you think is wrong, explore their
 reasoning. Step through the code together on a carefully chosen
 counterexample.
 
+Standard questions are a blessing and a curse: you have a standard bar
+to measure ability. You are very comfortable with the question if the
+candidate come up with a novel approach (I'm amazed how often still
+this happens). However, beware that you will perceive the question
+difficulty to decrease over time.
+
 ## Write some code
 
 Discussing code is great, but it's important you have some actual
