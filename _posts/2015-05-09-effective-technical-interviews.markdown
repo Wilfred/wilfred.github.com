@@ -31,27 +31,27 @@ you're offering.
 
 ## Avoid 'Big Bang' Questions
 
-It's easy to look for a single great interview question. This 'all or
-nothing' approach leads to questions that are too big, and candidates
-are likely to get stuck and stress.
+A common interview antipattern is to have a single 'great interview
+question'. This 'all or nothing' approach leads to questions that are
+too big, and candidates are more likely to get stuck or stress.
 
 Instead, break questions into smaller parts. Candidates enter an
 interview with no idea what to expect, so warmup questions set
 expectations.
 
-Having more questions gives you flexibility with candidates. You might
-have some SQL questions, but meet a candidate who clearly hasn't
-written much SQL. You've learnt something about their ability, and you
-can move on and explore other topics.
+You also learn much more about candidates by covering a range of
+topics. If a candidate is weak in one area, you can simply move on.
 
 Suppose we're interviewing a candidate for a frontend web development
-role. We could start with some CSS selector questions:
+role. We could start with some CSS questions:
 
 > Consider the following HTML:
 
 {% highlight html %}
-<div class="article">
+<div id="article">
     <p>Lorem ipsum <a href="/dolor">dolor</a> sit amet.</p>
+
+    <img src="cat.jpg">
 
     <p>Ut enim ad minim veniam.</p>
 
@@ -59,18 +59,21 @@ role. We could start with some CSS selector questions:
 </div>
 {% endhighlight %}
 
-> 1: What does the CSS selector `.article` match?
+> 1: What does the CSS selector `#article` match?
 
-> 2: What's the difference between `.article a` and `.article > a`?
+> 2: What's the difference between `#article a` and `#article > a`?
 
 > 3: Write a CSS selector that only matches the first paragraph
-element in an article div.
+element in a div with an article ID.
 
-These questions are incremental, but there's opportunities for great
-candidates to shine. In addition to just answering the question,
-experienced CSS developers will use exact terminology (child vs
-descendant in question 2) and comment on the bigger picture
-(`:first-child` browser support, CSS level 2 vs level 3).
+These questions are incremental, but there are also opportunities for
+experienced candidates to show-off. You can add open-ended questions
+like 'is this good HTML?' to see how candidates think.
+
+(Things you might discuss here include: `alt` tags on the `img`, using
+classes vs IDs for divs, and the HTML 5 `<article>` tag).
+
+## Use Standard Questions
 
 It's also important to have a standard set of questions that you ask
 candidates. 
