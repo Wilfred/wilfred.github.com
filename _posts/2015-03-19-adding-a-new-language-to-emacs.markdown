@@ -99,7 +99,7 @@ because it's easy to end up with a slow algorithm.
 ## 4: Flycheck
 
 You'll want probably want to set up a linter with
-[flycheck](http://www.flycheck.org/en/latest/). Even if there aren't
+[flycheck](http://www.flycheck.org/). Even if there aren't
 any sophisticated lint tools available, highlighting syntax errors
 as-you-type is very helpful.
 
