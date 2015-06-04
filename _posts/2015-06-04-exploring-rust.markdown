@@ -12,7 +12,26 @@ report any broken URLs. You can find the
 
 ## Cargo
 
-Nothing like it in any other systems language.
+The first striking feature of Rust is Cargo. Cargo is a package
+manager for Rust, and also generates project skeletons to get you started.
+
+Cargo works amazingly well. It's a stark contrast to programming in C
+and C++, providing canonical answers to questions like:
+
+* How do I depend on external libraries?
+* How do I upgrade libraries those dependencies?
+* How do I discover libraries that can help me with my
+project?
+* How do I work on two projects which depend on different versions of
+the same library?
+* How do I distinguish between direct dependencies I need and indirect
+dependencies I happen to use?
+
+If Rust had no other interesting features, the usefulness of Cargo
+makes Rust very attractive for new systems projects
+today. [crates.io](https://crates.io/), the online Rust package
+repository, is now
+[growing faster than Haskell's hackage](http://www.modulecounts.com/)!
 
 ## Rust is amazingly polished
 
@@ -44,4 +63,4 @@ questions and one SO question.
 
 Fast, robust.
 
-The future looks extremely bright.
+Rust is way past critical mass. The future looks extremely bright.
