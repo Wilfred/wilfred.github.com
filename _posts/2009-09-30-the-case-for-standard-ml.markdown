@@ -71,7 +71,7 @@ As for projects, I was informed that SML is used by the military
 (presumably due to its formal specification), but this doesn't exactly
 produce public-facing projects. The only two applications written in
 SML that I am aware of
-are [fxp (an XML parser)](http://atseidl2.informatik.tu-muenchen.de/~berlea/Fxp/) and [Swerve (a HTTP server)](http://mlton.org/Swerve). Exposure to these projects is a huge encouragement
+are [fxp (an XML parser)](http://web.archive.org/web/20141021075111/http://atseidl2.informatik.tu-muenchen.de/~berlea/Fxp/) and [Swerve (a HTTP server)](http://mlton.org/Swerve). Exposure to these projects is a huge encouragement
 to students.
 
 Whilst SML is failing to evangelise, Objective Caml (OCaml) is much
