@@ -135,7 +135,7 @@ and having a sane database structure I made the decision to only allow
 remarks on definitions.
 
 My approach for data extraction is an XML tree walker (using
-the <a href="http://codespeak.net/lxml/">lxml Python library</a>) that
+the <a href="http://lxml.de/">lxml Python library</a>) that
 flattens tree branches whilst allowing specifc subtrees to be
 excluded. My initial approach was more complex but it gradually became
 clear that most of my methods were some variation upon this theme.

@@ -4,7 +4,7 @@ title: "Lessons From Porting To CoffeeScript"
 ---
 
 I recently set out to do a project in
-[CoffeeScript](http://jashkenas.github.com/coffee-script/)
+[CoffeeScript](http://coffeescript.org/)
 (abbreviated CS). My aim was to build a Sudoku solver. One week and
 one JS prototype later, I realised that Sudoku were more interesting
 than I realised. I've recently ported
@@ -15,7 +15,7 @@ here's what I've learned:
 
 Getting up and running is very straightforward. Once you have the
 compiler, the
-[entire language reference](http://jashkenas.github.com/coffee-script/#language)
+[entire language reference](http://coffeescript.org/#language)
 is a single web page. Many of its language features have been taken
 from Python or Ruby, so you can quickly grasp the key concepts. The
 result: you can achieve basic proficiency very quickly indeed.
