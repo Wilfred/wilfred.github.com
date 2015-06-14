@@ -120,7 +120,7 @@ while True:
 In this case, you only want a naked except at the very top level of
 your program, and you want the exception to go somewhere. I like to
 log to [Sentry](https://getsentry.com/) or to a log file monitored by
-[Papertrail](https://papertrailapp.com/|Papertrail).
+[Papertrail](https://papertrailapp.com/).
 
 To sum up: Only catch the exceptions you're expecting to see. For all
 other exceptions, you want to be informed about it so you can fix it.
