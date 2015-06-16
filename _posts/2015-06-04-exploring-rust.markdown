@@ -49,16 +49,29 @@ attractive, coloured, cross-referenced, searchable
 The Rust community goes to great lengths to be welcoming and
 inclusive. The code of conduct is applied everywhere, and it
 shows. For example,
-[here's a user being asked not to make unconstructive criticisms of Go](http://article.gmane.org/gmane.comp.lang.rust.devel/4767/). This creates
-a community that I want to part of.
+[here's a user being asked not to make unconstructive criticisms of Go](http://article.gmane.org/gmane.comp.lang.rust.devel/4767/). This
+creates a community that I want to part of.
 
-help when I get stuck
-
-Merged a fix for my bug.
+I've also been struck as to how active the community is, especially
+for a new language. I made a
+[suggestion for improving a compiler error message](https://github.com/rust-lang/rust/issues/25468)
+and a PR was merged in under a day! There's also ample help available
+with knowledgable people on IRC and Stack Overflow who are very
+amenable.
 
 sent a docs patch
 
 discourse over mailing list
+
+## The learning curve
+
+In addition to learning the syntax and tooling, there ar elot sof
+concepts to learn.
+
+Writing a Unique iterator took a lot of head scratching, two IRC
+questions and one SO question.
+
+
 
 ## Rust is still immature
 
@@ -71,12 +84,7 @@ no easy to way to do timeouts is causing problems
 several of my dependencies, even though they were mozilla/servo deps,
 were not yet on crates.io.
 
-## There's a huge learning curve
-
-Writing a Unique iterator took a lot of head scratching, two IRC
-questions and one SO question.
-
-## Resulting programs are excellent
+## The payoff
 
 Fast, robust.
 
