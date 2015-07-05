@@ -13,7 +13,7 @@ their own Esperanto dictionary applications. I was unhappy with the
 inflexibility of existing online dictionaries, so I decided to build
 my own.
 
-<h2>Goals</h2>
+## Goals
 
 My primary goal was to create an Esperanto dictionary website that was
 attractive, easy to use and allowed the user to search for words as
@@ -28,7 +28,7 @@ systems that are frequently used)
 * novel compound words (the morphology of Esperanto is very
 agglutinative and novel combinations are fairly common)
 
-<h3>Existing solutions</h3>
+### Existing solutions
 
 The most well used online Esperanto dictionary today is
 probably <a href="http://www.reta-vortaro.de/">ReVo</a>. ReVo already
@@ -60,7 +60,7 @@ name itself is a Lojban compound meaning word searcher) supports
 compound words and offers a simple interface and so was a major
 influence on my early designs.
 
-<h2>Implementation</h2>
+## Implementation
 
 After considering the limitations of these other dictionaries, my
 target feature set became:
@@ -70,7 +70,7 @@ easily and avoiding the use of acronyms
 * A large collection of definitions to maximise the site's usefulness
 * The ability to search for words as they are written in the wild
 
-<strong>Interface</strong>
+### Interface
 
 Originally I considered a minimalist interface with a focus on
 typography, influenced by the interface of vlasisku. I experimented
@@ -112,8 +112,13 @@ To make the domain simple and memorable I settled on the name _La
 Simpla Vortaro_ (The Simple Dictionary) with the
 domain <a href="http://www.simplavortaro.org">simplavortaro.org</a>.
 
-<h3>Word Definitions</h3>
-Obtaining definitions proved to be quite a challenge. Whilst there are several freely available collections of definitions, the most comprehensive collection is produced by ReVo. Word definitions in ReVo include examples, usage remarks and translations rather than just a short definition.
+### Word Definitions
+
+Obtaining definitions proved to be quite a challenge. Whilst there are
+several freely available collections of definitions, the most
+comprehensive collection is produced by ReVo. Word definitions in ReVo
+include examples, usage remarks and translations rather than just a
+short definition.
 
 ReVo is based on a public domain dictionary _La Plena Vortaro de
 Esperanto_ that was released in 1930 and updated in 1934. Today
@@ -144,7 +149,7 @@ Additionally, with such a complex and varied set of files to extract
 from it was necessary for me to develop a test suite of unusually
 complex definition files to ensure data was being extracted correctly.
 
-<h2>Search</h2>
+## Search
 
 With a dataset in hand, I could think about search. I prototyped a few
 simple spell checking algorithms in Python and after success with that
@@ -152,7 +157,7 @@ I selected the Django web framework to run my site. This enabled me to
 build out from my prototypes rather than port them to another
 language.
 
-<h3>Search: Spell Check</h3>
+### Search: Spell Check
 
 I first implemented a spell check, since this feature was unavailable
 on other dictionaries. I started
@@ -192,7 +197,7 @@ different error types to ensure more likely errors (transpositions
 being considered the most probable) come earlier and so are less
 likely to be thrown away when the 999 limit is reached.
 
-<h3>Search: Writing Systems</h3>
+### Search: Writing Systems
 
 The next step was to support searching in any writing system. There are three major writing systems in Esperanto:
 
@@ -223,7 +228,7 @@ run the spell checker over this larger list, allowing the dictionary
 to offer alternatives to obvious errors such as _xciu_. A naive
 writing system conversion would not be capable of this.
 
-<h3>Search: Word Endings</h3>
+### Search: Word Endings
 
 Always forcing users to search for verbs in their infinitive form or
 nouns in the singular genitive case is not ideal. In practice,
@@ -262,7 +267,7 @@ fromagho, fromaghon, fromaghoj, fromaghojn_
 
 This final list became the list of possibilites for the spell checker.
 
-<h2>Compound Word Analysis</h2>
+## Compound Word Analysis
 
 In practice, Esperantists will form compound words that cannot be
 found in a dictionary. This was the most interesting challenge I faced
@@ -292,7 +297,7 @@ For the sake of an example, consider _plidolĉigi_ (to sweeten),
 which would be written _pli-dolĉ-igi_ in a textbook for
 beginners.
 
-<h3>Stemming</h3>
+### Stemming
 
 An Esperanto compound word consists of several word roots (or whole
 words) concatenated together, along with an appropriate word
@@ -321,7 +326,7 @@ words that do not have an ending that shows their their word type
 attempt to segment the entire word if the word classifier cannot work
 out the ending.
 
-<h3>Word Segmentation</h3>
+### Word Segmentation
 
 To separate the stem into its constituent components, a little more
 thought was needed. The ReVo dataset was laid out in such a way that
@@ -402,7 +407,7 @@ concluded that in these cases to simply choose the more frequently
 used word of the two (so _nova_ in this example) and have so
 far not found any pathological examples.
 
-<h3>Ambiguous Segmentation</h3>
+### Ambiguous Segmentation
 
 The other challenge I faced with word segmentation is that there are
 sometimes multiple possible parses. Only around 10% of the words I
@@ -454,7 +459,7 @@ unhelpful. During my testing, I never discovered any compound word
 which had more than two correct parses so two seemed an acceptable
 compromise.
 
-<strong>Conclusions</strong>
+### Conclusions
 
 The final product was released after three months of development and
 fulfilled all my initial objectives. I learnt a huge amount about web
