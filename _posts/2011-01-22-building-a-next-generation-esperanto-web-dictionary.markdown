@@ -84,13 +84,16 @@ settled on this approach as I prototyped and learnt the gory details
 of CSS.
 
 
-<img src="http://wilfredwordpress.nfshost.com/wp-content/uploads/vortaro_logo.png"/>
+<img src="/assets/vortaro_logo.png"/>
+
 _An early logo design, focusing more on typography for the restaurant menu concept_
 
-<img src="http://wilfredwordpress.nfshost.com/wp-content/uploads/mockup1.png"/>
+<img src="/assets/mockup1.png"/>
+
 _A prototype influenced by thesixtyone, even down to text position_
 
-<img src="http://wilfredwordpress.nfshost.com/wp-content/uploads/today.png"/>
+<img src="/assets/today.png"/>
+
 _The final design of the interface, using centred divs so the page can grow vertically_
 
 Choosing a domain name was another early decision I had to
