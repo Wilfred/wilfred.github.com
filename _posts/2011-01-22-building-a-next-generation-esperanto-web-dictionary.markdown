@@ -244,9 +244,9 @@ word types.
 This required me to build a simple word classifier. My classifier
 simply identifies words based on ending, with a blacklist for
 exceptions. For example, every noun in Esperanto ends with _-o_
-and there are only three words that end _-o _which are not
+and there are only three words that end _-o_ which are not
 nouns (_po_, a preposition, _do_, a conjunction
-and _ho, _an exclamation).
+and _ho_, an exclamation).
 
 Once words were classified I could then generate every possible tense
 and case. For example, from the word _fromaĝo_ (cheese) I
@@ -301,8 +301,8 @@ consisted of two steps: (1) removing the ending, and (2) separating
 out the components.
 
 To remove the ending, I needed to build a stemmer. In the case
-of _plidolĉigi_ I want to separate it into '_plidolĉ-'_,
-its compound stem and '_-i'_, the ending. There is a wealth of
+of _plidolĉigi_ I want to separate it into '_plidolĉ-_',
+its compound stem and '_-i_', the ending. There is a wealth of
 research out there on stemming but Esperanto has so few irregularities
 that I could simply write a short blacklist for each word ending.
 
@@ -326,8 +326,8 @@ out the ending.
 To separate the stem into its constituent components, a little more
 thought was needed. The ReVo dataset was laid out in such a way that
 obtaining a list of word roots was relatively easy. For example,
-'_dolĉa'_ (sweet) is already shown as having the root
-'_dolĉ-'_.
+'_dolĉa_' (sweet) is already shown as having the root
+'_dolĉ-_'.
 
 With a list of word roots in hand, separating the compound stem into
 word roots was a matter of considering every possible substring and
@@ -433,15 +433,15 @@ _badness = number of components - 0.5 * number of affixes_
 Although any word may be used in a compound word, Esperanto also has a
 group of affixes that may be used to change the compound word's
 meaning. These affixes are very flexible and frequently used, so their
-presence makes a given parse more likely. Common affixes include
-_-ig_ (similar to '-ify' in English e.g. _beligi
-_signifies 'beautify') and _-in_ (similar to '-ess' in
-English e.g. _leonino_ signfies 'lioness').
+presence makes a given parse more likely. Common affixes include _-ig_
+(similar to '-ify' in English e.g. _beligi_ signifies 'beautify') and
+_-in_ (similar to '-ess' in English e.g. _leonino_ signfies
+'lioness').
 
 As a result, reducing the badness score for words with affixes enabled
 my word segmentation tool to pass every example in the test suite,
-fixing previously problematic words such as _mal-ferm-ilo
-_('un-close-tool' i.e. an opener) which was confused with
+fixing previously problematic words such as _mal-ferm-ilo_
+('un-close-tool' i.e. an opener) which was confused with
 _mal-fer-mil-o_ ('un-iron-thousand' which is nonsensical).
 
 Once sorted, the website displayed the two parses with the lowest
