@@ -57,7 +57,7 @@ Bpython is a curses-based Python interpreter with syntax colouring and
 pop-up help. It also saves history _between_ sessions. You
 won't want to go back to the normal interpreter.
 
-<img class="alignnone" src="http://www.wilfred.me.uk/wp-content/uploads/bpython.png"/>
+<img class="alignnone" src="/assets/bpython.png"/>
 
 Ipython is also a very popular shell. It largely offers the same
 features as bpython, but also has fantastic line completion. If you
