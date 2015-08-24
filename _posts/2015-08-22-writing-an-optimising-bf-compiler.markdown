@@ -75,7 +75,7 @@ loop. `[->++<]` is equivalent to:
 
 Our optimiser can also detect these and generate efficient code. This
 also captures useful patterns like `[->+<]` (move cell 0 to cell 1)
-and `[->+>+<<]` (move cell 0 to cell 1 and cell 2).
+and `[->+>+<<]` (move cell 0 to both cell 1 and cell 2).
 
 As a result, we compile `[->++<]` to:
 
