@@ -70,8 +70,8 @@ increments, so `[-]+++` can be compiled to:
 BF doesn't provide a multiply instruction, so programs have to use a
 loop. `[->++<]` is equivalent to:
 
-    cell #1 := cell #0 * 2 + cell #1
-    cell #0 := 0
+    cell#1 := cell#0 * 2 + cell#1
+    cell#0 := 0
 
 Our optimiser can also detect these and generate efficient code. This
 also captures useful patterns like `[->+<]` (move cell 0 to cell 1)
