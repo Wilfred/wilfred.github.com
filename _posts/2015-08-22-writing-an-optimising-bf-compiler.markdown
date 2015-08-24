@@ -137,12 +137,11 @@ combined them in the optimal order? There's a great
 
 {% highlight rust %}
 #[quickcheck]
-fn optimise_should_be_idempotent(instrs: Vec<Instruction>) -> bool {
-    // Once we've optimised once, running again shouldn't reduce the
-    // instructions further. If it does, we're probably running our
-    // optimisations in the wrong order.
+fn should_be_idempotent(instrs: Vec<Instruction>) -> bool {
+    // Once we've optimised once, running again shouldn't
+    // reduce the instructions further.
     let minimal = optimise(instrs.clone());
-    return optimise(minimal.clone()) == minimal;
+    optimise(minimal.clone()) == minimal
 }
 {% endhighlight %}
 
