@@ -100,15 +100,15 @@ beginning of a BF program:
      as long as our brackets are matched.]
     actual code here!
 
-`bfc` aggressively removes dead code. For example, a loop at the
-beginning of a program is dead:
+`bfc` aggressively removes dead code. For example, cells in BF are
+initialised to zero, so a loop at the beginning of a program is dead:
 
     [dead]not-dead
 
 We also know that if a loop terminates, the current cell is zero. As a
 result, consecutive loops are dead:
 
-    whatever[whatever][dead][also dead]
+    foo[bar][dead][also dead]
 
 We already know that `[-]+` is setting the current cell to a constant
 value. We can extend this, so `[-]+[-]++` is equivalent to:
@@ -137,12 +137,12 @@ combined them in the optimal order? There's a great
 
 {% highlight rust %}
 #[quickcheck]
-fn optimize_should_be_idempotent(instrs: Vec<Instruction>) -> bool {
-    // Once we've optimized once, running again shouldn't reduce the
+fn optimise_should_be_idempotent(instrs: Vec<Instruction>) -> bool {
+    // Once we've optimised once, running again shouldn't reduce the
     // instructions further. If it does, we're probably running our
     // optimisations in the wrong order.
-    let minimal = optimize(instrs.clone());
-    return optimize(minimal.clone()) == minimal;
+    let minimal = optimise(instrs.clone());
+    return optimise(minimal.clone()) == minimal;
 }
 {% endhighlight %}
 
