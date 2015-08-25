@@ -16,11 +16,12 @@ out to write
 ## Baseline Performance
 
 I've written a basic BF interpreter in C, so we'll use that as our
-reference point for BF performance. Let's compare our compiler,
-without optimisations, with this interpreter.
+reference point for BF performance. Let's compare `bfc`,
+compiling to LLVM IR without optimisations, with this interpreter.
 
-As you can see, even without optimisations, our compiler is
-comfortably outperforming the interpreter.
+As you can see, even without optimisations, `bfc` is
+comfortably outperforming this interpreter. Faster interpreters exist,
+so let's look at optimisations we can add to our compiler.
 
 ## Collapsing Increments
 
@@ -133,7 +134,8 @@ TODO: is I/O really dead, or is there a different term?
 
 With all these different optimisations, how can we know that we have
 combined them in the optimal order? There's a great
-[Rust implementation of Quickcheck](#TODO) that we can use.
+[Rust implementation of Quickcheck](https://github.com/BurntSushi/quickcheck)
+that we can use.
 
 {% highlight rust %}
 #[quickcheck]
@@ -153,8 +155,64 @@ available opportunities.
 
 ## LLVM Optimisations
 
+LLVM offers a suite of optimisations that we can run. Surprisingly,
+there's little overlap with our BF-specific optimisations. It does
+give us an additional performance boost, so `bfc` uses LLVM
+optimisations too.
+
+(TODO: benchmark here)
+
 ## Bounds Analysis
+
+One novel optimisation that `bfc` offers is bounds analysis. In BF,
+programs have 30,000 cells available, initialised to 0. However, most
+programs don't use the full 30,000.
+
+`bfc` uses static analysis to work out the highest cell that a program
+could possibly reach.
 
 ## Speculative Execution
 
+Dead code elimination really helps here, as it can eliminate `,` in
+comments. Peephole optimisation also makes speculative execution
+cheaper.
+
+We also apply run length encoding to known cell values, to initialise
+cells as efficiently as possible.
+
+As a result, we compile the classic BF hello world to:
+
+{% highlight llvm %}
+@known_outputs = constant [13 x i8] c"Hello World!\0A"
+
+declare i32 @write(i32, i8*, i32)
+
+define i32 @main() {
+entry:
+  %0 = call i32 @write(i32 0, i8* getelementptr inbounds ([13 x i8]* @known_outputs, i32 0, i32 0), i32 13)
+  ret i32 0
+}
+{% endhighlight %}
+
 ## Closing Thoughts
+
+Related projects: interpreter for awib, compiler that does speculative execution.
+
+Further work: more peephole optimisations: offset operations, scanning
+left/right (TODO: link to blog post). Could also extract
+multiplication by a cell (not just a constant), or extract division.
+
+Bounds analysis could be smarter -- `[>]` cannot access beyond the
+highest cell accessed so far.
+
+Some of these optimisations could be pushed into LLVM, but very useful
+to run before speculative execution.
+
+Profiling speculative execution would allow us to run for more steps,
+reducing runtime work.
+
+Speculative execution must finish a top-level loop in current
+implementation.
+
+There's a tension between optimising compilers and new language
+compilers.
