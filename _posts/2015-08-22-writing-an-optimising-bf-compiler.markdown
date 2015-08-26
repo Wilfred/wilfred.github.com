@@ -3,10 +3,10 @@ layout: post
 title: "Writing an Optimising BF Compiler"
 ---
 
-It seems like everyone's written a
-[BF](https://en.wikipedia.org/wiki/Brainfuck) implementation. BF is
-now so widespread that LLVM and libjit both provide tutorials for
-writing compilers with their toolset!
+Almost everyone's written a
+[BF](https://en.wikipedia.org/wiki/Brainfuck) implementation these
+days. In fact, BF is now so widespread that LLVM and libjit both include
+tutorials for a basic implementation!
 
 However, what would an industrial strength compiler look like? I set
 out to write 
@@ -35,7 +35,7 @@ twice. Our baseline compiler would convert this to:
     cell_val := cell_val + 1
     store(cell_ptr, cell_val)
 
-However, the underlying computer is capable of adding numbers other
+However, the underlying hardware is capable of adding numbers other
 than one! We expand our intermediate representation (IR) to handle
 increments, so we can compile this to:
 
@@ -53,7 +53,7 @@ We compile it to this:
 
     cell_ptr := cell_ptr + 2
 
-## Loop Simplification: Clear
+## Clear Loops
 
 A common BF idiom is `[-]`, which zeroes the current cell. bfc's
 optimiser knows about this, and it's smart enough to compile it to:
@@ -66,7 +66,7 @@ increments, so `[-]+++` can be compiled to:
 
     store(cell_ptr, 3)
 
-## Loop Simplification: Multiply
+## Multiply Loops
 
 BF doesn't provide a multiply instruction, so programs have to use a
 loop. `[->++<]` is equivalent to:
@@ -111,14 +111,9 @@ result, consecutive loops are dead:
 
     foo[bar][dead][also dead]
 
-We already know that `[-]+` is setting the current cell to a constant
-value. We can extend this, so `[-]+[-]++` is equivalent to:
-
-    [-]++
-
 ## Redundant Code Elimination
 
-bfc can also remove code that it can prove has no effect.
+bfc can also remove instructions if it can prove they have no effect.
 
 We already know that `[-]+` is setting the current cell to a constant
 value. Repeated instances of this will clobber the previous value. For
@@ -138,7 +133,7 @@ cell. As a result, the following snippets can all be reduced to just
     -,
     [-]+,
 
-Instructions at the end of a program also be redundant. The only
+Instructions at the end of a program can also be redundant. The only
 possible side effects in a BF program are reading, writing and
 infinite loops. If we can prove the final instructions have no
 observable side effects, we remove them. For example:
@@ -148,8 +143,8 @@ observable side effects, we remove them. For example:
 This can be reduced to just `foo.`
 
 bfc assumes that all cell access are in bounds (between 0 and
-30,000). As a result, the program `<+` is optimised away by this, so
-it will not throw an error.
+30,000). As a result, the program `<+` is entirely optimised away by
+this, so it will not throw an error.
 
 ## Testing Optimisations
 
@@ -192,6 +187,26 @@ programs don't use the full 30,000.
 bfc uses static analysis to work out the highest cell that a program
 could possibly reach.
 
+For example, this program never reaches beyond cell #2:
+
+    >><<
+
+If loops have a net cell movement of zero, then we're still limiting
+ourselves to a fixed number of cells. This program never reaches
+beyond cell #2, regardless of how many loop iterations are executed:
+
+    [>><<]
+
+We apply this analysis recursively, so `[><[<>]]` is still bounded in
+the cells it can reach.
+
+Of course, we can't always find a lower bound. For example, it's
+impossible to find a bound on this program:
+
+    [,>]
+
+In these cases, bfc provides 30,000 cells for the program to use.
+
 ## Speculative Execution
 
 Many BF programs don't take any inputs at all. For programs that do
@@ -199,7 +214,7 @@ take input, there's an initialisation phase that sets cells to certain
 values first.
 
 bfc exploits this by executing as much as it can at compile time. We
-run for a set period of time (to avoid problems with infinite loops)
+run a fixed number of steps (to avoid problems with infinite loops)
 and terminate if encounter a `,` (a read instruction).
 
 As a result, we compile the classic BF hello world to:
@@ -216,8 +231,9 @@ entry:
 }
 {% endhighlight %}
 
-bfc runs speculative execution after peephole optimisations and dead code
-removal, to maximise the amount of work we can do before timing out.
+bfc performs speculative execution after peephole optimisations and dead code
+removal, to maximise how much we execute before hitting the execution
+step limit.
 
 Even if we cannot speculatively execute the whole program, partial
 execution is useful. We can discard any instructions executed at
@@ -240,27 +256,34 @@ For example, consider the program `+>+>+>++>,.`. bfc compiles this to:
   ; Intialise cell #4 to 0.
   %offset_cell_ptr2 = getelementptr i8* %cells, i32 4
   call void @llvm.memset.p0i8.i32(i8* %offset_cell_ptr2, i8 0, i32 1, i32 1, i1 true)
+
+  ; ... I/O instructions 
 {% endhighlight %}
+
+## Future Work
+
+There are a number of other optimising BF projects (notable
+implementations include
+[1](http://calmerthanyouare.org/2015/01/07/optimizing-brainfuck.html),
+[2](http://mearie.org/projects/esotope/bfc/) and
+[3](https://github.com/rdebath/Brainfuck/tree/master/tritium)) and bfc
+has benefitted from seeing their ideas.
+
+bfc still has scope for further optimisations: we don't apply the
+'scan loops' or 'operation offsets' optimisations
+[discussed by Mats Linander](http://calmerthanyouare.org/2015/01/07/optimizing-brainfuck.html). We
+also don't detect when two cells are multiplied together nor division.
+
+The bounds detection pass is also very pessimistic. It's currently
+limited to loops with a net cell movement of zero. As a result, `[>]`
+is treated as unbounded, whereas this loop cannot access cells which
+haven't previously been modified.
+
+Finally, bfc does not provide profile guided optimisation or adaptive
+optimisation (in the style of HotSpot or pypy).
 
 ## Closing Thoughts
 
-Related projects: interpreter for awib, compiler that does speculative execution.
-
-Further work: more peephole optimisations: offset operations, scanning
-left/right (TODO: link to blog post). Could also extract
-multiplication by a cell (not just a constant), or extract division.
-
-Bounds analysis could be smarter -- `[>]` cannot access beyond the
-highest cell accessed so far.
-
-Some of these optimisations could be pushed into LLVM, but very useful
-to run before speculative execution.
-
-Profiling speculative execution would allow us to run for more steps,
-reducing runtime work.
-
-Speculative execution must finish a top-level loop in current
-implementation.
-
-There's a tension between optimising compilers and new language
-compilers.
+BF is small enough to implement in a short space of time, but it's a
+real language with programs you can play with. It's a fantastic
+testbed for compiler techniques.
