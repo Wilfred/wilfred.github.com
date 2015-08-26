@@ -25,8 +25,9 @@ so let's look at optimisations we can add to our compiler.
 
 ## Collapsing Increments
 
-Let's look at some peephole optimisations. Consider the BF program `++`. This increments current cell
-twice. Our baseline compiler would convert this to:
+Let's look at some peephole optimisations. Consider the BF program
+`++`. This increments current cell twice. Our baseline compiler would
+convert this to:
 
     cell_val := load(cell_ptr)
     cell_val := cell_val + 1
@@ -243,21 +244,25 @@ during speculative execution.
 For example, consider the program `+>+>+>++>,.`. bfc compiles this to:
 
 {% highlight llvm %}
-  ; Initialise cell #0, cell #1 and cell #2 to 1.
-  ; Note that we combine adjacent cells with the
-  ; same value into a single memset call.
-  %offset_cell_ptr = getelementptr i8* %cells, i32 0
-  call void @llvm.memset.p0i8.i32(i8* %offset_cell_ptr, i8 1, i32 3, i32 1, i1 true)
+; Initialise cell #0, cell #1 and cell #2 to 1.
+; Note that we combine adjacent cells with the
+; same value into a single memset call.
+%offset_cell_ptr = getelementptr i8* %cells, i32 0
+call void @llvm.memset.p0i8.i32(i8* %offset_cell_ptr, i8 1, i32 3, i32 1, i1 true)
 
-  ; Initialise cell #3 to 2.
-  %offset_cell_ptr1 = getelementptr i8* %cells, i32 3
-  call void @llvm.memset.p0i8.i32(i8* %offset_cell_ptr1, i8 2, i32 1, i32 1, i1 true)
+; Initialise cell #3 to 2.
+%offset_cell_ptr1 = getelementptr i8* %cells, i32 3
+call void @llvm.memset.p0i8.i32(i8* %offset_cell_ptr1, i8 2, i32 1, i32 1, i1 true)
 
-  ; Intialise cell #4 to 0.
-  %offset_cell_ptr2 = getelementptr i8* %cells, i32 4
-  call void @llvm.memset.p0i8.i32(i8* %offset_cell_ptr2, i8 0, i32 1, i32 1, i1 true)
+; Intialise cell #4 to 0.
+%offset_cell_ptr2 = getelementptr i8* %cells, i32 4
+call void @llvm.memset.p0i8.i32(i8* %offset_cell_ptr2, i8 0, i32 1, i32 1, i1 true)
 
-  ; ... I/O instructions 
+; Initialise the cell pointer to 4.
+store i32 4, i32* %cell_index_ptr
+
+; Compiled representation of ,
+; Compiled representation of .
 {% endhighlight %}
 
 ## Future Work
@@ -272,7 +277,7 @@ has benefitted from seeing their ideas.
 bfc still has scope for further optimisations: we don't apply the
 'scan loops' or 'operation offsets' optimisations
 [discussed by Mats Linander](http://calmerthanyouare.org/2015/01/07/optimizing-brainfuck.html). We
-also don't detect when two cells are multiplied together nor division.
+also don't detect when two cells are multiplied together, nor division.
 
 The bounds detection pass is also very pessimistic. It's currently
 limited to loops with a net cell movement of zero. As a result, `[>]`
@@ -287,3 +292,31 @@ optimisation (in the style of HotSpot or pypy).
 BF is small enough to implement in a short space of time, but it's a
 real language with programs you can play with. It's a fantastic
 testbed for compiler techniques.
+
+Rust proved to be a fantatic language to use for bfc. The compiler
+prevents many bugs, and warns about many others, which helps
+tremendously. Its FFI makes interfacing with LLVM very
+straightforward, and makes it easy to separate 'code that could
+segfault' from the rest of the project.
+
+Rust's pattern matching also makes bfc optimisations very
+readable. Here's the dead code removal:
+
+{% highlight rust %}
+/// Remove any loops where we know the current cell is zero.
+pub fn remove_dead_loops(instrs: Vec<Instruction>) -> Vec<Instruction> {
+    instrs.into_iter().coalesce(|prev_instr, instr| {
+        if let (&Set(Wrapping(0)), &Loop(_)) = (&prev_instr, &instr) {
+            return Ok(Set(Wrapping(0)));
+        }
+        Err((prev_instr, instr))
+    }).map(|instr| {
+        match instr {
+            Loop(body) => {
+                Loop(remove_dead_loops(body))
+            },
+            i => i
+        }
+    }).collect()
+}
+{% endhighlight %}
