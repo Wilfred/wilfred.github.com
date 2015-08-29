@@ -18,7 +18,7 @@ optimisations are completely novel. Let's take a look.
 
 I've written a basic BF interpreter in C, so we'll use that as our
 reference point for BF performance. Let's compare bfc,
-compiling to LLVM IR without optimisations, with this interpreter.
+compiling without optimisations, with this interpreter.
 
 <figure>
 <div id="interpreter-vs" style="min-width: 310px; max-width: 800px; height:500px; margin: 0 auto"></div>
@@ -355,7 +355,6 @@ process.
 
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/bower_components/highcharts/highcharts.js"></script>
-<script src="/bower_components/highcharts/modules/broken-axis.js"></script>
 <script src="/bower_components/highcharts/modules/exporting.js"></script>
 
 <script>
@@ -373,19 +372,16 @@ function plot(selector, categories, series, opts) {
         },
         yAxis: {
             min: 0,
-            max: null,
+            max: opts.ymax || null,
             title: {
                 text: 'Runtime in seconds (fastest of 10 runs)',
                 align: 'high'
             },
-            breaks: [{
-                from: 0.4,
-                to: 2,
-                breakSize: 0.1
-            }]
         },
         tooltip: {
             valueSuffix: ' seconds',
+            // The default pointFormat but with numbers rounded to 5dp.
+            pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:.5f}</b><br/>'
         },
         plotOptions: {
             bar: {
@@ -401,11 +397,16 @@ function plot(selector, categories, series, opts) {
     });
 }
 
+// Based on http://stackoverflow.com/a/26674173/509706
+Highcharts.seriesTypes.bar.prototype.pointAttrToOptions.dashstyle = 'dashStyle';
+
 plot("#interpreter-vs",
      ['Hello world', '99 Bottles', 'Squares', 'Fibs'],
      [{
          name: 'Interpreter',
-         data: [0.0063936710357666016, 2.923617362976074, 0.1846942901611328, 0.14739513397216797]
+         data: [0.0063936710357666016,
+                {y: 2.923617362976074, borderWidth: 5, borderColor: 'black', dashStyle: 'dash'},
+                0.1846942901611328, 0.14739513397216797]
      }, {
          name: 'Compiler',
          data: [0.0065386295318603516, 0.011064291000366211, 0.01006627082824707, 0.008800506591796875]
