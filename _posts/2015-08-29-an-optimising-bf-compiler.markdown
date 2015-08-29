@@ -9,10 +9,10 @@ days. In fact, BF is now so widespread that LLVM and libjit both include
 tutorials for a basic implementation!
 
 However, what would an industrial strength compiler look like? I set
-out to write
-[bfc, a highly optimising compiler](https://github.com/Wilfred/bfc),
-exploring the limits of BF optimisation. I believe some of my
-optimisations are completely novel. Let's take a look.
+out to write a highly optimising BF compiler using Rust and
+LLVM. [bfc](https://github.com/Wilfred/bfc) was the result, and it
+includes a whole range of optimisations. I believe some are completely
+novel. Let's take a look.
 
 ## Baseline Performance
 
@@ -26,12 +26,13 @@ compiling without optimisations, with this interpreter.
 
 Clearly we're off to a good start, even without
 optimisations. However, interpreters exist that are much faster than
-this dumb implementation, so let's look at optimisations.
+this dumb implementation, so let's look at performance improvements
+for our compiled output.
 
 ## Combining Increments
 
-There are a range of peephole optimisations possible with BF. The most
-commonly implemented approach is combining increments. Consider the BF
+There are several peephole optimisations possible with BF. The most
+widely implemented technique is combining increments. Consider the BF
 program `++`. This increments current cell twice. Our baseline
 compiler would convert this to:
 
@@ -252,7 +253,7 @@ declare i32 @write(i32, i8*, i32)
 
 define i32 @main() {
 entry:
-  %0 = call i32 @write(i32 0, i8* getelementptr inbounds ([13 x i8]* @known_outputs, i32 0, i32 0), i32 13)
+  %0 = call i32 @write(i32 1, i8* getelementptr inbounds ([13 x i8]* @known_outputs, i32 0, i32 0), i32 13)
   ret i32 0
 }
 {% endhighlight %}
@@ -295,8 +296,9 @@ store i32 4, i32* %cell_index_ptr
 There are a number of other optimising BF projects (notable
 implementations include
 [1](http://calmerthanyouare.org/2015/01/07/optimizing-brainfuck.html),
-[2](http://mearie.org/projects/esotope/bfc/) and
-[3](https://github.com/rdebath/Brainfuck/tree/master/tritium)) and bfc
+[2](http://mearie.org/projects/esotope/bfc/),
+[3](http://xn--2-umb.com/10/brainfuck-using-llvm) and
+[4](https://github.com/rdebath/Brainfuck/tree/master/tritium)) and bfc
 has benefited from seeing their ideas.
 
 bfc still has scope for further optimisations: we don't apply the
@@ -310,9 +312,14 @@ limited to loops with a net cell movement of zero. As a result, `[>]`
 is treated as unbounded, whereas this loop cannot access cells which
 haven't previously been modified.
 
+Speculative execution is not currently smart enough to partly execute
+a loop. This means BF programs with a big outer loop don't yet benefit
+from this optimisation, because we eventually hit a `,` or reach the
+step limit before the loop terminates.
+
 Finally, bfc does not provide profile guided optimisation nor adaptive
-optimisation (in the style of HotSpot or pypy). Its output also
-assumes a 32-bit word size.
+optimisation (in the style of HotSpot or pypy). bfc also assumes a
+32-bit word size.
 
 ## Closing Thoughts
 
@@ -320,24 +327,26 @@ BF is small enough to implement in a short space of time, but it's a
 real language with programs you can play with. It's a fantastic
 testbed for compiler techniques.
 
-Rust proved to be a fantastic language to use for bfc. The compiler
-prevents many bugs, and warns about many others, which helps
+Rust proved to be a great implementation language for bfc. The
+Rust compiler prevents many bugs, and warns about many others, which helps
 tremendously. Its FFI makes interfacing with LLVM very
 straightforward, and makes it easy to separate 'code that could
-segfault' from the rest of the project.
+segfault' from the rest of the codebase.
 
 Rust's pattern matching also makes bfc optimisations very
 readable. Here's the dead code removal:
 
 {% highlight rust %}
-/// Remove any loops where we know the current cell is zero.
 pub fn remove_dead_loops(instrs: Vec<Instruction>) -> Vec<Instruction> {
+    // Remove any loops where we know the current cell is zero.
     instrs.into_iter().coalesce(|prev_instr, instr| {
         if let (&Set(Wrapping(0)), &Loop(_)) = (&prev_instr, &instr) {
-            return Ok(Set(Wrapping(0)));
+            Ok(Set(Wrapping(0)))
+        } else {
+            Err((prev_instr, instr))
         }
-        Err((prev_instr, instr))
     }).map(|instr| {
+        // Remove dead nested loops too.
         match instr {
             Loop(body) => {
                 Loop(remove_dead_loops(body))
@@ -348,10 +357,23 @@ pub fn remove_dead_loops(instrs: Vec<Instruction>) -> Vec<Instruction> {
 }
 {% endhighlight %}
 
-Writing an effective optimising compiler for a conventional language
-is a large scale project that takes years. By limiting ourselves to a
-very small language, we can explore the entire compiler development
-process.
+Writing an optimising compiler can seem like a daunting
+project. Building a compiler can take years. By limiting ourselves to
+BF, we've been able to explore many of the interesting problems in
+compiler engineering:
+
+* Halting problem (speculative execution)
+* Compilation performance (speculative execution is expensive)
+* The limits of static analysis (cell bounds analysis)
+* Ordering of optimisation passes
+* Designing a good intermediate representation (bfc uses its own IR
+and lowers to LLVM IR)
+* Writing effective tests
+
+Not bad for a side project!
+
+*Want to find out more? bfc is [available on GitHub](https://github.com/Wilfred/bfc), and you
+can also view the [benchmarks used for the graphs](https://github.com/Wilfred/bf_bench).*
 
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/bower_components/highcharts/highcharts.js"></script>
