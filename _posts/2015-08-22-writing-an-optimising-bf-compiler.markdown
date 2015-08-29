@@ -19,6 +19,11 @@ I've written a basic BF interpreter in C, so we'll use that as our
 reference point for BF performance. Let's compare bfc,
 compiling to LLVM IR without optimisations, with this interpreter.
 
+<figure>
+<div id="interpreter-vs" style="min-width: 310px; max-width: 800px; height:500px; margin: 0 auto"></div>
+    <figcaption>Interpreter vs compiler</figcaption>
+</figure>
+
 As you can see, even without optimisations, bfc is
 comfortably outperforming this interpreter. Faster interpreters exist,
 so let's look at optimisations we can add to our compiler.
@@ -320,3 +325,59 @@ pub fn remove_dead_loops(instrs: Vec<Instruction>) -> Vec<Instruction> {
     }).collect()
 }
 {% endhighlight %}
+
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/highcharts/highcharts.js"></script>
+<script src="/bower_components/highcharts/modules/exporting.js"></script>
+
+<script>
+$('#interpreter-vs').highcharts({
+    chart: {
+        type: 'bar'
+    },
+    title: {
+        text: null
+    },
+    xAxis: {
+        categories: ['Hello world', '99 Bottles', 'Squares', 'Fibs'],
+    },
+    yAxis: {
+        min: 0,
+        max: 0.3,
+        title: {
+            text: 'Time in seconds (fastest of 10 runs)',
+            align: 'high'
+        },
+    },
+    tooltip: {
+        valueSuffix: ' seconds',
+    },
+    plotOptions: {
+        bar: {
+        }
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'top',
+        x: -10,
+        y: 10,
+        floating: true,
+        borderWidth: 1,
+        backgroundColor: '#FFFFFF',
+    },
+    exporting: {
+        enabled: false
+    },
+    credits: {
+        enabled: false
+    },
+    series: [{
+        name: 'Interpreter',
+        data: [0.006530, 2.917070, 0.185683, 0.066633]
+    }, {
+        name: 'Compiler',
+        data: [0.006251, 0.012041, 0.009810, 0.009810]
+    }]
+});
+</script>
