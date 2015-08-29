@@ -22,7 +22,6 @@ compiling to LLVM IR without optimisations, with this interpreter.
 
 <figure>
 <div id="interpreter-vs" style="min-width: 310px; max-width: 800px; height:500px; margin: 0 auto"></div>
-    <figcaption>Interpreter vs compiler</figcaption>
 </figure>
 
 Clearly we're off to a good start, even without
@@ -184,7 +183,11 @@ there's little overlap with our BF-specific optimisations. It does
 give us an additional performance boost, so bfc uses LLVM
 optimisations too.
 
-(TODO: benchmark here)
+<figure>
+<div id="llvm-opt" style="min-width: 310px; max-width: 800px; height:500px; margin: 0 auto"></div>
+</figure>
+
+TODO: is it faster for larger programs?
 
 ## Bounds Analysis
 
@@ -333,7 +336,8 @@ pub fn remove_dead_loops(instrs: Vec<Instruction>) -> Vec<Instruction> {
 <script src="/bower_components/highcharts/modules/exporting.js"></script>
 
 <script>
-function plot(selector, categories, series) {
+function plot(selector, categories, series, opts) {
+    opts = opts || {};
     $(selector).highcharts({
         chart: {
             type: 'bar'
@@ -346,7 +350,7 @@ function plot(selector, categories, series) {
         },
         yAxis: {
             min: 0,
-            max: 0.3,
+            max: opts.ymax || null,
             title: {
                 text: 'Time in seconds (fastest of 10 runs)',
                 align: 'high'
@@ -358,16 +362,6 @@ function plot(selector, categories, series) {
         plotOptions: {
             bar: {
             }
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'top',
-            x: -10,
-            y: 10,
-            floating: true,
-            borderWidth: 1,
-            backgroundColor: '#FFFFFF',
         },
         exporting: {
             enabled: false
@@ -387,5 +381,17 @@ plot("#interpreter-vs",
      }, {
          name: 'Compiler',
          data: [0.006251, 0.012041, 0.009810, 0.009810]
+     }],
+     {ymax: 0.4}
+    );
+
+plot("#llvm-opt",
+     ['Hello world', '99 Bottles', 'Squares', 'Fibs'],
+     [{
+         name: 'Without LLVM optimisations',
+         data: [0.006413698196411133, 0.008083820343017578, 0.00716400146484375, 0.006306648254394531]
+     }, {
+         name: 'With LLVM optimisations',
+         data: [0.0065762996673583984, 0.007405996322631836, 0.006670475006103516, 0.006576061248779297]
      }]
     );</script>
