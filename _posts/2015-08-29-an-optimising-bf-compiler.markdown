@@ -1,6 +1,6 @@
 --- 
 layout: post
-title: "Writing an Optimising BF Compiler"
+title: "An Optimising BF Compiler"
 ---
 
 Almost everyone's written a
@@ -11,7 +11,8 @@ tutorials for a basic implementation!
 However, what would an industrial strength compiler look like? I set
 out to write 
 [bfc, a highly optimising compiler](https://github.com/Wilfred/bfc),
-and it's remarkably fast. Let's take a closer look.
+exploring the limits of BF optimisation. Some of my optimisations are
+completely novel. Let's take a closer look.
 
 ## Baseline Performance
 
@@ -24,15 +25,16 @@ compiling to LLVM IR without optimisations, with this interpreter.
     <figcaption>Interpreter vs compiler</figcaption>
 </figure>
 
-As you can see, even without optimisations, bfc is
-comfortably outperforming this interpreter. Faster interpreters exist,
-so let's look at optimisations we can add to our compiler.
+Clearly we're off to a good start, even without
+optimisations. However, interpreters exist that are much faster than
+this dumb implementation, so let's look at optimisations.
 
-## Collapsing Increments
+## Combining Increments
 
-Let's look at some peephole optimisations. Consider the BF program
-`++`. This increments current cell twice. Our baseline compiler would
-convert this to:
+There are a range of peephole optimisations possible with BF. The most
+commonly implemented approach is combining increments. Consider the BF
+program `++`. This increments current cell twice. Our baseline
+compiler would convert this to:
 
     cell_val := load(cell_ptr)
     cell_val := cell_val + 1
@@ -68,7 +70,7 @@ optimiser knows about this, and it's smart enough to compile it to:
 
 Setting a constant value is great because it opens up new opportunities
 for collapsing instructions. We can go a step further and combine
-increments, so `[-]+++` can be compiled to:
+with increments, so `[-]+++` can be compiled to:
 
     store(cell_ptr, 3)
 
@@ -80,9 +82,9 @@ loop. `[->++<]` is equivalent to:
     cell#1 := cell#1 + 2 * cell#0
     cell#0 := 0
 
-Our optimiser can also detect these and generate efficient code. This
-also captures useful patterns like `[->+<]` (move cell 0 to cell 1)
-and `[->+>+<<]` (move cell 0 to both cell 1 and cell 2).
+Our optimiser can also detect multiply loops and generate efficient
+code. This also captures useful patterns like `[->+<]` (move cell 0 to
+cell 1) and `[->+>+<<]` (move cell 0 to both cell 1 and cell 2).
 
 As a result, we compile `[->++<]` to:
 
