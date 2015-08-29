@@ -257,6 +257,7 @@ $('#container').highcharts({
                 enabled: true,
                 style: {
                     fontSize: '16px',
+                    fontWeight: 'normal'
                 }
             }
         }
