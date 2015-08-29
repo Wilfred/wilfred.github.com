@@ -333,53 +333,59 @@ pub fn remove_dead_loops(instrs: Vec<Instruction>) -> Vec<Instruction> {
 <script src="/bower_components/highcharts/modules/exporting.js"></script>
 
 <script>
-$('#interpreter-vs').highcharts({
-    chart: {
-        type: 'bar'
-    },
-    title: {
-        text: null
-    },
-    xAxis: {
-        categories: ['Hello world', '99 Bottles', 'Squares', 'Fibs'],
-    },
-    yAxis: {
-        min: 0,
-        max: 0.3,
-        title: {
-            text: 'Time in seconds (fastest of 10 runs)',
-            align: 'high'
+function plot(selector, categories, series) {
+    $(selector).highcharts({
+        chart: {
+            type: 'bar'
         },
-    },
-    tooltip: {
-        valueSuffix: ' seconds',
-    },
-    plotOptions: {
-        bar: {
-        }
-    },
-    legend: {
-        layout: 'vertical',
-        align: 'right',
-        verticalAlign: 'top',
-        x: -10,
-        y: 10,
-        floating: true,
-        borderWidth: 1,
-        backgroundColor: '#FFFFFF',
-    },
-    exporting: {
-        enabled: false
-    },
-    credits: {
-        enabled: false
-    },
-    series: [{
-        name: 'Interpreter',
-        data: [0.006530, 2.917070, 0.185683, 0.066633]
-    }, {
-        name: 'Compiler',
-        data: [0.006251, 0.012041, 0.009810, 0.009810]
-    }]
-});
-</script>
+        title: {
+            text: null
+        },
+        xAxis: {
+            categories: categories,
+        },
+        yAxis: {
+            min: 0,
+            max: 0.3,
+            title: {
+                text: 'Time in seconds (fastest of 10 runs)',
+                align: 'high'
+            },
+        },
+        tooltip: {
+            valueSuffix: ' seconds',
+        },
+        plotOptions: {
+            bar: {
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -10,
+            y: 10,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: '#FFFFFF',
+        },
+        exporting: {
+            enabled: false
+        },
+        credits: {
+            enabled: false
+        },
+        series: series
+    });
+}
+
+plot("#interpreter-vs",
+     ['Hello world', '99 Bottles', 'Squares', 'Fibs'],
+     [{
+         name: 'Interpreter',
+         data: [0.006530, 2.917070, 0.185683, 0.066633]
+     }, {
+         name: 'Compiler',
+         data: [0.006251, 0.012041, 0.009810, 0.009810]
+     }]
+    );</script>
