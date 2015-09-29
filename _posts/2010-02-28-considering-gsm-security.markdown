@@ -42,12 +42,12 @@ As for Skype, reports vary. Skype is also undocumented (although as a business m
 <h3>Spoofing</h3>
 There's also the issue of spoofing. If a mobile phone can successfully convince the receiver that it is a different phone, it can access voicemail without encountering security measures. There are products such as <a href="http://blog.brickhousesecurity.com/spoofcard/">Spoofcard</a> that allow you to impersonate any caller ID you wish.
 
-Ideally an attacker also wishes to spoof a number to the base station such that he can receive calls or texts intended for someone else. Whilst details are scarce, it seems that <a href="http://www.pcworld.com/businesscenter/article/163515/nokia_we_dont_know_why_criminals_want_our_old_phones.html">this has been achieved by some users</a> using certain older Nokia handsets.
+Ideally an attacker also wishes to spoof a number to the base station such that he can receive calls or texts intended for someone else. Whilst details are scarce, it seems that <a href="http://www.pcworld.com/article/163515/Nokia_phone_hackers.html">this has been achieved by some users</a> using certain older Nokia handsets.
 
 <h3>Bugging</h3>
 Finally, a mobile phone has a wealth of information about you. Any GSM model will register with its local base station when switched on, so phone records later will show which cell you are in. In rural areas a cell can have a radius of up to 35km, but in cities it can be as small as 100m. The CIA <a href="http://www.wired.com/politics/security/magazine/15-07/st_cia">were caught out</a> by this in 2007. Today, many phones have even more accurate positioning using GPS or Skyhook technologies.
 
-Some phones will actually act as <a href="http://www.schneier.com/blog/archives/2006/12/remotely_eavesd_1.html&lt;br &gt;&lt;/a&gt;">bugs on demand</a>. This 'roving bug' technique allows law enforcement to remotely install sound recording software on a handset. Again details are scarce, but I would imagine rooted Linux based phones would be immune to this.
+Some phones will actually act as <a href="https://www.schneier.com/blog/archives/2006/12/remotely_eavesd_1.html">bugs on demand</a>. This 'roving bug' technique allows law enforcement to remotely install sound recording software on a handset. Again details are scarce, but I would imagine rooted Linux based phones would be immune to this.
 
 <a name="foot1">&nbsp;</a>
 

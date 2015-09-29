@@ -71,7 +71,7 @@ than abusing it.
 
 Anyone can configure an exit node to only permit certain types of
 traffic. Some exit
-nodes <a href="http://www.teamfurry.com/wordpress/2007/11/19/on-tor/">only
+nodes <a href="https://web.archive.org/web/20130313084604/http://www.teamfurry.com/wordpress/2007/11/19/on-tor/">only
 accept traffic on ports that correspond to unencrypted protocols</a>
 or <a href="http://www.f-secure.com/weblog/archives/00001321.html">change
 SSL certificates</a>. This is downright fishy, and an experienced Tor

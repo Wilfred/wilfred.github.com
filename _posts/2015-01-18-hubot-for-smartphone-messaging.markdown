@@ -16,7 +16,7 @@ In my social circles, [WhatsApp](https://www.whatsapp.com/) is the
 clear winner by usage. To my disappointment, there's no official API
 available for WhatsApp.
 
-In spite of this, there's [OpenWhatsApp](http://openwhatsapp.org/) and
+In spite of this, there's [Yowsup](https://github.com/tgalal/yowsup) and
 [WhatsAPI](https://github.com/venomous0x/WhatsAPI). WhatsApp is
 basically a modified XMPP protocol, and intrepid open source
 developers have reverse-engineered it.
