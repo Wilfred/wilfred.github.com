@@ -68,7 +68,44 @@ This gives us better cache locality during program execution.
 
 ## Next Mutation Analysis
 
-In bfc v1.0.0, we would 
+In bfc v1.0.0, we would remove redundant adjacent instructions. For
+example, incrementing a cell before writing to it:
+
+    +,
+
+and dead loops:
+
+    [some loop here][next loop is dead]
+
+However, now that we're reordering instructions, our redundant
+instruction optimisations may not help us.
+
+bfc is now able to find the next mutation instruction for a given
+cell. Of course, it's not always possible to find one. It may not be
+possible to determine the next mutation at compile time (e.g. complex
+loops), or there may not be another mutation for this cell.
+
+For example, given the IR:
+
+    Loop (some loop body)
+    Set 0 (offset 0) <- this is redundant!
+    Set 0 (offset -1)
+
+If a loop terminates, the current cell is 0, so we know this set is
+redundant. However, after reordering, that set does not immediately
+follow the loop:
+
+    Loop (some loop body)
+    Set 0 (offset -1)
+    Set 0 (offset 0) <- this is redundant!
+
+bfc uses next mutation analysis to find this redundant set and remove
+it.
+
+This is a generalisation of the previous approach, and applies in more
+cases. For example, consider the program:
+
+    [loop X]>.<[
 
 ## Benchmarks:
 
