@@ -75,7 +75,7 @@ example, incrementing a cell before writing to it:
 
 and dead loops:
 
-    [some loop here][next loop is dead]
+    [some loop here][this loop is dead]
 
 However, now that we're reordering instructions, our redundant
 instruction optimisations may not help us.
@@ -105,20 +105,122 @@ it.
 This is a generalisation of the previous approach, and applies in more
 cases. For example, consider the program:
 
-    [loop X]>.<[
+    [loop X]>.<[loop Y]
 
-## Benchmarks:
+Loop Y is dead here, and bfc is able to remove it.
 
-(fastest of three runs)
+## Partial Loop Execution
 
-mandelbrot.bf: v1.0: 4.73 seconds v1.2: 4.42 seconds
+bfc was already able to execute BF code at compile time, producing big
+speedups in many popular BF programs.
 
-factor.bf with 133333333333337: v1.0: 1.64 seconds v1.2: 1.38 seconds
+However, v1.0.0 required loops to be completely executed at compile
+time. This simplified the implementation, but many larger BF programs
+have a big outer loop. These programs did not benefit from bfc's
+compile time execution.
 
-long.bf: v1.0: 1.65 seconds v1.2: 0.89 seconds
+For example, given the IR:
 
-hanoi.bf: v1.0: 0.16 secs, v1.2: 0.09 seconds
+    A
+    B
+    Loop:
+      C
+      D
+      Loop:
+        E
+        F
 
-dbfi.bf with its own input then hello: v1.0: 15.39 seconds, v1.2: 15.36 seconds
+If we couldn't execute the whole outer loop at compile time, we would
+only be able to remove A and B from the final executable, giving us:
 
-awib.bf: v1.0: 4.73 seconds v1.2: 4.59 seconds
+    Loop:
+      C
+      D
+      Loop:
+        E
+        F
+
+Now in v1.2.0, we can execute up to an arbitrary position in the code. As
+in v1.0.0, bfc executes until it reaches a `,` instruction, a timer
+expires, or the program terminates.
+
+If we only manage to partially execute a loop, we split the basic
+block and runtime execution continues where compile time execution
+stopped.
+
+In our example above, suppose timer fires just after executing E. Our
+final executable looks like this:
+
+    GOTO start
+    Loop:
+      C
+      D
+      Loop:
+        E
+      start:
+        F
+
+
+## Benchmarks
+
+For v1.2.0 I've measured bfc using
+[Mats Linander's benchmark suite](https://github.com/matslina/bfoptimization).
+
+<figure>
+<div id="old-vs-new" style="min-width: 310px; max-width: 800px; height:500px; margin: 0 auto"></div>
+</figure>
+
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/highcharts/highcharts.js"></script>
+<script src="/bower_components/highcharts/modules/exporting.js"></script>
+
+<script>
+function plot(selector, categories, series) {
+    $(selector).highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: null
+        },
+        xAxis: {
+            categories: categories,
+        },
+        yAxis: {
+            min: 0,
+            max: null,
+            title: {
+                text: 'Runtime in seconds (fastest of 3 runs)',
+                align: 'high'
+            },
+        },
+        tooltip: {
+            valueSuffix: ' seconds',
+            // The default pointFormat but with numbers rounded to 5dp.
+            pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:.5f}</b><br/>'
+        },
+        plotOptions: {
+            bar: {
+            }
+        },
+        exporting: {
+            enabled: false
+        },
+        credits: {
+            enabled: false
+        },
+        series: series
+    });
+}
+
+plot("#old-vs-new",
+     ['mandelbrot', 'factor', 'long', 'hanoi', 'dbfi', 'awib'],
+     [{
+         name: 'v1.0.0',
+         data: [4.73, 1.64, 1.65, 0.16, 15.39, 4.73]
+     }, {
+         name: 'v1.2.0',
+         data: [4.42, 1.38, 0.89, 0.09, 15.36, 4.59]
+     }]
+    );
+</script>
