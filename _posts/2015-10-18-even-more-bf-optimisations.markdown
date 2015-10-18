@@ -48,8 +48,27 @@ After introducing offsets, our IR looks like this:
     Increment 2 (offset 3)
     PointerIncrement 4
 
-Given a sequence of Increment or Set instructions, we can also reorder
-them
+There's another advantage of adding offsets to Increment and Set
+instructions. Given a sequence of Increments and Sets with different
+offsets, we can freely reorder them. Given the IR:
+
+    Increment 1 (offset 1)
+    Increment 2 (offset -1)
+    Set 3 (offset 2)
+    Set 4 (offset 0)
+
+After reordering, we produce the IR:
+
+    Increment 2 (offset -1)
+    Set 4 (offset 0)
+    Increment 1 (offset 1)
+    Set 3 (offset 2)
+
+This gives us better cache locality during program execution.
+
+## Next Mutation Analysis
+
+In bfc v1.0.0, we would 
 
 ## Benchmarks:
 
@@ -58,3 +77,11 @@ them
 mandelbrot.bf: v1.0: 4.73 seconds v1.2: 4.42 seconds
 
 factor.bf with 133333333333337: v1.0: 1.64 seconds v1.2: 1.38 seconds
+
+long.bf: v1.0: 1.65 seconds v1.2: 0.89 seconds
+
+hanoi.bf: v1.0: 0.16 secs, v1.2: 0.09 seconds
+
+dbfi.bf with its own input then hello: v1.0: 15.39 seconds, v1.2: 15.36 seconds
+
+awib.bf: v1.0: 4.73 seconds v1.2: 4.59 seconds
