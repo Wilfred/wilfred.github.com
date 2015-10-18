@@ -11,7 +11,7 @@ However, the competition has been heating up! It's been interesting to
 compare with performance other optimising BF implementations. In a few
 cases, bfc's performance was matched by simpler implementations.
 
-So, challenge accepted. How can we leverage bfc's optimisations to
+Challenge accepted. How can we leverage bfc's optimisations to
 produce even faster BF programs?
 
 ## Reorder With Offset
@@ -193,25 +193,27 @@ Firstly, optimisation is hard. Static analysis of programs is easy to
 screw up even with a good test suite. It took me several hours to get
 the last (known) bug out of the next mutation analysis.
 
-Optimisation is never completed. There are always further improvements
+Secondly, optimisation is never done. There are always further improvements
 possible. The challenge is finding which optimisations are
-sufficientl general that they apply to 'real
+sufficiently general that they apply to 'real
 world' code. It's not even clear what the upper limit on performance
-is (Mats Linander's project *still* beats bfc in many cases)!
+is. Mats Linander's project *still* beats bfc in many cases!
 
-LLVM is a great help, but it won't save you from considering
-performance. [They provide tips to frontend authors](http://llvm.org/docs/Frontend/PerformanceTips.html)
-but you will need to carefully consider what LLVM IR you generate. You
-will also need to apply some optimisations before generating LLVM IR.
+Thirdly, it's not enough to use an optimising compiler backend. LLVM
+has many powerful optimisations, and
+[tips for using them effectively](http://llvm.org/docs/Frontend/PerformanceTips.html). This
+is no substitute for exploiting the semantics of the target language
+in the frontend.
 
-Finally, Rust is a lovely language to work in. You can refactor code
-with confidence, and lean heavily on the compiler to help you find any
-spots you've missed. The compiler errors and warnings also prevent
-several classes of bugs. To my amazement, other Rust developers
-[have been able to jump into the code and contribute improvements](https://github.com/Wilfred/bfc/pull/2)!
+<!-- Geometric mean is 0.783, so 1 / 0.783 = 28% faster
+We use the geometric mean because the numbers are normalised
+(the pypy team recommends this).
+-->
 
-I'd recommend using LLVM and/or Rust without hesitation. They're huge
-productivity boosters -- a property totally absent from BF!
+Finally, we have completed our challenge! bfc v1.2.0 produces
+executables that are, on average, 28% faster than v1.0.0. This totally
+ridiculous project is
+[available in all its glory on GitHub](https://github.com/Wilfred/bfc).
 
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/bower_components/highcharts/highcharts.js"></script>
@@ -285,7 +287,7 @@ plot("#old-vs-new-normalised",
                 4.59 / 4.73]
      }],
      {
-         title: 'Runtime normalised to v1.0.0'
+         title: 'Runtime relative to v1.0.0'
      }
     );
 </script>
