@@ -18,6 +18,8 @@ then look at newer, more potent competitors.
 
 ## Inspect Editor At Point
 
+
+
 ## Just a REPL Really
 
 ## Emacs Ecosystem
@@ -26,6 +28,28 @@ then look at newer, more potent competitors.
 
 ## Victory of the commons: Atom
 
+Amazing ecosystem, proper package manager. GitHub team know how to
+build community projects.
+
+Leveraging the HTML/CSS/JS developer community: many devs, but
+sometimes performance suffers. Very cutting edge too: used react, then
+native, trying to use the Electron tooling to best effect. Interesting
+experiment, exploring the limits of the web platform.
+
+Not just text: great colour pickers, markdown renderers etc.
+
+Not very introspectable, but latest release adds good descriptions of
+settings: http://blog.atom.io/2015/10/29/atom-1-1-is-out.html
+('Settings Have Nice Descriptions')
+
+Requires a separate master/slave editor rather than interactive
+inplace changes.
+
 ## Meta Editing: Pharo
+
+Very introspectable.
+
+Maturing: moving away from Scratch's UI, better software engineering
+(cf scratch being removed by gentoo for libjpeg vulnerabilities).
 
 ## Closing Thoughts
