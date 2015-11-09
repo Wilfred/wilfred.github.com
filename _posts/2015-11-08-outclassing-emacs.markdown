@@ -1,6 +1,8 @@
 --- 
 layout: post
 title: "Outclassing Emacs"
+tags:
+ - emacs
 ---
 
 Software comes and goes, platforms change, use cases are adapted for
@@ -18,11 +20,60 @@ then look at newer, more potent competitors.
 
 ## Inspect Editor At Point
 
+<figure>
+    <img src="/assets/inspect_element_chromium.png">
+    <figcaption>Inspecting HTML in Chromium</figcaption>
+</figure>
 
+Every browser today allows you inspect the HTML of the webpage you're
+looking at. If you see an interesting web page design, you can see
+what elements are used, and how they're styled.
 
-## Just a REPL Really
+Emacs provides this for the whole editing experience.
+
+<figure>
+    <img src="/assets/emacs_describe_tab.png">
+    <figcaption>What code runs when we press tab?</figcaption>
+</figure>
+
+This is immensely powerful. We can ask profound questions of the
+functionality we're using:
+
+Q: What command is run when I press this key?
+A: `c-indent-line-or-region`
+
+Q: What is this command supposed to do?
+A: It indents the currently selected text ('region'), the current
+line, or the current block.
+
+Q: What code is actualy executed when I press this key?
+A: Emacs gives us a link to the code it's using.
+
+This has a profound effect on *how* we develop code in Emacs. Suppose we
+want to add new functionality. If we know of any similar commands, we
+can effortless find their source and see how they achieve their
+behaviour.
+
+This isn't limited to functions. Emacs settings are simply variables
+that we can set
+
+Emacs also encourages docstrings for everything. Settings in Emacs are
+just variables. W
+
+## Just an Interpreter!
+
+There's no difference between changing a setting and setting a
+variable in Emacs[1].
+
+<figure>
+    <img src="/assets/python_settings.gif">
+    <figcaption>Modifying settings / setting variables</figcaption>
+</figure>
+
 
 ## Emacs Ecosystem
+
+Huge melting pot of experiments to see what sticks.
 
 ## Emacs Limitations
 
@@ -53,3 +104,8 @@ Maturing: moving away from Scratch's UI, better software engineering
 (cf scratch being removed by gentoo for libjpeg vulnerabilities).
 
 ## Closing Thoughts
+
+## Footnotes:
+
+1: I'm glossing over the difference between `defcustom` and `defvar`
+here. You can still use `setq` on `defcustom` variables.
