@@ -73,9 +73,20 @@ variable in Emacs[1].
 
 ## Emacs Ecosystem
 
+Magit, smartparens, undo-tree, skewer-mode/cider, evil, aggressive-indent: people experiment and produce
+incredible projects. Crazy projects: pschoanalyze, nyan progress, 
+
 Huge melting pot of experiments to see what sticks.
 
 ## Emacs Limitations
+
+No namespaces.
+
+No GUI: not customisable.
+
+Not pretty (cf atom/light table/sublime)
+
+Learning curve (terminology, lisp syntax, keybindings, concepts).
 
 ## Victory of the commons: Atom
 
