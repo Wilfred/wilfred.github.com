@@ -114,6 +114,8 @@ Very introspectable.
 Maturing: moving away from Scratch's UI, better software engineering
 (cf scratch being removed by gentoo for libjpeg vulnerabilities).
 
+## Low cognitive load: Zed
+
 ## Closing Thoughts
 
 ## Footnotes:
