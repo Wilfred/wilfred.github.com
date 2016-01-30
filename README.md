@@ -7,7 +7,7 @@ wilfred.me.uk blog. All content is under the GFDL 1.3.
 
 You need Jekyll installed:
 
-    $ gem install jekyll
+    $ gem install --user-install jekyll
     
 Start Jekyll:
 
