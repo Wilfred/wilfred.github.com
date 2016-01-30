@@ -1,6 +1,6 @@
 --- 
 layout: post
-title: "The World's Most Sophisticated BF Compiler"
+title: "An Industrial-Grade BF Compiler"
 ---
 
 What do you expect from your compiler? The best compilers offer:
@@ -13,7 +13,7 @@ What do you expect from your compiler? The best compilers offer:
 
 Being a wildly overambitious developer, I set out to make
 [bfc](https://github.com/Wilfred/bfc) provide this whole feature
-set.
+set. Let's take a look at the result.
 
 ## Optimisations
 
@@ -27,7 +27,7 @@ LLVM provides an
 this document, I noticed a new
 [note had been added about pass ordering](https://github.com/llvm-mirror/llvm/commit/047904e858cad10493d8c7f7eaa8414996e8013c). It
 turns out that LLVM's default optimisations are tuned for C, and bfc
-massively benefits from running the optimisations again.
+*massively* benefits from running the optimisations again.
 
 In other words:
 
@@ -35,7 +35,7 @@ In other words:
     $ opt -S -O3 raw_ir.ll -o opt_once.ll
     $ opt -S -O3 opt_once.ll -o opt_twice.ll
 
-`opt_twice.ll` was often faster than `opt_once.ll`.
+`opt_twice.ll` was often much faster than `opt_once.ll`!
 
 Reusing the BF benchmark from the
 [previous blog post](/blog/2015/10/18/even-more-bf-optimisations/), we
@@ -60,7 +60,7 @@ not cover it), but reading the source of `llc` and `rustc` shows
 examples. You can see
 [the API calls used by bfc here](https://github.com/Wilfred/bfc/blob/3a7ac4742b54ce6bb3e5fcab35fbf4e4e59736f1/src/llvm.rs#L821-L846).
 
-BENCHMARK HERE
+BENCHMARK HERE (with and without llvm opt)
 
 ## Syntax Errors
 
@@ -109,6 +109,7 @@ bfc now also supports cross-compilation by specifying an LLVM
 target triple:
 
     $ bfc hello_world.bf --target=x86_64-pc-linux-gnu
+
 
 ## Scraping The Bottom Of The Barrel
 
