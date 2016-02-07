@@ -37,11 +37,13 @@ In other words:
 
 `opt_twice.ll` was often much faster than `opt_once.ll`!
 
-Reusing the BF benchmark from the
+After fixing the LLVM passes, and reusing the BF benchmark from the
 [previous blog post](/blog/2015/10/18/even-more-bf-optimisations/), we
-see a significant speedup:
+see a significant speedup on all test programs:
 
-BENCHMARK HERE
+<figure>
+<div id="old-vs-new" style="min-width: 310px; max-width: 800px; height:500px; margin: 0 auto"></div>
+</figure>
 
 ## Short Compile Times
 
@@ -60,7 +62,8 @@ not cover it), but reading the source of `llc` and `rustc` shows
 examples. You can see
 [the API calls used by bfc here](https://github.com/Wilfred/bfc/blob/3a7ac4742b54ce6bb3e5fcab35fbf4e4e59736f1/src/llvm.rs#L821-L846).
 
-BENCHMARK HERE (with and without llvm opt)
+For maximum performance, bfc users can specify `--opt` or `--llvm-opt`
+to produce debug builds with fewer optimisations.
 
 ## Syntax Errors
 
@@ -110,7 +113,6 @@ target triple:
 
     $ bfc hello_world.bf --target=x86_64-pc-linux-gnu
 
-
 ## Scraping The Bottom Of The Barrel
 
 Having implemented all these features, bfc now has the dubious title
@@ -128,3 +130,62 @@ I hope you've enjoyed this series on BF compilation. BF is a fantastic
 playground, and LLVM is an incredible feat of engineering. If you
 encounter a bug or limitation in bfc, don't hesitate to
 [file a bug](https://github.com/Wilfred/bfc/issues/new).
+
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/highcharts/highcharts.js"></script>
+<script src="/bower_components/highcharts/modules/exporting.js"></script>
+
+<script>
+function plot(selector, categories, series, opts) {
+    opts = opts || {};
+    $(selector).highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: null
+        },
+        xAxis: {
+            categories: categories,
+        },
+        yAxis: {
+            min: 0,
+            max: null,
+            title: {
+                text: opts.title,
+                align: 'high'
+            },
+        },
+        tooltip: {
+            valueSuffix: ' seconds',
+            // The default pointFormat but with numbers rounded to 3dp.
+            pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:.3f}</b><br/>'
+        },
+        plotOptions: {
+            bar: {
+            }
+        },
+        exporting: {
+            enabled: false
+        },
+        credits: {
+            enabled: false
+        },
+        series: series
+    });
+}
+
+plot("#old-vs-new",
+     ['mandelbrot', 'factor', 'long', 'hanoi', 'dbfi', 'awib'],
+     [{
+         name: 'v1.3.0',
+         data: [3.71, 0.955, 1.421, 0.071, 10.396, 3.061]
+     }, {
+         name: 'v1.6.0',
+         data: [1.431, 0.343, 0.829, 0.010, 3.469, 1.091]
+     }],
+     {
+         title: 'Runtime in seconds (fastest of 3 runs)'
+     }
+    );
+</script>
