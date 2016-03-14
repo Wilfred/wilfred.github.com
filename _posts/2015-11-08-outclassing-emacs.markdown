@@ -5,29 +5,44 @@ tags:
  - emacs
 ---
 
-Software comes and goes, platforms change, use cases are adapted for
-contemporary usage.
-
-Somehow, Emacs has outlived everything. In an industry that's
+It's bizarre that programmers still use Emacs. In an industry that's
 continually reinventing itself, it's incredible that a 1976 text
 editor is still in active use.
 
-What can Emacs teach us about the design of programming tools? What
-tools will surpass Emacs in the very areas it excels in?
+What can we learn from the design of Emacs? What tools will surpass
+Emacs in the very areas it excels in?
 
-In this blog post, I will explore Emacs' strengths, weaknesses, and
-then look at newer, more potent competitors.
+Let's explore what makes Emacs special, and we'll try to predict which
+tools will eventually beat Emacs at its own game.
+
+## The Hackable Ecosystem
+
+**Property** The Emacs ecosystem is huge and thriving.
+
+Magit, smartparens, undo-tree, skewer-mode/cider, evil, aggressive-indent: people experiment and produce
+incredible projects. Crazy projects: pschoanalyze, nyan progress, 
+
+Huge melting pot of experiments to see what sticks.
+
+Really easy to depend on 
+
+**Competition** Most editors have package managers now (vim, sublime,
+eclipse) and that's a good thing.
+
+However, Atom is something special. Not only is HTML/JS a lingua
+franca for many developers, the package manager is not an
+afterthought. It's well-engineered, modelled on npm, and really easy
+to share projects.
 
 ## Inspect Editor At Point
+
+Have you ever clicked 'Inspect Element' in a web browser? This makes
+it easy to find out what HTML a website uses in its design.
 
 <figure>
     <img src="/assets/inspect_element_chromium.png">
     <figcaption>Inspecting HTML in Chromium</figcaption>
 </figure>
-
-Every browser today allows you inspect the HTML of the webpage you're
-looking at. If you see an interesting web page design, you can see
-what elements are used, and how they're styled.
 
 Emacs provides this for the whole editing experience.
 
@@ -36,7 +51,7 @@ Emacs provides this for the whole editing experience.
     <figcaption>What code runs when we press tab?</figcaption>
 </figure>
 
-This is immensely powerful. We can ask profound questions of the
+This is shockingly powerful. We can ask profound questions of the
 functionality we're using:
 
 Q: What command is run when I press this key?
@@ -54,11 +69,12 @@ want to add new functionality. If we know of any similar commands, we
 can effortless find their source and see how they achieve their
 behaviour.
 
-This isn't limited to functions. Emacs settings are simply variables
-that we can set
+describe-variable, apropos-value
 
 Emacs also encourages docstrings for everything. Settings in Emacs are
-just variables. W
+just variables.
+
+**Competition** Pharo
 
 ## Just an Interpreter!
 
@@ -70,13 +86,7 @@ variable in Emacs[1].
     <figcaption>Modifying settings / setting variables</figcaption>
 </figure>
 
-
-## Emacs Ecosystem
-
-Magit, smartparens, undo-tree, skewer-mode/cider, evil, aggressive-indent: people experiment and produce
-incredible projects. Crazy projects: pschoanalyze, nyan progress, 
-
-Huge melting pot of experiments to see what sticks.
+**Competition** Pharo
 
 ## Emacs Limitations
 
@@ -115,6 +125,8 @@ Maturing: moving away from Scratch's UI, better software engineering
 (cf scratch being removed by gentoo for libjpeg vulnerabilities).
 
 ## Low cognitive load: Zed
+
+Nice simple UI.
 
 ## Closing Thoughts
 
