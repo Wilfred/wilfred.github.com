@@ -7,7 +7,7 @@ I had the pleasure of attending the LLVM Developer Meeting this year
 in Barcelona. Too much happened to describe it all, so I'll just give
 you the highlights.
 
-There were many great talks on a range of topics including: tools that
+There were many great talks on a range of topics, including tools that
 were ready for primetime, practical techniques and blue sky
 research. Some of my favourites were:
 
@@ -23,27 +23,29 @@ was clear and effective. They also showed how to derive simple loop
 optimisations like loop interchange in this system and the more
 sophisticated optimisations they've developed on top.
 
-Rui Ueyama gave a talk on LLD, which has recently added ELF
-support. He gave a very accessible overview of linking algorithms and
-their semantics/performance tradeoffs. Linkers are often black boxes
-ignored by developers, so I enjoyed learning the implementation
-details of the LLVM linker.
+Linkers are a greatly overlooked part of the compiler toolchain, so I
+enjoyed Rui Ueyama's talk on LLD. This was very topical, as LLD has
+had a ton of work of late and
+[ELF support was recently rewritten](http://blog.llvm.org/2015/11/new-elf-linker-from-llvm-project.html). Rui
+also did a deep-dive on linking algorithms and their
+semantics/performance tradeoffs.
 
 Kristof Beryls discussed the challenges of accurate performance
 measurements. When writing compiler optimisations, obtaining reliable
 performance metrics is crucial. Kristof demonstrated how benchmark
-numbers can be misleading, and gave suggestions of how to fix them.
+numbers can be outrageously misleading, and gave suggestions of how to
+fix them.
 
 If you missed any of the talks, they were recorded. They should be
 uploaded to the
-[LLVM youtube account](https://www.youtube.com/channel/UCv2_41bSAa5Y_8BacJUZfjQ)
-(uploads are usually announced on the
+[LLVM YouTube account](https://www.youtube.com/channel/UCv2_41bSAa5Y_8BacJUZfjQ)
+(uploads are announced on the
 [llvm-devmeeting mailing list](http://lists.llvm.org/mailman/listinfo/llvm-devmeeting)).
 
 In addition to the talks, there were plenty of opportunities to mingle
 with people from different parts of the LLVM ecosystem. I met
 academics, compiler engineers from companies large and small, and even
-had dinner with the PS4 compiler team.
+had dinner with the PS4 compiler team!
 
 It was well worth attending, and I'd recommend it to anyone who is
 interested in compiler development. I hope to see you there next year!
