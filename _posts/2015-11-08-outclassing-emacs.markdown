@@ -88,6 +88,10 @@ variable in Emacs[1].
 
 **Competition** Pharo
 
+## A UI that scales
+
+Atom has arbitrary command names and a M-x equivalent.
+
 ## Emacs Limitations
 
 No namespaces.
