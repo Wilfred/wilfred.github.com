@@ -1,41 +1,7 @@
 --- 
 layout: post
-title: "Major Mode Best Practices"
+title: "Tips For Developing Major Modes"
 ---
-
-Emacs today has great tooling to help you develop reliable major modes
-without forcing your favourite libraries on your users.
-
-## Use regexp-opt
-
-As of Emacs 24, `regexp-opt` takes a `'symbols` option. You should write
-your font lock keywords like this:
-
-(defvar cask-mode-font-lock-keywords
-  `((,(regexp-opt
-       ;; Full list taken from http://cask.readthedocs.org/en/latest/guide/dsl.html
-       '("package" "package-file" "files" "depends-on" "development" "source")
-       'symbol)
-     . font-lock-keyword-face)
-
-This has two advantages. By whitelisting keywords, users can quickly
-spot mistakes when editing:
-
-<img src="/assets/cask_incorrect_keyword.png">
-
-This also prevents highlighting substrings that happen to be keywords:
-
-<img src="/assets/cask_highlight_substring.png">
-
-## Use assess
-
-[asses](https://github.com/phillord/assess) is a great library for
-testing your major mode. It provides many useful assertions, which
-provide useful error messages when they fail.
-
-
-
-## Use capf
 
 Major modes are at the heart of Emacs functionality. I recently
 [wrote a mode for Cask files](https://github.com/Wilfred/cask-mode)
@@ -49,6 +15,8 @@ table to highlight strings and comments.
 
 Next, you'll want to highlight keywords. This is a fantastic visual
 cue for users to whether their code is legal.
+
+<img src="/assets/cask_incorrect_keyword.png">
 
 Wherever possible, whitelist syntax. Cask accepts various different
 fetchers, `:git`, `:github`, `:hg` and so on. A lazy solution would be
@@ -70,6 +38,8 @@ This enables commands like `forward-symbol` to do the right thing.
 
 Also, make sure you use `regexp-opt` with symbols (as we said symbols
 before). You don't want substrings highlighted:
+
+<img src="/assets/cask_highlight_substring.png">
 
 There will probably be syntax in your target language that doesn't
 have an obvious suitable face in Emacs. Define your own:
