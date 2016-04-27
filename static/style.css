@@ -267,6 +267,12 @@ pre {
     border: 1px solid #ddd;
 }
 
+.highlight > pre {
+    background-color: inherit;
+    border: 0;
+    margin: 0;
+}
+
 acronym, abbr, span.caps {
     font-size: 1em;
     letter-spacing: .08em;
