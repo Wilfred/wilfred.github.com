@@ -70,25 +70,23 @@ authors didn't bother.
 
 That's all changed with the release of
 [assess](https://github.com/phillord/assess). Assess provides great
-assertions for testing highlighting, indentation 
+assertions with readable error messages.
 
-Finally, you should write tests to verify that indentation and
-highlighting work as intended.
-
-This used to be awkward, but the
-[assess](https://github.com/phillord/assess) library has made writing
-tests much easier. It provides tons of assertions that produce useful
-error messages when they fail.
-
-For example, here's a simple indentation test from [cask-mode]():
+For example, here's a simple indentation test from [cask-mode](https://github.com/Wilfred/cask-mode):
 
 {% highlight common-lisp %}
 (ert-deftest cask-mode-indent-inside-development ()
   "Ensure we correctly indent inside (development ...) blocks."
   (should (assess-indentation=
            'cask-mode
-           "(development\n(depends-on \"foo\"))"
-           "(development\n (depends-on \"foo\"))")))
+           ;; before:
+           "
+(development
+(depends-on \"foo\"))"
+           ;; after:
+           "
+(development
+ (depends-on \"foo\"))")))
 {% endhighlight %}
 
 Highlighting is particularly helped by assess:
@@ -102,15 +100,16 @@ Highlighting is particularly helped by assess:
            "melpa"
            'cask-mode-source-face)))
 {% endhighlight %}
-           
-Here's an example of the assertion error message:
 
+If this test fails, we get a helpful message describing which faces
+were actually used:
+           
 {% highlight common-lisp %}
       #("Face does not match expected value
 	Expected: cask-mode-source-face
 	Actual: font-lock-keyword-face
 	Location: 9
 	Line Context: (source melpa)
-	bol Position: 1
+	bol Position: 1"
 {% endhighlight %}
 
