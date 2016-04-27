@@ -108,7 +108,7 @@ backquote syntax for building expressions. However, we have to be
 careful about our output, and manually generate fresh, uninterned symbols to avoid
 accidental variable capture.
 
-{% highlight lisp %}
+{% highlight common-lisp %}
 (defmacro swap (x y)
   (let ((tmp-sym (gensym)))
     `(let ((,tmp-sym ,x))
@@ -129,7 +129,7 @@ but it still may occur in user code in macro expansions.
 By contrast, the lack of hygiene works really well when we want to
 deliberately capture variables. `each-it` is very readable:
 
-{% highlight lisp %}
+{% highlight common-lisp %}
 (defmacro each-it (list &rest body)
   `(mapc (lambda (it) ,@body) ,list))
 {% endhighlight %}
@@ -152,7 +152,7 @@ Recent versions of newLisp
 [also support expansion macros](http://www.newlisp.org/downloads/newlisp_manual.html#macro),
 but let's explore what f-expressions would look like.
 
-{% highlight lisp %}
+{% highlight common-lisp %}
 ;; swap is already defined in newlisp
 (context 'my-swap)
 (define-macro (my-swap:my-swap x y)
@@ -167,10 +167,11 @@ written normal macros. There's no `macroexpand`, no quasiquotes and
 scoping is dynamic. We don't have the same separation between runtime
 and compiletime, so we can just call `set` directly. 
 
-{% highlight lisp %}
+{% highlight common-lisp %}
 (define-macro (each-it lst)
     (let ((template (list 'dolist (list 'it lst))))
-      ;; args holds all the arguments we haven't bound in our parameter list
+      ;; args holds all the arguments that we
+      ;; haven't bound in our parameter list
       (extend template (args))
       (eval template)))
 {% endhighlight %}

@@ -127,7 +127,7 @@ In [Trifle lisp](https://github.com/Wilfred/trifle), we plan to take
 an explicit approach. We plan to make TCO opt-in, so our power
 function is labelled as requiring TCO.
 
-{% highlight lisp %}
+{% highlight common-lisp %}
 (function to-the-power-of (base exponent accum)
   (if (zero? exponent)
     accum

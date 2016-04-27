@@ -33,13 +33,13 @@ The documentation is excellent (it's generated automatically from the
 test suite), but my favourite feature is the anaphoric macros. Rather
 than writing:
 
-{% highlight lisp %}
+{% highlight common-lisp %}
 (-filter (lambda (x) (> x 10)) (list 8 9 10 11 12))
 {% endhighlight %}
 
 You can simply write an s-expression that is evaluated for each item:
 
-{% highlight lisp %}
+{% highlight common-lisp %}
 (--filter (> it 10) (list 8 9 10 11 12))
 {% endhighlight %}
     
