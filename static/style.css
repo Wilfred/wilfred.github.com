@@ -273,16 +273,6 @@ pre {
     margin: 0;
 }
 
-acronym, abbr, span.caps {
-    font-size: 1em;
-    letter-spacing: .08em;
-    cursor: help;
-}
-
-acronym, abbr {
-    border-bottom: 0.2em solid #ddd;
-}
-
 blockquote {
     margin: 0;
     padding: 0 0 0 15px;
