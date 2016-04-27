@@ -12,12 +12,12 @@ here are my top tips:
 ## Use regexp-opt
 
 As of Emacs 24, `regexp-opt` takes a `'symbols` option. You should write
-your font lock keywords like this:
+your font-lock keywords like this:
 
 {% highlight common-lisp %}
-(defvar cask-mode-font-lock-keywords
+(defvar js-mode-font-lock-keywords
   `((,(regexp-opt
-       '("package" "package-file" "files" "depends-on")
+       '("var" "for" "function" "if" "else")
        'symbol)
      . font-lock-keyword-face)
 {% endhighlight %}
@@ -25,29 +25,52 @@ your font lock keywords like this:
 This has two advantages. By whitelisting keywords, users can quickly
 spot mistakes when editing:
 
-<img src="/assets/cask_incorrect_keyword.png">
+<figure>
+<img src="/assets/mispelled_keyword.png">
+</figure>
 
 This also prevents a classic bug where Emacs highlights substrings
 that happen to be keywords:
 
-<img src="/assets/cask_highlight_substring.png">
+<figure>
+<img src="/assets/keyword_substring.png">
+</figure>
 
 ## (Don't) use company
 
-Company is quickly becoming the most popular completion backend for
-Emacsers. However, not everyone uses it, and ideally you wouldn't
-force company on people who don't use it.
+Company is excellent, and I highly recommend it. However, not all
+Emacsers use company. You don't need to force company on your users.
 
-You can have the best of both worlds by using
-`completion-at-point-functions`. Your completion functionality will
+Instead, you can use `completion-at-point-functions`. Your completion functionality will
 work in stock Emacs, and company users will benefit too through
 `company-capf`.
 
-See racer.el for a great example of this.
+Ah, but what about all the extra annotations you can supply to
+company? We can have our cake and eat it too:
 
-Company is excellent, and 
+{% highlight common-lisp %}
+(defun racer-complete-at-point ()
+  "Complete the symbol at point."
+  (unless (nth 3 (syntax-ppss)) ;; not in string
+    (let* ((bounds (bounds-of-thing-at-point 'symbol))
+           (beg (or (car bounds) (point)))
+           (end (or (cdr bounds) (point))))
+      (list beg end
+            (completion-table-dynamic #'racer-complete)
+            :annotation-function #'racer-complete--annotation
+            :company-prefix-length (racer-complete--prefix-p beg end)
+            :company-docsig #'racer-complete--docsig
+            :company-location #'racer-complete--location))))
+{% endhighlight %}
 
-## Write tests
+## Test with assess
+
+Historically, it's been rather awkward to test major modes. Many
+authors didn't bother.
+
+That's all changed with the release of
+[assess](https://github.com/phillord/assess). Assess provides great
+assertions for testing highlighting, indentation 
 
 Finally, you should write tests to verify that indentation and
 highlighting work as intended.
