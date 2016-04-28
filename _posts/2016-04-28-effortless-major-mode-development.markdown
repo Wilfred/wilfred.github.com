@@ -7,7 +7,7 @@ tags:
 
 It's now easier than ever to write major modes in Emacs. If you
 haven't written a major mode in a while, or you're just starting out,
-here are my top tips:
+here are my three top tips:
 
 ## Use regexp-opt
 
@@ -113,8 +113,9 @@ were actually used:
    bol Position: 1"
 {% endhighlight %}
 
-Do you have any tips for major mode development?
-[Leave a comment on the reddit discussion](#). 
-
-*If you haven't written your first major mode yet, check out
-[adding a new language to Emacs](/blog/2015/03/19/adding-a-new-language-to-emacs/)*.
+These tips are all new things I've learnt writing
+[a new major mode for Cask files](https://github.com/Wilfred/cask-mode). If
+you're just getting started with Emacs development, check out
+[adding a new language to Emacs](/blog/2015/03/19/adding-a-new-language-to-emacs/). Finally,
+if I've missed your favourite tip,
+[leave a comment on the /r/emacs discussion](#)!
