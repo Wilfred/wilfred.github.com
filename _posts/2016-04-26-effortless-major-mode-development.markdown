@@ -18,7 +18,7 @@ your font-lock keywords like this:
 (defvar js-mode-font-lock-keywords
   `((,(regexp-opt
        '("var" "for" "function" "if" "else")
-       'symbol)
+       'symbols)
      . font-lock-keyword-face)
 {% endhighlight %}
 
@@ -105,11 +105,16 @@ If this test fails, we get a helpful message describing which faces
 were actually used:
            
 {% highlight common-lisp %}
-      #("Face does not match expected value
-	Expected: cask-mode-source-face
-	Actual: font-lock-keyword-face
-	Location: 9
-	Line Context: (source melpa)
-	bol Position: 1"
+#("Face does not match expected value
+   Expected: cask-mode-source-face
+   Actual: font-lock-keyword-face
+   Location: 9
+   Line Context: (source melpa)
+   bol Position: 1"
 {% endhighlight %}
 
+Do you have any tips for major mode development?
+[Leave a comment on the reddit discussion](#). 
+
+*If you haven't written your first major mode yet, check out
+[adding a new language to Emacs](/blog/2015/03/19/adding-a-new-language-to-emacs/)*.
