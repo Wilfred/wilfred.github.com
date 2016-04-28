@@ -118,4 +118,4 @@ These tips are all new things I've learnt writing
 you're just getting started with Emacs development, check out
 [adding a new language to Emacs](/blog/2015/03/19/adding-a-new-language-to-emacs/). Finally,
 if I've missed your favourite tip,
-[leave a comment on the /r/emacs discussion](#)!
+[leave a comment on the /r/emacs discussion](https://www.reddit.com/r/emacs/comments/4gwe8a/effortless_major_mode_development/)!
