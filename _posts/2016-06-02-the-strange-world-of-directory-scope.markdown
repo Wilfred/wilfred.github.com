@@ -3,69 +3,99 @@ layout: post
 title: "The Strange World of Directory Scope"
 ---
 
-Most languages today use [lexical scope](#todo). A few older languages
-use [dynamic scope](#todo). Imagine my surprise this week, when debugging a
-[Handlebars](http://www.handlebarsjs.com) template, to find a totally
+Most languages today use
+[lexical scope](https://en.wikipedia.org/wiki/Scope_%28computer_science%29#Lexical_scoping). A
+few older languages use
+[dynamic scope](https://en.wikipedia.org/wiki/Scope_%28computer_science%29#Dynamic_scoping). Imagine
+my surprise this week, when debugging a
+[Handlebars](http://www.handlebarsjs.com) template, finding a totally
 new approach to scope!
 
-In Handlebars, you cannot access variables in outer scopes. Suppose we
+What if we required programmers to access scopes explicitly? Sound
+crazy? In Handlebars, this is a reality!
+
+Handlebars *does not let you access variables in outer scopes*. Suppose we
 have the following context:
 
-    var context = {user: "Alice",
-                   friends: ["Bob", "Charlie", "Diane"]};
-                   
+```js
+var context = {user: "Alice",
+               friends: ["Bob", "Charlie", "Diane"]};
+```
+     
 We can access `user` in the top-level scope:
 
-    This user is {{user}}.
-    
-    ->
-    
-    This user is Alice.
+{% raw %}
+```handlebars
+This user is {{user}}.
+
+renders as:
+
+This user is Alice.
+```
+{% endraw %}
     
 However, we cannot access `user` from `#each` blocks:
 
-    {{#each friends}}
-    {{user}} is friends with {{this}}.
-    {{/each}}
-    
-    ->
-    
-    is friends with Bob.
-    is friends with Charlie.
-    is friends with Diane.
+{% raw %}
+```handlebars
+{{#each friends}}
+{{user}} is friends with {{this}}.
+{{/each}}
 
-Handlebars [provides a solution](#todo), which is a filesystem style
-reference to the parent scope:
+renders as:
 
-    {{#each friends}}
-    {{../user}} is friends with {{this}}.
-    {{/each}}
-    
-    ->
-    
-    Alice is friends with Bob.
-    Alice is friends with Charlie.
-    Alice is friends with Diane.
+is friends with Bob.
+is friends with Charlie.
+is friends with Diane.
+```
+{% endraw %}
+
+Handlebars
+[provides filesystem style syntax](http://handlebarsjs.com/#paths) to
+access the parent scope:
+
+{% raw %}
+```handlebars
+{{#each friends}}
+{{../user}} is friends with {{this}}.
+{{/each}}
+
+renders as:
+
+Alice is friends with Bob.
+Alice is friends with Charlie.
+Alice is friends with Diane.
+```
+{% endraw %}
     
 Wow! I'd believed there was nothing beyond dynamic and lexical
-scoping. I don't know what this scoping technique is called, so I'm
+scoping. I'm not aware of a name for this style of scope, so I'm
 going to call it 'directory scope' for the sake of this post.
 
-Directory scope has some interesting consequences. Firstly, it makes
-refactoring more difficult, since your template is very sensitive to
-context. If you introduce a new block, or move code around, you may
-need to change how you access your variables.
+Directory scope does have its downsides. It makes refactoring more
+difficult, because templates are very sensitive to context. If you
+introduce a new block, or move code around, you may need to change how
+you access your variables.
 
-It has a number of benefits too though. You don't need to worry about
-shadowing variables, because you can still access identically named
-variables in outer scope!
+It has a number of benefits too though. You never need to worry about
+shadowing variables. You can still access variables in outer scopes,
+even if they have the same name! No namespacing required.
 
-If we're not worried about shadowing, we can write new control
-structures with ease. A lisp macro author would worry about hygiene in
-blocks, because they could end up shadowing user-defined variables. A
-Handlebars block author can inject variables with gay abandon. Any
-block could introduce a `user` variable, because the programmer can
-only access outer variables with explicit `../foo`!
+If you're not worried about shadowing, then writing new control
+structures, lisp-style, is easy. A lisp macro author would worry about
+hygiene in blocks, because they could end up shadowing user-defined
+variables.
 
-It's not often simple debugging teaches you entirely new ways to handle
-variable scope.
+A Handlebars block author can inject variables with gay
+abandon. Suppose we defined a `#with-user` block. This could inject a
+`user` variable without breaking any of our code examples above.
+
+The syntax choice is also clever. You can probably guess what `./foo`
+means (access the variable in the current scope) and what `../../foo`
+means (access the variable in the grandparent scope).
+
+This illustrates the value of regularly learning new
+languages. Starting from a bug — why isn't my variable in scope? — I
+ended up a exploring a radically different approach to scoping with a
+fresh set of tradeoffs.
+
