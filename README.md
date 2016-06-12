@@ -11,7 +11,7 @@ You need Jekyll installed:
     
 Start Jekyll:
 
-    $ jekyll serve --watch
+    $ jekyll serve --watch --incremental
 
 Note that changes to `_config.yml` may require restarting the server.
 
