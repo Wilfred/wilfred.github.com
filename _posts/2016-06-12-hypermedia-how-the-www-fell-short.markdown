@@ -3,7 +3,7 @@ layout: post
 title: "Hypermedia: How the WWW fell short"
 ---
 
-Whenever there's a revolution computing, there's a period of wild
+Whenever there's a revolution in computing, there's a period of wild
 experimentation. Ideas are explored, prototypes are built, and
 manifestos are written.
 
@@ -12,20 +12,16 @@ first prototypes. Not everything works well in practice. Some features
 prove difficult to build, are punted to v2, and never get shipped.
 
 The World Wide Web, with its **HyperText** Markup Language, was
-heavily influenced by the ideas of hypermedia. The idea of hyperlinks,
-cross-referencing documents, was radical.
-
-Is it copyright infringement to link to someone else's web page? The
-practice is widely accepted now, but only
-[after a series of court cases contesting this](https://en.wikipedia.org/wiki/Copyright_aspects_of_hyperlinking_and_framing#History_of_copyright_litigation_in_field). It
-was not until 2014 that the European Court of Justice made a binding
-ruling on linking being acceptable.
+heavily influenced by the ideas of hypermedia. The idea of hyperlinks &mdash;
+cross-referencing documents &mdash; was radical. There were even
+[court cases disputing the right to link to content](https://en.wikipedia.org/wiki/Copyright_aspects_of_hyperlinking_and_framing#History_of_copyright_litigation_in_field).
 
 The original concept of
-[hypertext](https://en.wikipedia.org/wiki/Hypertext), particularly the
+[hypertext](https://en.wikipedia.org/wiki/Hypertext) was much more
+ambitious. Early designs, such as the
 [memex](https://en.wikipedia.org/wiki/Memex) and
-[Project Xanadu](https://en.wikipedia.org/wiki/Project_Xanadu), were
-much more ambitious.
+[Project Xanadu](https://en.wikipedia.org/wiki/Project_Xanadu), had a
+richer feature set.
 
 Here's the web they envisaged.
 
@@ -35,15 +31,13 @@ Today's hyperlinks are one-way: when you visit a webpage, you do not
 know what links point to it. You can only see what links start from
 it.
 
-The basic principle of
+It's useful information, enabling the reader to discover related
+pages. Indeed, the basic principle of
 [Google's PageRank](https://en.wikipedia.org/wiki/PageRank) is founded
-on crawling the entire web to find back links.
-
-Bidirectional links are alive and well in Wikipedia, which provides a
-'What links here' feature to discover related topics.
+on crawling the web to find back links. 
 
 <figure>
-<img src="/assets/what_links_here_small.png">
+<img src="/assets/what_links_here.png">
 <figcaption>
 Wikipedia: <a
 href="https://en.wikipedia.org/wiki/Special:WhatLinksHere/PageRank">Pages
@@ -51,9 +45,12 @@ that link to "PageRank"</a>
 </figcaption>
 </figure>
 
+Bidirectional links are alive and well in Wikipedia, which provides a
+'What links here' feature to discover related topics.
+
 ## Transclusion
 
-It's not possible to include one web page in another. You could
+Today's web cannot include one page in another. You could
 manaully scrape the HTML and paste it in, but then you miss out any
 future updates.
 
@@ -147,7 +144,7 @@ document, but fits the common use case.
 <figcaption>
 <a
 href="http://genius.com/">Genius</a>
-highlights <a href="http://genius.com/511238">can link to ranges of text</a>
+highlights can <a href="http://genius.com/511238">link to ranges of text</a>
 </figcaption>
 </figure>
 
@@ -167,5 +164,18 @@ snapshots many websites. For high-profile online news,
 [NewsDiffs](http://newsdiffs.org/) regularly snapshots stories to see
 how articles are edited over time.
 
-Again, this is an example where wikis come closer to the traditional
-idea of hypermedia. 
+This is another example where wikis come closer to the traditional
+idea of
+hypermedia. [https://en.wikipedia.org/wiki/Hypertext](https://en.wikipedia.org/wiki/Hypertext)
+links to the current version of the hypertext article on Wikipedia, whereas
+[https://en.wikipedia.org/w/index.php?title=Hypertext&oldid=722248276](https://en.wikipedia.org/w/index.php?title=Hypertext&oldid=722248276)
+explicitly links to the version at time of writing, regardless of
+future changes.
+
+## Looking Forward
+
+HTML is over 20 years old. We author web pages in this medium, but its
+abilities and limitations
+[shape our content](https://en.wikipedia.org/wiki/The_medium_is_the_message). We
+need to consider what hypermedia can be and design our platforms to
+make the best use of our content.
