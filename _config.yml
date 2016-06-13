@@ -1,3 +1,4 @@
 higlighter: pygments
 permalink: /blog/:year/:month/:day/:title/
 markdown: kramdown
+future: true
