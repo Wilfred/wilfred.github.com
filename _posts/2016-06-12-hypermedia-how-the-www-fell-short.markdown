@@ -103,18 +103,18 @@ personal web page at
 originally linked to www.oclc.org:5046/~shafer, which no longer
 resolves. However, the PURL has been updated, so visitors are now
 redirected to
-[https://docs.google.com/document/d/1tnDck.../](https://docs.google.com/document/d/1tnDck5nVkk6vTVayobIO9cpvyEh6lfNTIcBp8_uDEmg/).
+[docs.google.com/document/d/1tnDck.../](https://docs.google.com/document/d/1tnDck5nVkk6vTVayobIO9cpvyEh6lfNTIcBp8_uDEmg/).
 
-A common form of link rot is page
+A common source of link rot is page
 renaming. [Stack Overflow](http://stackoverflow.com/), a Q&A site,
 includes question titles in URLs. These are often edited to clarify
-the question. Stack Overflow embeds unique question IDs in its URLs to ensure
-old links work.
+the question. Stack Overflow embeds unique question IDs in its URLs to
+ensure old links work.
 
 Thus
-http://stackoverflow.com/questions/37089768/does-pharo-provide-tail-call-optimisation
+[http://stackoverflow.com/questions/37089768/does-pharo-provide-tail-call-optimisation](http://stackoverflow.com/questions/37089768/does-pharo-provide-tail-call-optimisation)
 is the canonical URL, but
-http://stackoverflow.com/questions/37089768/foobar still works.
+[http://stackoverflow.com/questions/37089768/foobar](http://stackoverflow.com/questions/37089768/foobar) still works.
 
 ## Section links
 
@@ -174,8 +174,14 @@ future changes.
 
 ## Looking Forward
 
-HTML is over 20 years old. We author web pages in this medium, but its
-abilities and limitations
-[shape our content](https://en.wikipedia.org/wiki/The_medium_is_the_message). We
-need to consider what hypermedia can be and design our platforms to
-make the best use of our content.
+Should we throw away today's web and rebuild? Certainly not.
+
+The web we have works incredibly well. Its feature set has enabled
+users to write billions of web pages. The technology is standardised
+and there are many mature implementations.
+
+HTML is still a medium where some things are easy and some things are
+not. We should not lose sight of how
+[HTML will affect how we communicate](https://en.wikipedia.org/wiki/The_medium_is_the_message). Instead,
+we should pillage the ideas of the past to make the best use of our
+content today.
