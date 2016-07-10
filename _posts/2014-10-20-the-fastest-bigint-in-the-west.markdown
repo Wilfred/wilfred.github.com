@@ -196,12 +196,15 @@ $('#container').highcharts({
     chart: {
         type: 'bar',
         zoomType: 'y',
+        style: {
+            fontFamily: '"Merriweather", "PT Serif", Georgia, "Times New Roman", serif',
+            fontSize: '15px'
+        }
     },
     title: {
-        text: ''
+        text: null
     },
     xAxis: {
-
         categories: [
             "SBCL 1.2.2",
             "Go 1.3.3",
@@ -225,7 +228,7 @@ $('#container').highcharts({
         },
         labels: {
             style: {
-                fontSize: "16px"
+                fontSize: "15px"
             }
         }
     },
@@ -238,7 +241,7 @@ $('#container').highcharts({
         labels: {
             overflow: 'justify',
             style: {
-                fontSize: "16px"
+                fontSize: "15px"
             }
         }
     },
