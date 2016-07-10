@@ -146,6 +146,9 @@ function plot(selector, categories, series, opts) {
                 fontSize: '15px'
             }
         },
+        title: {
+            text: null
+        },
         xAxis: {
             categories: categories,
             labels: {
