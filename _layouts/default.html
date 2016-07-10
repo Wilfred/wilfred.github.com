@@ -1,67 +1,37 @@
-<!DOCTYPE html> 
-<html> 
- 
-<head> 
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
- 
-	<title>{% if page and page.title %}{{ page.title }} | {% endif %}Wilfred Hughes :: Blog</title> 
- 
-	<link rel="stylesheet" href="/static/min.css" type="text/css" media="all" /> 
-</head> 
- 
-<body> 
-<div id="page"> 
-	<header> 
-		<h1><a href="/">Wilfred Hughes::Blog</a></h1> 
-		<small>programming, language design, and human factors</small> 
- 	</header>
- 
-	<div id="content">
-		{{ content }}
-	</div>
- 
-	<div id="sidebar">
-		<ul>
-			<li id="pages-2" class="widget widget_recent_entries">
-				<h2 class="widgettitle">Recent</h2> 
-				<ul>
-					{% for post in site.posts limit: 5 %}
-					<li class="page_item"><a href="{{ post.url }}">{{ post.title }}</a></li>
-					{% endfor %}
-				</ul> 
-			</li>
-			<li id="recent-posts-2" class="widget widget_pages">
-				<h2 class="widgettitle">Meta</h2> 
-				<ul> 
-					<li><a href="/about">About</a></li>
-					<li><a href="/all_posts">All Posts</a></li>
-				</ul> 
-			</li>
-			<li id="recent-posts-2" class="widget widget_pages">
-				<h2 class="widgettitle">Feed</h2> 
-				<ul> 
-					<li><a type="application/rss+xml" href="/rss.xml">RSS</a></li>
-				</ul> 
-			</li> 
-		</ul>
-	</div>
- 
-</div>
+<!DOCTYPE html>
+<html>
+{% include head.html %}
+<body class="site{% if site.animated %} animated fade-in-down{% endif %}">
+  {% if site.google_tag_manager %}
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id={{ site.google_tag_manager }}"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','{{ site.google_tag_manager }}');</script>
+  {% endif %}
+	{% if site.facebook_comments %}
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId={{ site.facebook_appid }}";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
+	{% endif %}
 
-<script type="text/javascript">
+  <div class="site-wrap">
+    {% include header.html %}
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-3370763-1']);
-  _gaq.push(['_trackPageview']);
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+        {{ content }}
+      </div>
+    </div>
+  </div>
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
- 
+  {% include footer.html %}
 </body>
-
 </html>
