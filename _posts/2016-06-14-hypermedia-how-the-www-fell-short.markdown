@@ -51,7 +51,7 @@ Bidirectional links are alive and well in Wikipedia, which provides a
 ## Transclusion
 
 Today's web cannot include one page in another. You could
-manaully scrape the HTML and paste it in, but then you miss out any
+manually scrape the HTML and paste it in, but then you miss out any
 future updates.
 
 HTML does provide the `<iframe>` tag, but the embedded content does
