@@ -224,13 +224,22 @@ function plot(selector, categories, series, opts) {
     opts = opts || {};
     $(selector).highcharts({
         chart: {
-            type: 'bar'
+            type: 'bar',
+            style: {
+                fontFamily: '"Merriweather", "PT Serif", Georgia, "Times New Roman", serif',
+                fontSize: '15px'
+            }
         },
         title: {
             text: null
         },
         xAxis: {
             categories: categories,
+            labels: {
+                style: {
+                    fontSize: '15px'
+                }
+            }
         },
         yAxis: {
             min: 0,
@@ -239,6 +248,11 @@ function plot(selector, categories, series, opts) {
                 text: opts.title,
                 align: 'high'
             },
+            labels: {
+                style: {
+                    fontSize: '15px'
+                }
+            }
         },
         tooltip: {
             valueSuffix: ' seconds',
