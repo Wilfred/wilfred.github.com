@@ -87,15 +87,15 @@ text:
   index:
     coming_soon: 'Coming soon...'
   contact:
-    email:    'Email Address'
-    content:  'What would you like to say?'
-    subject:  'New submission!'
-    submit:   'Say Hello'
+    email:    'Your email address'
+    content:  'Your message'
+    subject:  'New message from wilfred.me.uk'
+    submit:   'Send'
     ajax:
       sending:  'sending..'
       sent:     'Message sent!'
       error:    'Error!'
-  thanks: 'Thanks for contacting us. We will reply as soon as possible.'
+  thanks: 'Email sent, thanks.'
   og_locale: 'en_GB'
 
 # Build settings
