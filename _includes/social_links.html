@@ -9,7 +9,6 @@
     {% if site.stackoverflow_id %}
       <a class="fa fa-stack-overflow" href="https://stackoverflow.com/users/{{ site.stackoverflow_id }}"></a>
     {% endif %}
-    <a class="fa fa-rss" href="{{ "/feed.xml" | prepend: site.baseurl }}"></a>
     {% if site.twitter_username %}
       <a class="fa fa-twitter" href="https://twitter.com/{{ site.twitter_username }}"></a>
     {% endif %}
@@ -22,9 +21,6 @@
     {% if site.google_plus_id %}
       <a class="fa fa-google-plus" href="https://plus.google.com/{{ site.google_plus_id }}/posts"></a>
     {% endif %}
-    {% if site.email %}
-      <a class="fa fa-envelope" href="mailto:{{ site.email }}"></a>
-    {% endif %}
     {% if site.linkedin_username %}
       <a class="fa fa-linkedin" href="https://www.linkedin.com/in/{{ site.linkedin_username }}"></a>
     {% endif %}
@@ -34,6 +30,7 @@
     {% if site.medium_id %}
       <a class="fa fa-medium" href="https://medium.com/@{{ site.medium_id }}"></a>
     {% endif %}
+    <a class="fa fa-rss" href="{{ "/feed.xml" | prepend: site.baseurl }}"></a>
   </div>
   <div class="right">
     {% if site.bitcoin_url %}
