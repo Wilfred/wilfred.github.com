@@ -83,7 +83,11 @@ text:
   post:
     updated:        'Updated'
     minute_read:    'minute read'
-    related_posts:  'Related Posts'
+
+    # Jekyll doesn't have any default cleverness around finding
+    # related posts. There are plugins, but GitHub only supports
+    # uncustomised Jekyll.
+    related_posts:  'Recent Posts'
   index:
     coming_soon: 'Coming soon...'
   contact:
