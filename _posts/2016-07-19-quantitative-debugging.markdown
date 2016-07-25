@@ -51,21 +51,26 @@ debugging. Let's look at the results!
 
 ## Overview of results
 
-Over the course of ? months, I logged 59 instances of getting stuck on
+Over the course of 14 months, I logged 59 instances of getting stuck on
 a bug.
-
--- plot of bugs over time
 
 I manually categorised these into:
 
-* Misleading error messages
+* Misleading/absent error messages
 * Misunderstandings of the programming language
 * Programming language implementation bugs
 * Lack of a type checker
 * Needed static analysis
-* Confusing APIs
+* Confusing/badly designed APIs
 * Misconfigured tools
-* Tool bugs
+* Tool bugs (todo: this is vague! Only the jenkins bug and
+  influxdb/logstash, bisect test failure)
+* User error
+* Hardware error
+* Poor docs
+* Incorrect use of mutable data
+
+TODO: add: lack of defensive programming?
 
 -- numeric table by category
 
