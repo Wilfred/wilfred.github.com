@@ -31,7 +31,7 @@ we're looking for arithmetic functions:
 suggest.el simply has a list of functions, and tries each one in
 turn. The fact that `+` is syntactically the same as any other
 function is a big help here. We don't need to do any special
-formatting to write infix functions.
+formatting for infix functions.
 
 ## Brute-Force Performance
 
@@ -82,11 +82,12 @@ to guide users into typing in the correct places.
 
 <img src="/assets/suggest_hook.gif">
 
-Finally, as shown above, suggest.el uses
+suggest.el also uses
 [change hooks](https://www.gnu.org/software/emacs/manual/html_node/elisp/Change-Hooks.html)
-to inform the user that they need to re-run `suggest-update`. This
-shows `C-c C-c` (the default keybinding) by default. Just like the
-Emacs tutorial, suggest.el will always use the current keybindings.
+(pictured above) to inform the user that they need to re-run
+`suggest-update`. This shows `C-c C-c` (the default keybinding) by
+default. Just like the Emacs tutorial, suggest.el will always use the
+current keybindings.
 
 ## Choosing Functions
 
@@ -104,7 +105,7 @@ functions, and show them first.
 
 <img src="/assets/suggest_aliases.png">
 
-Suggest.el has to decide which function aliases to show.I've been
+suggest.el has to decide which function aliases to show. I've been
 [convincingly persuaded that predicate functions should use `-p`](https://github.com/bbatsov/projectile/pull/291#issuecomment-38379199),
 so suggest.el prefers those aliases. suggest.el also favours `cl-lib`
 over the popular, but deprecated `cl` (e.g. `cl-first` not `first`).
@@ -127,6 +128,10 @@ types. You're unlikely to find a higher-order function from a random
 example. We also want functions that are characterised by a single
 example. Single-argument predicates aren't much use, since they need
 several examples to demonstrate their behaviour.
+
+We currently have functions for lists, alists, plists, hash tables,
+numbers, strings, symbols and paths. This covers much of my day-to-day
+development, and I've already learnt some new functions!
 
 ## Give It A Try!
 
