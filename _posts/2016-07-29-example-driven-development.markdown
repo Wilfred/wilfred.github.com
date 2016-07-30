@@ -5,12 +5,12 @@ tags:
  - emacs
 ---
 
-"Hey $COLLEAGUE, is there any function that takes a list and returns a
+"Hey $COLLEAGUE, is there any function that takes this list and returns a
 list like this?"
 
 Some functions are hard to Google. It's often easier to speak about
-concrete examples: I have a list `'(foo bar baz)`, and an index `1`,
-and I want a list without that index `'(foo baz)`.
+concrete examples: I have a list `'(x y z)`, and an index `1`,
+and I want a list without the element at that position: `'(x z)`.
 
 <img src="/assets/suggest_el.png">
 
@@ -33,26 +33,26 @@ turn. The fact that `+` is syntactically the same as any other
 function is a big help here. We don't need to do any special
 formatting to write infix functions.
 
-## Performance
+## Brute-Force Performance
 
 suggest.el brute-force searches its list of functions. It ignores
-anything that throws an error, or returns a type different to the type
-requested.
+anything that throws an error, or returns a value different to the
+output requested.
 
 We currently have a list of 140 functions. I was expecting this to be
 slow, but it's instant.
 
-To make matters worse, we need to try every permutation of
-arguments. We want users to discover functions like `nth`, even if
-they get arguments in the wrong order. There are a lot of
-permutations, but typically users only use 1-3 arguments, so it's not
-a problem.
+We also need to try every permutation of arguments, which is
+computationally expensive. We want users to discover functions like
+`nth`, even if they get arguments in the wrong order. There are a lot
+of permutations, but typically users only use 1-3 arguments, so it's
+not a problem.
 
 If suggest.el find a match, then it doesn't try any other
 orderings. This prevents us suggesting both `(+ 2 3)` and `(+ 3 2)` --
 the user would probably prefer the order they've proposed anyway.
 
-## Eval all the way
+## Eval All The Way
 
 suggest.el evals all the expressions given, so users can specify any
 data they like.
@@ -67,7 +67,7 @@ In the above screenshot, note how the suggested expression `(-sum
 copy-pasted. However, we show the final value `=> 9`, so it's clear
 what the function is doing.
 
-## Exploiting the Emacs UI
+## Exploiting The Emacs UI
 
 Emacs makes it easy to build on top of existing functionality.
 
@@ -82,13 +82,15 @@ highlighting. Headings and output also the
 [special property `read-only`](https://www.gnu.org/software/emacs/manual/html_node/elisp/Special-Properties.html#Special-Properties)
 so users only type in the correct places.
 
+<img src="/assets/suggest_hook.gif">
+
 Finally, as shown above, suggest.el uses
 [change hooks](https://www.gnu.org/software/emacs/manual/html_node/elisp/Change-Hooks.html)
 to inform the user that they need to re-run `suggest-update`. This
 shows `C-c C-c` (the default keybinding) by default. Just like the
 Emacs tutorial, suggest.el will always use the current keybindings.
 
-## Choosing functions
+## Choosing Functions
 
 suggest.el has a whitelist of functions that are safe to run. Which
 functions should we include? suggest.el is in a position of
@@ -106,7 +108,7 @@ functions, and show them first.
 
 Choosing between function aliases, and choosing third party packages,
 is tricky. I've
-[been convincingly persuaded that predicate function should use `-p`](https://github.com/bbatsov/projectile/pull/291#issuecomment-38379199),
+been [convincingly persuaded that predicate function should use `-p`](https://github.com/bbatsov/projectile/pull/291#issuecomment-38379199),
 so suggest.el prefers those aliases. suggest.el also favours `cl-lib`
 over the popular, but deprecated `cl` (e.g. `cl-first` not
 `first`). suggest.el includes third-party packages that I consider
@@ -122,4 +124,10 @@ found that functions with a small number of arguments are best. Those
 arguments should be simple types: you're unlikely to 'stumble across' a
 higher-order function from a random example.
 
-## Give it a try!
+## Give It A Try!
+
+suggest.el is [on GitHub](https://github.com/Wilfred/suggest.el),
+[on MELLPA](http://melpa.org/#/suggest), and I would love to hear any
+feedback you may have. You can
+[tweet at me](https://twitter.com/_wilfredh) or
+[file an issue](https://github.com/Wilfred/suggest.el/issues/new).
