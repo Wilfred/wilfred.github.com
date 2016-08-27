@@ -45,7 +45,7 @@ I hope it will also encourage users to write great docstrings for
 their own projects.
 
 Love it? Hate it? Let me know what you think in the
-[/r/rust discussion](#todo).
+[/r/rust discussion](https://www.reddit.com/r/rust/comments/4zw81t/rustdoc_meets_the_selfdocumenting_editor/).
 
 (It's hot off the press, so there will be bugs. If you find one, please
 [file it on GitHub](https://github.com/racer-rust/emacs-racer).)
