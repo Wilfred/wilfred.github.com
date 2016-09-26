@@ -77,12 +77,6 @@ much for CS algorithms: `assoc` with alists was faster than hash
 maps. `save-excursion` is expensive, so we just create temporary
 buffers and dirty them.
 
-Emacs is incredibly customisable: you can even adjust garbage
-collection behaviour within your code! I reduced runtime by 30% by
-setting `gc-cons-percentage` to a higher value, so GC runs less
-frequently. I don't know of many languages that let you
-(non-invasively) tune this.
-
 Finally, we give the user feedback on progress, so they know Emacs
 hasn't hung.
 
