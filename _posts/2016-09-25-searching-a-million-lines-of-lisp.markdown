@@ -7,13 +7,8 @@ tags:
 
 Time for another Emacs adventure!
 
-I got Smalltalk envy again recently. In Smalltalk, I can use the
-finder to find all direct callers of a method ('message sends' in
-Smalltalk jargon).
-
-In Emacs, however, you're outta luck. There's no way to find all the
-callers of a function or macro. Most Emacsers just grab their
-favourite text search tool.
+In Emacs today, there's no way to find all the callers of a function
+or macro. Most Emacsers just grab their favourite text search tool.
 
 We can do better. It just wouldn't be Emacs without a litle fanatical
 tool building. How hard can it be?
@@ -47,45 +42,45 @@ Anyway, I ~~totally ripped off~~ was inspired by similar work in
 moves point to the end of the expression read, and you can use
 `scan-sexps` to find the start of the expression.
 
+## Analysing
+
 ## Performance
 
-After about a week of figuring out how to parse code, I realised that
-Emacs has a **ton** of elisp. My current instance has 750 KLOC loaded,
-and since Emacs lazily loads files, that's only the subset of
-functionality that I use!
+It turns out that Emacs has a **ton** of elisp. My current instance
+has loaded *three quarters of a million lines of code*. Emacs actually
+lazily loads files, so that's only the functionality that I use!
 
-I wanted to parse everything in the current Emacs instance, just like
-Smalltalk. With ~800 files on my `load-path`, my 10 second parser
-wouldn't cut it.
+So, uh, a little optimisation was needed. I wrote a benchmark script
+and learnt how to make elisp fast.
 
-To write fast elisp, you need to do as little as possible. I
-refactored my parsing to only calculate positions when the current
-form might contain a match for the current search.
+refs.el needs to know where it found matches, so users can jump to the
+file at the right position. However, if a form doesn't contain any
+matches, we don't need to do this expensive calculation.
 
-How do we know a form might match? Emacs has a little-known variable
+It turns out we can do even better. Emacs has a little-known variable
 called `read-with-symbol-positions` that will report all the symbols
-read during parsing. If we're looking for function calls to
+read when parsing a form. If we're looking for function calls to
 `some-func`, and there's no reference to the symbol `some-func`, we
 can skip that form entirely.
 
-This brought parsing down to <1 second per file, and I wrote a proper
-benchmark script. I then managed to get another 3-4x speedup with
-careful profiling. 
+When you have unavoidable calculations, you need to use C functions
+wherever possible. So much for CS algorithms: `assoc` with small
+alists was faster than building a hash map with elisp.
 
-C functions are fast, elisp functions are slow. So
-much for CS algorithms: `assoc` with alists was faster than hash
-maps. `save-excursion` is expensive, so we just create temporary
-buffers and dirty them.
+Elisp provides various ways to avoid changing the state of the current
+buffer, particularly `save-excursion` and `with-current-buffer`. This
+bookkeeping is expensive, and refs.el just creates its own temporary
+buffers and dirties them.
 
-Finally, we give the user feedback on progress, so they know Emacs
-hasn't hung.
+Finally, we do the traditional software performance cheat: we show a
+progress bar.
 
 ## Display
 
 We have something that works, and we can search in under 10
 seconds. How do we display results?
 
-I experimented with color, and with underlines, but it quickly became
+I experimented with colour, and with underlines, but it quickly became
 noisy.
 
 The best way to answer UI questions in Emacs is to ask 'what would
