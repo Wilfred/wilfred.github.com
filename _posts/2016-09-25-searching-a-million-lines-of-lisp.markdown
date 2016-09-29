@@ -25,7 +25,7 @@ lisp, you just have... a list. Unadorned.
 I briefly explored writing my own parser before coming to my
 senses. Did you know the following is legal elisp?
 
-```
+{% highlight common-lisp %}
 ;; Variables can start with numbers:
 (let ((0x0 1))
   ;; And a backquote does not have to immediately precede the
@@ -33,7 +33,7 @@ senses. Did you know the following is legal elisp?
   `
   ;; foo
   (+ ,0x0))
-```
+{% endhighlight %}
 
 Cripes.
 
@@ -43,6 +43,44 @@ moves point to the end of the expression read, and you can use
 `scan-sexps` to find the start of the expression.
 
 ## Analysing
+
+OK, we've parsed our code, preserving positions. Which forms actually
+look like function calls?
+
+This requires a little thought. Here are some tricky examples:
+
+{% highlight common-lisp %}
+;; Not references to `foo' as a function.
+(defun some-func (foo))
+(lambda (foo))
+(let (foo))
+(let ((foo)))
+
+;; Calls to `foo'.
+(foo)
+(lambda (x) (foo))
+(let (x) (foo))
+(let ((x (foo))) (foo))
+(funcall 'foo)
+;; Not necessarily a call, but definitely a reference to 
+;; the function `foo'.
+(a-func #'foo)
+{% endhighlight %}
+
+We can't simply walk the list: `(foo)` may or may not be a function
+call, depending on context. We calculate the path taken to get to a
+form, so we have context.
+
+For example, given the code `(let (x) (bar) (setq x (foo)))`, we build a
+path `((setq . 2) (let . 3))` when looking at the `(foo)`. This gives
+us enough context to recognise function calls.
+
+"Aha!", says the experienced lisper. "What about macros?"
+
+refs.el understands a few common macros, and *most* macros just
+evaluate *most* of their arguments. This generally works, but refs.el
+can't understand arbitrary forms. We do provide a `refs-symbol` to
+find all references, regardless of their positions in the form.
 
 ## Performance
 
@@ -79,6 +117,11 @@ progress bar.
 
 We have something that works, and we can search in under 10
 seconds. How do we display results?
+
+<img src="/assets/refs_proto.png">
+
+Initially, we just dumped the form in the results buffer. This loses
+context and puts everything on one line.
 
 I experimented with colour, and with underlines, but it quickly became
 noisy.
