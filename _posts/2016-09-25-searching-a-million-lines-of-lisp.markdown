@@ -10,7 +10,7 @@ Time for another Emacs adventure!
 In Emacs today, there's no way to find all the callers of a function
 or macro. Most Emacsers just grab their favourite text search tool.
 
-We can do better. It just wouldn't be Emacs without a litle fanatical
+We can do better. It just wouldn't be Emacs without a little fanatical
 tool building. How hard can it be?
 
 ## Parsing
@@ -20,7 +20,7 @@ Everyone know how to parse lisp, right? It's just `read`.
 It turns out that a homoiconic language is hard to parse when you want
 to know *where you found the code in the first place*. In a language
 with a separate AST, the AST type includes file positions. In
-lisp, you just have... a list. Unadorned.
+lisp, you just have... a list. No frills.
 
 I briefly explored writing my own parser before coming to my
 senses. Did you know the following is legal elisp?
@@ -37,10 +37,11 @@ senses. Did you know the following is legal elisp?
 
 Cripes.
 
-Anyway, I ~~totally ripped off~~ was inspired by similar work in
-[el-search](https://elpa.gnu.org/packages/el-search.html). `read`
+Anyway, I ~~totally ripped off~~ was inspired by similar functionality
+in [el-search](https://elpa.gnu.org/packages/el-search.html). `read`
 moves point to the end of the expression read, and you can use
-`scan-sexps` to find the start of the expression.
+`scan-sexps` to find the start of the expression. Using this technique
+recursively, you can find the position of every form in a file.
 
 ## Analysing
 
@@ -68,19 +69,24 @@ This requires a little thought. Here are some tricky examples:
 {% endhighlight %}
 
 We can't simply walk the list: `(foo)` may or may not be a function
-call, depending on context. We calculate the path taken to get to a
-form, so we have context.
+call, depending on context. To model context, we build a 'path' that
+describes the contextual position of the current form.
 
-For example, given the code `(let (x) (bar) (setq x (foo)))`, we build a
-path `((setq . 2) (let . 3))` when looking at the `(foo)`. This gives
-us enough context to recognise function calls.
+A path is just a list that shows the first element of all the
+enclosing forms, plus our position within it. For example, given the
+code `(let (x) (bar) (setq x (foo)))`, we build a path `((setq . 2)
+(let . 3))` when looking at the `(foo)`.
 
-"Aha!", says the experienced lisper. "What about macros?"
+This gives us enough context to recognise function calls in normal
+code. "Aha!", says the experienced lisper. "What about macros?"
 
-refs.el understands a few common macros, and *most* macros just
-evaluate *most* of their arguments. This generally works, but refs.el
-can't understand arbitrary forms. We do provide a `refs-symbol` to
-find all references, regardless of their positions in the form.
+Well, elisp-refs understands a few common macros. *Most* macros just
+evaluate *most* of their arguments. This means we can just walk the
+form and spot most function calls.
+
+This isn't perfect, but it works very well in practice. We also
+provide an `elisp-refs-symbol` command that finds all references to a
+symbol, regardless of its position in forms.
 
 ## Performance
 
@@ -91,27 +97,30 @@ lazily loads files, so that's only the functionality that I use!
 So, uh, a little optimisation was needed. I wrote a benchmark script
 and learnt how to make elisp fast.
 
-refs.el needs to know where it found matches, so users can jump to the
-file at the right position. However, if a form doesn't contain any
-matches, we don't need to do this expensive calculation.
+Firstly, **avoid doing work**. elisp-refs needs to know where it found
+matches, so users can jump to the file at the right position. However,
+if a form doesn't contain any matches, we don't need to do this
+expensive calculation at all.
 
-It turns out we can do even better. Emacs has a little-known variable
-called `read-with-symbol-positions` that will report all the symbols
-read when parsing a form. If we're looking for function calls to
-`some-func`, and there's no reference to the symbol `some-func`, we
+Secondly, **find shortcuts**. Emacs has a little-known variable
+called `read-with-symbol-positions`. This variable reports all the
+symbols read when parsing a form. If we're looking for function calls
+to `some-func`, and there's no reference to the symbol `some-func`, we
 can skip that form entirely.
 
-When you have unavoidable calculations, you need to use C functions
-wherever possible. So much for CS algorithms: `assoc` with small
-alists was faster than building a hash map with elisp.
+Thirdly, **use C functions**. CS algorithms says that building a hash
+map gives you fast lookup. In elisp-refs, we use `assoc` with small
+alists, because C functions are fast and most lists weren't big enough
+to benefit from the O(1) lookup.
 
-Elisp provides various ways to avoid changing the state of the current
-buffer, particularly `save-excursion` and `with-current-buffer`. This
-bookkeeping is expensive, and refs.el just creates its own temporary
-buffers and dirties them.
+Fourthly, **write impure functions**. Elisp provides various ways to
+avoid changing the state of the current buffer, particularly
+`save-excursion` and `with-current-buffer`. This bookkeeping is
+expensive, so elisp-refs just creates its own temporary buffers and
+dirties them.
 
-Finally, we do the traditional software performance cheat: we show a
-progress bar.
+When all else fails, **cheat**. elisp-refs reports its progress, which
+doesn't make it faster, but reassures the user.
 
 ## Display
 
@@ -120,18 +129,36 @@ seconds. How do we display results?
 
 <img src="/assets/refs_proto.png">
 
-Initially, we just dumped the form in the results buffer. This loses
-context and puts everything on one line.
+Initially, I just dumped each form in the results buffer. Can we do
+better?
 
-I experimented with colour, and with underlines, but it quickly became
-noisy.
+<img src="/assets/refs_proto2.png">
 
-The best way to answer UI questions in Emacs is to ask 'what would
-magit do?'. Magit, I thought, would use a small number of colours,
-with bold text to highlight headings.
+I changed the file header to include a link to the file, and defined
+some faces for styling. This was an improvement, but it forces all
+Emacs theme authors to add support for the faces defined in our
+package.
 
-I settled on syntax highlighting the result, but treating the rest of
-the search context as a comment. I think this is intuitive, and fits
-whatever funky colour scheme you're using.
+I also added context, so users can see the rest of the line, with the
+matching part underlined.
+
+This is better, but the underline is still noisy.
+
+When I get stuck with UI, I ask *'what would magit do?'*. I decided
+that magit would take advantage of existing Emacs faces.
 
 <img src="/assets/refs_screenshot.png">
+
+The final version carefully unindents each search result, to make the
+results easier to skim.
+
+It uses normal Emacs fontification, but highlights the surrounding
+context as comments. This means it will match your favourite colour
+scheme, and new users should find the UI familiar.
+
+## Wrap-Up
+
+elisp-refs is
+[available on GitHub](https://github.com/Wilfred/elisp-refs.el),
+[available on MELPA](http://melpa.org/#/elisp-refs), and it's ready
+for your use! Go forth, and search your codebases!
