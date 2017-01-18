@@ -14,7 +14,7 @@ love will *just work*.
 If you've ever fancied contributing to core Emacs, this is a great
 opportunity to learn the internals. There's tons of low hanging fruit,
 we have [a list of good first bugs](https://github.com/Wilfred/remacs#help-needed) and even a
-walkthrough of [writing your first elisp function using Rust](https://github.com/Wilfred/remacs#porting-c-functions-to-rust-walkthrough).
+walkthrough of [writing your first elisp function using Rust](https://github.com/Wilfred/remacs#porting-elisp-primitive-functions-walkthrough).
 
 Rust is perfect for this because we can port incrementally. If you
 want to replace the entire regular expression engine, you can do
