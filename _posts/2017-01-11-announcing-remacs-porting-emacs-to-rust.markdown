@@ -1,6 +1,8 @@
 --- 
 layout: post
 title: "Announcing Remacs: Porting Emacs to Rust"
+tags:
+ - emacs
 ---
 
 I am delighted to announce
