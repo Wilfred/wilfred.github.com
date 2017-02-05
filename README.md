@@ -10,11 +10,11 @@ Styling is based on [pixyll](https://github.com/johnotander/pixyll)
 You need Jekyll installed:
 
     $ gem install --user-install bundle
-    $ bundle install
+    $ bundle install --path vendor/bundle
     
 Start Jekyll:
 
-    $ jekyll serve --watch
+    $ bundle exec jekyll serve --watch
 
 Note that changes to `_config.yml` may require restarting the server.
 
