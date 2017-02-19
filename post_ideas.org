@@ -1,0 +1,21 @@
+* Semantic expansion in expand-region
+* Optimising dash.el
+
+** pure declarations
+
+** byte-compiler symbol properties
+
+** TODO making --each use dolist
+   :PROPERTIES:
+   :CREATED:  <2017-02-19 Sun 14:25>
+   :END:
+
+* Dumb text > Smart IDE
+
+** Poor man's refactoring using iedit and symbol syntax knowledge
+
+** Company (greedy vs precise completino)
+
+** Recursive search
+
+Can't use Ctrl+F in a settings page, or a search results buffer in your average IDE
