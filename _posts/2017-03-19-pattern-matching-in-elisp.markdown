@@ -3,16 +3,20 @@ layout: post
 title: "Pattern Matching in Elisp"
 ---
 
-Pattern matching is invaluable in elisp. Data is often passed around
-in lists of a known structure, and manual list access can be verbose.
+Pattern matching is invaluable in elisp. Lists are ubiquitous, and a
+small amount of pattern matching can often replace a ton of verbose
+list fiddling.
 
-Since this is Lisp, we have lots of options! In this post, I will
-compare cl.el,
-pcase.el, [dash.el](https://github.com/magnars/dash.el),
+Since this is Lisp, we have lots of choices! In this post, we'll
+compare
+[cl.el](https://www.gnu.org/software/emacs/manual/cl.html),
+[pcase.el](https://www.gnu.org/software/emacs/manual/html_node/elisp/Pattern-matching-case-statement.html),
+[dash.el](https://github.com/magnars/dash.el),
 and [shadchen](https://github.com/VincentToups/shadchen-el), so you
-can choose the best fit for your project.
+can choose the best fit for your project. We'll look at the most
+common use cases, and end with some recommendations.
 
-For the sake of this post, I will consider both pattern matching and
+For the sake of this post, we'll consider both pattern matching and
 destructuring, as they're closely related concepts.
 
 ## A Simple List
@@ -24,23 +28,30 @@ of our libraries work here:
 (eval-when-compile (require 'cl))
 (cl-destructuring-bind (a b c) (list 1 2 3)
   (+ a b c))
+{% endhighlight %}
 
+{% highlight common-lisp %}
 (pcase (list 1 2 3)
   (`(,a ,b ,c) (+ a b c)))
 ;; Or:
 (pcase-let ((`(,a ,b ,c) (list 1 2 3)))
   (+ a c b))
+{% endhighlight %}
 
+{% highlight common-lisp %}
 (require 'dash)
 ;; Using `-let' with a single value
 (-let [(a b c) (list 1 2 3)]
   (+ a b c))
-;; We can also use `-let' like the `built-in' let,
+
+;; We can also use `-let' like the built-in `let',
 ;; which enables us to add other bindings (`pcase-let'
 ;; can do this too).
 (-let (((a b c) (list 1 2 3)))
   (+ a b c))
+{% endhighlight %}
 
+{% highlight common-lisp %}
 (require 'shadchen)
 (match (list 1 2 3)
   ((list a b c) (+ a b c)))
@@ -51,7 +62,7 @@ of our libraries work here:
 
 Already, we can see some major syntactic
 differences. `cl-destructuring-bind` has a very lightweight syntax.
-`-let` is also lightweight, but has a definite Clojure
+`-let` is also lightweight, and has a definite Clojure
 influence. `pcase` uses a backquote syntax that's familiar if you've
 written macros, and shadchen's `match` uses patterns based
 on
@@ -74,7 +85,9 @@ they require a single matching pattern.
   (`() 0)
   (`(,a) a)
   (`(,a ,b) (+ a b)))
+{% endhighlight %}
 
+{% highlight common-lisp %}
 (require 'shadchen)
 (match (list 1 2)
   ((list) 0)
@@ -104,14 +117,20 @@ skip elements, so naturally this is possible too:
 (eval-when-compile (require 'cl))
 (cl-destructuring-bind (a _ _ d) (list 1 2 3 4)
   (+ a d))
+{% endhighlight %}
 
+{% highlight common-lisp %}
 (pcase (list 1 2 3 4)
   (`(,a ,_ ,_ ,d) (+ a d)))
+{% endhighlight %}
 
+{% highlight common-lisp %}
 (require 'dash)
 (-let [(a _ _ d) (list 1 2 3 4)]
   (+ a d))
+{% endhighlight %}
 
+{% highlight common-lisp %}
 (require 'shadchen)
 (match (list 1 2 3 4)
   ((list a _ _ d) (+ a d)))
@@ -132,7 +151,9 @@ For literals, it's straightforward:
 (pcase (list 1 2)
   (`(0 ,b) b)
   (`(,a ,b) (+ a b)))
+{% endhighlight %}
 
+{% highlight common-lisp %}
 (require 'shadchen)
 (match (list 0 0)
   ((list 0 b) b)
@@ -146,7 +167,9 @@ If we want symbols, it takes a little more care with our quoting:
   (`(x ,b) "Starts with 'x")
   (`(y ,b) "Starts with 'y")
   (`(,a ,b) "Starts with something else"))
+{% endhighlight %}
 
+{% highlight common-lisp %}
 (require 'shadchen)
 (match (list 'x 'y)
   ((list 'x b) "Starts with 'x")
@@ -173,20 +196,26 @@ If you have an explicit cons pair, it may not be a proper list. You
 can match on this instead:
 
 {% highlight common-lisp %}
-;; The docstring for `cl-destructuring-bind' doesn't say what's
-;; possible, but Info node `(cl) Macros' informs us that the syntax is
-;; the same as `cl-defmacro'.
+;; The docstring for `cl-destructuring-bind' doesn't say
+;; what's possible, but Info node `(cl) Macros' informs
+;; us that the syntax is the same as `cl-defmacro'.
 (eval-when-compile (require 'cl))
 (cl-destructuring-bind (a &rest b) (cons 1 2)
   (+ a b))
+{% endhighlight %}
 
+{% highlight common-lisp %}
 (pcase (cons 1 2)
   (`(,a . ,b) (+ a b)))
+{% endhighlight %}
 
+{% highlight common-lisp %}
 (require 'dash)
 (-let [(a . b) (cons 1 2)]
   (+ a b))
+{% endhighlight %}
 
+{% highlight common-lisp %}
 (require 'shadchen)
 (match (cons 1 2)
   ((cons a b) (+ a b)))
@@ -200,12 +229,16 @@ can do this too:
 
 {% highlight common-lisp %}
 (pcase (list 1 2)
-  (`(and (,a ,b) (oddp ,a)) "Two element list starts with odd number")
-  (`(,a ,b) "Other two element list."))
+  (`(and (,a ,b) (oddp ,a))
+   "Two element list starting with an odd number")
+  (`(,a ,b)
+   "Other two element list."))
+{% endhighlight %}
 
+{% highlight common-lisp %}
 (match (list 1 2)
   ((list (? #'oddp a) b)
-   "Two element list starts with odd number")
+   "Two element list starting with an odd number")
   ((list a b)
    "Other two element list."))
 {% endhighlight %}
@@ -226,5 +259,7 @@ manual, which makes up for slightly noisier syntax. It's also widely
 used in Emacs core and some popular Emacs packages, such as magit and
 use-package.
 
-If you're using dash.el already, I'd recommend using `-let`, otherwise
-I'd use pcase.
+Now we've seen some examples, which should you pick? If you're already
+using dash.el in your projects, it's a no-brainer: use `-let`. If not,
+give `pcase` a try: it's built-in, it's used extensively in core, and
+it's the only library that worked in every scenario we looked at.
