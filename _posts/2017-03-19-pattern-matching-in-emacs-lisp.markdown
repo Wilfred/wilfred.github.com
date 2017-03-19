@@ -1,6 +1,6 @@
 --- 
 layout: post
-title: "Pattern Matching in Elisp"
+title: "Pattern Matching in Emacs Lisp"
 ---
 
 Pattern matching is invaluable in elisp. Lists are ubiquitous, and a
