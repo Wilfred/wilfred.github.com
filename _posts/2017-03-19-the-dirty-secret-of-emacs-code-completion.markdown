@@ -48,4 +48,9 @@ mind.
 Are you writing a function with similarly named internal variables?
 dabbrev saw them coming.
 
-Are you working on 
+Are you working on pure text, such as documentation or a commit
+message? dabbrev can still remember `ReallyLongClassName`.
+
+Is your programming language too dynamic to have a good completion
+tool? dabbrev doesn't demand any static analysis.
+
