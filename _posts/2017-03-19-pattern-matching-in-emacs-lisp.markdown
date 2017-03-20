@@ -25,7 +25,6 @@ Let's get started with a list that always has three elements. All four
 of our libraries work here:
 
 {% highlight common-lisp %}
-(eval-when-compile (require 'cl))
 (cl-destructuring-bind (a b c) (list 1 2 3)
   (+ a b c))
 {% endhighlight %}
@@ -114,7 +113,6 @@ A full-featured pattern matching library should include the ability to
 skip elements, so naturally this is possible too:
 
 {% highlight common-lisp %}
-(eval-when-compile (require 'cl))
 (cl-destructuring-bind (a _ _ d) (list 1 2 3 4)
   (+ a d))
 {% endhighlight %}
@@ -199,7 +197,6 @@ can match on this instead:
 ;; The docstring for `cl-destructuring-bind' doesn't say
 ;; what's possible, but Info node `(cl) Macros' informs
 ;; us that the syntax is the same as `cl-defmacro'.
-(eval-when-compile (require 'cl))
 (cl-destructuring-bind (a &rest b) (cons 1 2)
   (+ a b))
 {% endhighlight %}
