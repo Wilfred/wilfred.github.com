@@ -197,7 +197,7 @@ can match on this instead:
 ;; The docstring for `cl-destructuring-bind' doesn't say
 ;; what's possible, but Info node `(cl) Macros' informs
 ;; us that the syntax is the same as `cl-defmacro'.
-(cl-destructuring-bind (a &rest b) (cons 1 2)
+(cl-destructuring-bind (a . b) (cons 1 2)
   (+ a b))
 {% endhighlight %}
 
