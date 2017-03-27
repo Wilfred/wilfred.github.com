@@ -226,7 +226,7 @@ can do this too:
 
 {% highlight common-lisp %}
 (pcase (list 1 2)
-  (`(and (,a ,b) (oddp ,a))
+  ((and `(,a ,b) (guard (oddp a)))
    "Two element list starting with an odd number")
   (`(,a ,b)
    "Other two element list."))
