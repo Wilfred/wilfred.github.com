@@ -74,4 +74,67 @@ the functionality at the C level is used anywhere inside Emacs.
 
 Being Emacsy is about providing an incredible mutable programming
 environment, and things like portably accessing a user's home
-directory are not reallly what Emacs is about.
+directory are not really what Emacs is about.
+
+## Remacs!
+
+So, how is Remacs different?
+
+Remacs is an incremental port of that C code to Rust. Since it's an
+incremental port, we have a working Emacs instance at every stage of
+the project.
+
+Note that Remacs is based on the master branch of GNU Emacs, so
+sometimes we get compatibility bug reports due to GNU Emacs changing
+something on master.
+
+We aim to be a drop-in replacement with bug-for-bug compatibility.
+
+We're also seeking to match or beat GNU Emacs performance. We've
+discussed replacing the `unexec` support, but we've been unwilling to
+move to anything that hurts performance.
+
+I have done a few preliminary benchmarks of Remacs' primitives, and
+performance is definitely no worse. It's possible that it's slightly
+faster, but I would need to measure more and be very careful to do a
+fair comparison.
+
+## Non-Goals
+
+I also want to talk about what Remacs isn't.
+
+Remacs aims to be friendly fork. I have commit privileges on GNU
+Emacs: we haven't fallen out with the core team.
+
+On the contrary, we have hit bugs in in the test suite (#25534) and
+interpreter segfaults (#25684) and we've reported them upstream. We
+want to be positive contributors to the Emacs ecosystem.
+
+Remacs is also not a radical overhaul of the Emacs design. From a
+user's perspective, they might notice that Remacs is slightly faster,
+or more robust (although GNU Emacs very rarely crashes). They might
+also notice that the contribution workflow is different (pull requests on
+GitHub).
+
+Finally, Remacs is not planning to replace Emacs Lisp. We've discussed
+possible changes to the bytecode format, but Remacs should be a
+drop-in alternative implementation of emacs lisp.
+
+## The C Codebase
+
+GNU Emacs is a large and old C codebase. It has code to support DOS,
+SunOS, and even broken malloc implementations.
+
+Remacs will not support these platforms, and that's OK. GNU Emacs
+still exists for your DOS computing needs :)
+
+The C codebase predates `clang-format`, so the code style is not
+always consistent. The GNU Emacs core team is understandably reluctant
+to add `clang-format` as it makes tools like `git-blame` less
+effective.
+
+Remacs uses `rustfmt` for all contributions, because we have that
+luxury.
+
+Contributing to GNU Emacs follows a traditional workflow: you send
+your patches to mailing list. 
