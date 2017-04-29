@@ -137,4 +137,17 @@ Remacs uses `rustfmt` for all contributions, because we have that
 luxury.
 
 Contributing to GNU Emacs follows a traditional workflow: you send
-your patches to mailing list. 
+your patches to mailing list. There is CI
+([emacs-trunk on Hydra](http://hydra.nixos.org/jobset/gnu/emacs-trunk))
+but it's Linux only and after-the-fact (it runs once your changes have
+been accepted). GNU Emacs' tests are written in elisp and don't have
+unit tests at the C level.
+
+To contribute to Remacs, we use GitHub with pull requests. We use
+Travis for PRs, so every PR is checked for Rust compiler warnings, we
+run the Rust unit tests and the whole Emacs test suite on both Linux
+and OS X.
+
+## Why Rust?
+
+
