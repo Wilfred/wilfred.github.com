@@ -150,4 +150,85 @@ and OS X.
 
 ## Why Rust?
 
+Rust is a high performance language that allows you work close to the
+metal, just like C.
 
+Rust does have a learning curve, but it's very approachable: the docs
+and community are both fantastic when you stuck.
+
+Rust also has a package manager with a growing selection of
+libraries available. We can pull libraries for things like HTTP and
+MD5, and focus on what makes Emacs Emacsy. In cases where the Rust
+ecosystem doesn't have the libraries we need, we can factor out
+reusable libraries.
+
+Another big benefit of Rust is that it's safe. Safe Rust code will not
+segfault, nor will safe multithreaded code have data races. As Emacs
+moves towards elisp-level multithreading, Rust can be a huge help
+here.
+
+## A Separate Project
+
+Remacs is a fork that lives on GitHub. This gives us freedom to
+explore different designs and contribution models. This is much like
+GuileEmacs, XEmacs and emacs-jit.
+
+We have a lightweight pull request model. There are now four people
+who can accept PRs, so we're trying to reduce our bus factor.
+
+## Achievements
+
+Our [GitHub repo](https://github.com/Wilfred/remacs) is now at over
+1,000 stars, so there's definitely interest in our project.
+
+We've also been featured on Hacker News,
+Reddit,
+[Phoronix](https://www.phoronix.com/scan.php?page=news_item&px=Remacs-Rust-Emacs),
+[Linux Magazin](http://www.linux-magazin.de/NEWS/Remacs-Rust-Basis-fuer-Emacs) and
+[Golem](https://www.golem.de/news/remacs-rust-basis-fuer-editor-emacs-vorgestellt-1701-125544.html). This
+has helped bring new contributors in.
+
+## Milestones
+
+Remacs now has several elisp primitive functions that are written in
+pure Rust. For example, calling `car`, `cdr`, `+`, `+` or `sin`
+uses Rust implementations.
+
+We've also integrated some Rust libraries. If you calculate a SHA256
+sum or base64 encode a string, Remacs uses Rust libraries that are
+maintained by other Rustaceans.
+
+Finally, Remacs passes almost the entire GNU Emacs test suite on both
+Linux and OS X. (We have a few issues with some EIEIO tests that
+aren't determinstic on Travis.) We've also developed a modest Rust
+unit test suite.
+
+## Packaging
+
+There's now a
+[remacs-git package on the Arch Linux user repository](https://aur.archlinux.org/packages/remacs-git/). If
+you're an EVM user (a great tool for testing elisp against multiple
+Emacs versions),
+[Remacs is now available on EVM](https://github.com/rejeep/evm/pull/81) too!
+
+## Community
+
+We now have a low-traffic
+[dedicated Remacs subreddit](https://www.reddit.com/r/remacs/). We
+will announce news and milestones here.
+
+We've also recently added a [Gitter chatroom](https://gitter.im/remacs-discuss/Lobby).
+If you have questions or want to lurk and see the latest developments,
+feel free to stop by.
+
+## Contribute!
+
+Remacs lives
+at [github.com/wilfred/remacs](https://github.com/Wilfred/remacs) and
+we'd love you to try it.
+
+Our README includes [a walkthrough for writing your first elisp
+primitive in Rust](https://github.com/Wilfred/remacs#porting-elisp-primitive-functions-walkthrough). If
+you've ever fancied hacking on Emacs core, we'd love to have you join us.
+
+We're here to enrich the Emacs ecosystem. Thanks for listening.
