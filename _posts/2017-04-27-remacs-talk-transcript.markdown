@@ -21,7 +21,7 @@ if I'm unclear.
 
 I'm a Python programmer by day, and I write crazy Emacs things by
 night. I've contributed to many elisp projects, so hopefully I've
-benefited your Emacs experience in some small way.
+already benefited your Emacs experience in some small way.
 
 I've committed patches to dash.el, counsel, magit and I even have
 commit rights to GNU Emacs. I believe in Emacs as the most powerful
@@ -62,7 +62,7 @@ We can see that there's a lot more elisp than C in Emacs. Since elisp
 requires fewer lines of code per feature, the vast majority of Emacs
 functionality is written in elisp.
 
-There's still a lof of C here. There's the C code itself, the header
+There's still a lot of C here. There's the C code itself, the header
 files, and build scripts supporting it.
 
 This view is slightly misleading, however. C code doesn't have a
@@ -99,12 +99,10 @@ performance is definitely no worse. It's possible that it's slightly
 faster, but I would need to measure more and be very careful to do a
 fair comparison.
 
-## Non-Goals
+## What Remacs Isn't
 
-I also want to talk about what Remacs isn't.
-
-Remacs aims to be friendly fork. I have commit privileges on GNU
-Emacs: we haven't fallen out with the core team.
+Remacs isn't a hostile fork. I have commit privileges on GNU Emacs: we
+haven't fallen out with the core team.
 
 On the contrary, we have hit bugs in in the test suite (#25534) and
 interpreter segfaults (#25684) and we've reported them upstream. We
@@ -123,7 +121,7 @@ drop-in alternative implementation of emacs lisp.
 ## The C Codebase
 
 GNU Emacs is a large and old C codebase. It has code to support DOS,
-SunOS, and even broken malloc implementations.
+SunOS, and even some broken malloc implementations.
 
 Remacs will not support these platforms, and that's OK. GNU Emacs
 still exists for your DOS computing needs :)
@@ -200,7 +198,7 @@ maintained by other Rustaceans.
 
 Finally, Remacs passes almost the entire GNU Emacs test suite on both
 Linux and OS X. (We have a few issues with some EIEIO tests that
-aren't determinstic on Travis.) We've also developed a modest Rust
+aren't deterministic on Travis.) We've also developed a modest Rust
 unit test suite.
 
 ## Packaging
