@@ -152,7 +152,7 @@ Rust is a high performance language that allows you work close to the
 metal, just like C.
 
 Rust does have a learning curve, but it's very approachable: the docs
-and community are both fantastic when you stuck.
+and community are both fantastic when you are stuck.
 
 Rust also has a package manager with a growing selection of
 libraries available. We can pull libraries for things like HTTP and
