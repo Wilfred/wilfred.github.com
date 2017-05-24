@@ -20,7 +20,7 @@ interpolation too!
 
 {% highlight groovy %}
 def name = "wilfred"
-"hello $wilfred"
+"hello $name"
 {% endhighlight %}
 
 Groovy doesn't stop there, however. Oh no.
