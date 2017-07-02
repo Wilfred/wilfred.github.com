@@ -104,7 +104,7 @@ Converting to a string, then taking the length, does indeed produce
 3.0
 ```
 
-This is doing a breadth-first search of function calls. I've written
+suggest.el is doing a breadth-first search of function calls. I've written
 [several search heuristics](https://github.com/Wilfred/suggest.el/blob/b543b15cbff0d5dfeaebff1f4c9aacab7412a40f/suggest.el#L492-L512)
 and found that a depth of three function calls still gives acceptable
 performance.
