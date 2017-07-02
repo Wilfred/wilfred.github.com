@@ -3,20 +3,20 @@ layout: post
 title: "Synthesising Elisp Code"
 ---
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Just look at this awesome Emacs mode.<br><br>(It&#39;s <a href="https://t.co/wBOvlM0ixK">https://t.co/wBOvlM0ixK</a> and <a href="https://twitter.com/_wilfredh">@_wilfredh</a> did it) <a href="https://t.co/5SV1MgnHJP">pic.twitter.com/5SV1MgnHJP</a></p>&mdash; ☭🚀🐕 Bodil 🐕🚀☭ (@bodil) <a href="https://twitter.com/bodil/status/762770893298950146">August 8, 2016</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
 I've just released v0.3
 of [suggest.el](https://github.com/Wilfred/suggest.el), an Emacs
 package for discovering elisp functions. You supply an example input
 and output, and it makes suggestions.
 
-The initial release was already useful, but v0.3 is now much smarter.
+v0.3 is much smarter, and almost magical in places. Let's take a look.
 
-## what is this, anyway?
+## What is this, anyway?
 
-Communicating what suggest.el does is difficult. Bodil's tweet above
-did a much better job of communicating usage, so I've overhauled the
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Just look at this awesome Emacs mode.<br><br>(It&#39;s <a href="https://t.co/wBOvlM0ixK">https://t.co/wBOvlM0ixK</a> and <a href="https://twitter.com/_wilfredh">@_wilfredh</a> did it) <a href="https://t.co/5SV1MgnHJP">pic.twitter.com/5SV1MgnHJP</a></p>&mdash; ☭🚀🐕 Bodil 🐕🚀☭ (@bodil) <a href="https://twitter.com/bodil/status/762770893298950146">August 8, 2016</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Communicating what suggest.el does is difficult. Bodil's tweet did a
+much better job of communicating usage, so I've overhauled the
 README. It's now full of examples like this:
 
 <blockquote>
@@ -35,47 +35,34 @@ README. It's now full of examples like this:
 
 This helps users get an idea of what they can do with suggest.el.
 
-## let's not segfault Emacs
+## Let's not segfault Emacs
 
 It turns out that brute-forcing elisp primitives can expose
 some nasty Emacs bugs. suggest.el will no longer make your Emacs
 crash, and
 [upstream have fixed the underlying issue](https://debbugs.gnu.org/cgi/bugreport.cgi?bug=25684).
 
-## isn't there a function for that?
+## Isn't there a function for that?
 
 Since the initial release, suggest.el can now suggest 38 additional
 functions. suggest.el is now able to help you find values in a vector,
-convert symbols to strings, and much more besides.
+convert symbols to strings, and much more besides. Serendipitous
+discoveries are now much more likely.
 
-## any number of arguments
+## Any number of arguments
 
 If your input is a list, you might be able to call a function with
 `apply` to get your desired result. Given an input `'(2 3)` and an
 output of `5`, suggest.el can now propose `(apply #'+ '(2 3))`!
 
-## slightly magical
+## Slightly magical
 
-One user commented that suggest.el was very limited because it can't go
-from `'(a b c d)` to `'(a b)`.
+suggest.el had a major limitation: what if you need to combine a few
+functions to get the result you want?
 
-Thinking about the implementation, this seemed like a silly
-request. Why would you expect a *single function* to drop exactly two
-elements?
-
-However, if we search for *sequences* of function calls, we can make this
-user happy!
-
-```emacs-lisp
-;; Inputs (one per line):
-'(a b c d)
-
-;; Desired output:
-'(a b)
-
-;; Suggestions:
-(butlast (butlast '(a b c d))) ;=> '(a b)
-```
+I added a breadth-first search of nested function calls. Using a few
+[judicious search heuristics](https://github.com/Wilfred/suggest.el/blob/b543b15cbff0d5dfeaebff1f4c9aacab7412a40f/suggest.el#L492-L512),
+suggest.el can search for up to three nested function calls.
 
 This proved to be a really fun feature that sometimes produces
 surprising results:
@@ -104,11 +91,6 @@ Converting to a string, then taking the length, does indeed produce
 3.0
 ```
 
-suggest.el is doing a breadth-first search of function calls. I've written
-[several search heuristics](https://github.com/Wilfred/suggest.el/blob/b543b15cbff0d5dfeaebff1f4c9aacab7412a40f/suggest.el#L492-L512)
-and found that a depth of three function calls still gives acceptable
-performance.
-
 Sorting results is still an open problem: suggest.el prefers fewer
 function calls with a crude notion of 'simple' functions.
 
@@ -130,7 +112,7 @@ function calls with a crude notion of 'simple' functions.
 `cl-third` vs `-last-item` vs `(car (last ...))` is largely a matter
 of taste. The last result is entirely silly.
 
-## testing a search
+## Testing the search
 
 I've also written a series of tests to verify that my search returns
 the intended result (in addition to any others). This is really
@@ -154,14 +136,14 @@ ideas, but I often find they produce insight that leads to refactoring
 them away entirely. Time will tell if this macro is worth the
 maintenance.
 
-## outro
-
-suggest.el v0.3 is [available on MELPA](https://melpa.org/#/suggest) and I
-hope it's useful for you.
+## Outro
 
 If you like suggest.el, you'll be blown away
-by [barliman](https://github.com/webyrd/Barliman/). This takes the
+by [Barliman](https://github.com/webyrd/Barliman/). This takes the
 idea of synthesising much much further, and can even generate quines!
 See [this video](https://www.youtube.com/watch?v=er_lLvkklsk) for a
 great demonstration.
+
+suggest.el v0.3 is [available on MELPA](https://melpa.org/#/suggest). If you discover
+some interesting function combinations, I'd love to hear about them!
 
