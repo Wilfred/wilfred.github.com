@@ -9,7 +9,7 @@ Styling is based on [pixyll](https://github.com/johnotander/pixyll)
 
 You need Jekyll installed:
 
-    $ gem install --user-install bundle
+    $ gem install --user-install bundler
     $ bundle install --path vendor/bundle
     
 Start Jekyll:
