@@ -1,6 +1,8 @@
 --- 
 layout: post
 title: "Synthesising Elisp Code"
+tags:
+ - emacs
 ---
 
 I've just released v0.3

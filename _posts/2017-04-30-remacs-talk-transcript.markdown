@@ -1,6 +1,8 @@
 --- 
 layout: post
 title: "Remacs Talk Transcript"
+tags:
+ - emacs
 ---
 
 *This is a transcript of my Remacs talk at the last Emacs meetup. This
