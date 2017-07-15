@@ -11,14 +11,11 @@ Lots has happened since the last Remacs update!
 
 We now have
 a [Gitter chat room](https://gitter.im/remacs-discuss/Lobby)! Do drop
-by if you have any questions or wish to discuss Remacs.
+by if you have any questions or wish to discuss Remacs. There's a
+low traffic [Remacs Subreddit](https://www.reddit.com/r/remacs/) too.
 
-We've also added @jeandudey and @birkenfeld to the GitHub
-collaborators, bringing us to five fine people who can approve your
-pull requests.
-
-If you fancy building Remacs without installing a dev toolchain
-(compilers, C libraries etc), there's now a [docker-compose.yml](https://github.com/Wilfred/remacs/pull/205)
+We've added @jeandudey and @birkenfeld to the GitHub collaborators,
+bringing us to five fine people who can approve your pull requests.
 
 ## Elisp Features
 
@@ -27,41 +24,45 @@ are landing in Remacs
 ([1](https://github.com/Wilfred/remacs/pull/158),
 [2](https://github.com/Wilfred/remacs/pull/227)).
 
-characterp: https://github.com/Wilfred/remacs/pull/170
+We've added a lot new elisp primitive functions:
 
-string-to-unibyte: https://github.com/Wilfred/remacs/pull/210
+Strings: [characterp](https://github.com/Wilfred/remacs/pull/170),
+multibyte conversions
+([1](https://github.com/Wilfred/remacs/pull/210),
+[2](https://github.com/Wilfred/remacs/pull/211),
+[3](https://github.com/Wilfred/remacs/pull/218)), and [comparisons](https://github.com/Wilfred/remacs/pull/217)
 
-multibyte-string-p: https://github.com/Wilfred/remacs/pull/211
+Vectors:
+[basic support](https://github.com/Wilfred/remacs/pull/202/commits/24248b43295f47f32fe6ba0c74cc60c9c18747f9),
+[functions](https://github.com/Wilfred/remacs/pull/213/)
 
-unibyte-char-to-multibyte: https://github.com/Wilfred/remacs/pull/218
+Buffers:
+[basic support](https://github.com/Wilfred/remacs/pull/202/commits/c7f81453a47ae8ebfd9d7e45bb8909b73e87d886), [functions](https://github.com/Wilfred/remacs/pull/215)
 
-string-lessp: https://github.com/Wilfred/remacs/pull/217
+Symbols: [various functions](https://github.com/Wilfred/remacs/pull/224)
 
-vector functions: https://github.com/Wilfred/remacs/pull/213/files
+A much requested feature, adding Rust support to `find-function`, [has
+been added](https://github.com/Wilfred/remacs/pull/203). This was an
+unusual PR as it includes some elisp changes in Remacs.
 
-buffer functions: https://github.com/Wilfred/remacs/pull/215
-
-Porting 'symbol-name', 'fboundp', 'symbol-function', and
-'symbol-plist' to Rust.: https://github.com/Wilfred/remacs/pull/224
-
-find-function can now find the source of primitives written in Rust! https://github.com/Wilfred/remacs/pull/203
-
-We now
-have
+We now have
 [documentation on our compatibility with GNU Emacs](https://github.com/Wilfred/remacs/blob/master/REMACS_COMPATIBILITY.md). This
 covers all known implementation differences, platform support
 differences, and describes how to detect Remacs in elisp code.
 
 ## Cleanup
 
-We've
+Platforms: We've
 [dropped MS-DOS support](https://github.com/Wilfred/remacs/pull/140). Remacs
-now [works again on 32-bit systems]()
+now runs on 32-bit Linux and OS X.
 
-We've also split out the codebase:
+The codebase has been split out:
 
 - remacs-lib (Rust equivalents of gnulib)
-- remacs-sys
+- remacs-sys (type definitions of Emacs types and C functions)
+- remacs-macros (procedural macros supporting elisp primitive
+  functions in Rust)
+- src (Rust implementation code of elisp)
 
 We now
 run [rustfmt on every PR](https://github.com/Wilfred/remacs/pull/151).
@@ -69,10 +70,10 @@ run [rustfmt on every PR](https://github.com/Wilfred/remacs/pull/151).
 Signal name mapping is pure-Rust:
 https://github.com/Wilfred/remacs/pull/165/files
 
-vectors:
-https://github.com/Wilfred/remacs/pull/202/commits/24248b43295f47f32fe6ba0c74cc60c9c18747f9
-buffers:
-https://github.com/Wilfred/remacs/pull/202/commits/c7f81453a47ae8ebfd9d7e45bb8909b73e87d886
+If you fancy building Remacs without installing a dev toolchain
+(compilers, C libraries etc), there's now
+a [docker-compose.yml](https://github.com/Wilfred/remacs/pull/205) to
+make your life easy.
 
 ## Macros
 
@@ -101,3 +102,12 @@ and we've updated:
 https://github.com/Wilfred/remacs/pull/221
 
 xsignal is marked as never returning: https://github.com/Wilfred/remacs/pull/182/files
+
+## Closing Thoughts
+
+There's still lots to do on Remacs: many small elisp functions to port, or
+larger projects to sink your teeth into. We also welcome incomplete
+pull requests: many of the PRs shown here have been built on top of
+initial implementations written by other contributors.
+
+Join the fun at: https://github.com/Wilfred/remacs
