@@ -9,16 +9,50 @@ benefits.
 
 Let's take a look at the black art of making elisp faster.
 
-## Primitives Are Your Friend
+## Measure First!
 
-Chris Wellons has pointed out that `--map` creates an anonymous
-function:
+Chris Wellons has a
+[great optimisation blog post](http://nullprogram.com/blog/2017/01/30/) that
+discusses the performance overhead of creating lambdas with `mapcar`.
+
+If we look at `--map`, it does indeed create anonymous functions:
 
 {% highlight common-lisp %}
 (defmacro --map (form list)
   "Anaphoric form of `-map'."
   `(mapcar (lambda (it) ,form) ,list))
 {% endhighlight %}
+
+
+Creating anonymous functions instantiates a closure, which isn't
+free. Let's write an iterative equivalent:
+
+{% highlight common-lisp %}
+(defmacro --map-loop (form list)
+  (declare (debug (form form)))
+  (let ((result-sym (make-symbol "result")))
+    `(let (,result-sym)
+       (dolist (it ,list)
+         (push ,form ,result-sym))
+       (nreverse ,result-sym))))
+{% endhighlight %}
+
+
+
+| List Length   |          mapcar |   dolist |
+| ------------- | :-------------: |   -----: |
+| 1             |        0.000010 | 0.000028 |
+| 1,000         |          0.0027 |   0.0079 |
+| 100,000       |            0.74 |     1.24 |
+
+Times are in seconds, and the
+[full source is here](https://gist.github.com/Wilfred/d51db0a1433ec4abdbca58a0dec039a5) if
+you want to reproduce my results.
+
+## Primitives Are Your Friend
+
+Chris Wellons has pointed out that `--map` creates an anonymous
+function:
 
 Creating anonymous functions can be slow -- we're instantiating a
 closure. Can we do better?
