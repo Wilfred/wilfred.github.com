@@ -49,9 +49,14 @@ free. Let's write an iterative equivalent:
 [full source is here](https://gist.github.com/Wilfred/d51db0a1433ec4abdbca58a0dec039a5) if
 you want to reproduce my results.)
 
-Other Emacsers have [observed `dolist` outperforming `mapcar`](https://gist.github.com/Wilfred/d51db0a1433ec4abdbca58a0dec039a5#gistcomment-2019226) for
-short lists. It's clearly not a speedup in all situations. `mapcar` is
-primitive, and primitives tend to be fast.
+Surprisingly, `mapcar` is consistently faster in this particular
+benchmark! Other Emacsers have
+[observed `dolist` outperforming `mapcar`](https://gist.github.com/Wilfred/d51db0a1433ec4abdbca58a0dec039a5#gistcomment-2019226) for
+short lists.
+
+`mapcar` is primitive, and primitives tend to be fast. `dolist`
+clearly isn't a speedup in all situations. dash.el is a generic
+library so we can't change anything here.
 
 ## Matching Primitive Performance
 
@@ -78,7 +83,7 @@ peformance we want:
 
 | Approach         | time (seconds) |
 | :----------      |       -------: |
-| custom function  |         0.1399 |
+| wrapper function |         0.1399 |
 | alias            |         0.0055 |
 | use car directly |         0.0050 |
 
@@ -109,18 +114,18 @@ compare the disassembly using `M-x disasemble`.
 
 {% endhighlight %}
 
-These are not the same! There's a `car` bytecode when we
-use the `car` function directly.
+Intriguingly, these are not the same. There's a `car` bytecode that's
+being used with `use-car-directly`.
 
 With a little
 [help from the Emacs Stack Exchange](https://emacs.stackexchange.com/q/30064/304),
-we can see that byte-opt.el looks for `'byte-opt` properties on
-functions. If a function symbol has this property, the byte compiler
+we can see that byte-opt.el looks for `'byte-opcode` properties on
+functions. If a function symbol has this property, the byte-compiler
 will replace the function with custom bytecode.
 
 {% highlight common-lisp %}
-;; Ensure that calls to `-first-item' are compiled to a single opcode,
-;; just like `car'.
+;; Ensure that calls to `-first-item' are compiled to 
+;; a single opcode, just like `car'.
 (put '-first-item 'byte-opcode 'byte-car)
 (put '-first-item 'byte-compile 'byte-compile-one-arg)
 {% endhighlight %}
@@ -129,6 +134,90 @@ This makes performance of `-first-item` indistinguishable from `car`!
 We do lose the ability to advise `-first-item`, but that's not
 possible with `car` either.
 
-## Sufficiently Smart Compilers
+## Leveraging the Byte-Compiler
 
-What about functions that aren't just aliases? Can the byte
+What about functions that aren't just aliases? Can the byte-compiler
+help us here?
+
+It turns out that the byte-compiler can actually calculate values at
+compile time!
+
+Suppose we define a pure function that drops the first two items of a
+list:
+
+{% highlight common-lisp %}
+(defun drop-2 (items)
+  (cdr (cdr items)))
+
+(defun use-drop-2 ()
+  (message "%S" (drop-2 '(1 2 3 4))))
+;; byte code for use-drop-2:
+;; args: nil
+;; 0       constant  message
+;; 1       constant  "%S"
+;; 2       constant  drop-2
+;; 3       constant  (1 2 3 4)
+;; 4       call      1
+;; 5       call      2
+;; 6       return    
+{% endhighlight %}
+
+If we annotate our function as pure, the byte-compiler actually runs
+it at compile time:
+
+{% highlight common-lisp %}
+(defun drop-2-pure (items)
+  (declare (pure t))
+  (cdr (cdr items)))
+
+(defun use-drop-2-pure ()
+  (message "%S" (drop-2-pure '(1 2 3 4))))
+;; byte code for use-drop-2-pure:
+;;   args: nil
+;; 0       constant  message
+;; 1       constant  "%S"
+;; 2       constant  (3 4)
+;; 3       call      2
+;; 4       return    
+{% endhighlight %}
+
+This works because we're calling `drop-2-pure` on a literal, and we
+know the value of literals at compile time.
+
+We can even annotate our functions as having no side effects. In this
+situation, the byte-compiler removes the call entirely:
+
+{% highlight common-lisp %}
+;; eval-and-compile to work around Emacs bug #24863.
+(eval-and-compile
+  (defun drop-2-pure (items)
+    (declare (side-effect-free t))
+    (cdr (cdr items))))
+
+(defun pointless-call-to-drop-2-pure (x)
+  (drop-2-pure x)
+  "foo")
+;; byte code for pointless-call-to-drop-2-pure:
+;;   doc:   ...
+;;   args: (arg1)
+;; 0       constant  "foo"
+;; 1       return    
+{% endhighlight %}
+
+The byte-compiler helpfully reports a warning here too:
+
+    value returned from (drop-2-pure x) is unused
+    
+## Open Source FTW
+
+The latest version of dash.el includes all these improvements, so you
+can simply upgrade to take advantage. If you find yourself needing to
+squeeze every last drop of performance from your elisp, you can follow
+what we've done here:
+
+* benchmark your code (with `benchmark-run` or `profiler-start`)
+* disassemble your functions (with `diassemble`)
+* ask some friendly Emacsers
+  (e.g. the [Emacs Stack Exchange](https://emacs.stackexchange.com/))
+  
+Good luck! May your editing experience never be laggy!
