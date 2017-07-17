@@ -45,9 +45,7 @@ free. Let's write an iterative equivalent:
 | 1,000       |           0.0027 |           0.0079 |
 | 100,000     |             0.74 |             1.24 |
 
-(Times are in seconds, and the
-[full source is here](https://gist.github.com/Wilfred/d51db0a1433ec4abdbca58a0dec039a5) if
-you want to reproduce my results.)
+([Full benchmark code here](https://gist.github.com/Wilfred/d51db0a1433ec4abdbca58a0dec039a5).)
 
 Surprisingly, `mapcar` is consistently faster in this particular
 benchmark! Other Emacsers have
@@ -55,8 +53,7 @@ benchmark! Other Emacsers have
 short lists.
 
 `mapcar` is primitive, and primitives tend to be fast. `dolist`
-clearly isn't a speedup in all situations. dash.el is a generic
-library so we can't change anything here.
+clearly isn't a speedup in all situations. Let's try something else.
 
 ## Matching Primitive Performance
 
@@ -87,7 +84,7 @@ peformance we want:
 | alias            |         0.0055 |
 | use car directly |         0.0050 |
 
-([Full source code here](https://gist.github.com/Wilfred/3ee025116cff82169435262f44bffb0c).)
+([Full benchmark code here](https://gist.github.com/Wilfred/3ee025116cff82169435262f44bffb0c).)
 
 For shame! Our alias still isn't as fast as using the primitive. Let's
 compare the disassembly using `M-x disasemble`.
@@ -162,7 +159,7 @@ list:
 ;; 6       return    
 {% endhighlight %}
 
-If we annotate our function as pure, the byte-compiler actually runs
+If we annotate our function as pure, the byte-compiler helpfully runs
 it at compile time:
 
 {% highlight common-lisp %}
