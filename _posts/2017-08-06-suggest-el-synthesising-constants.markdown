@@ -1,6 +1,8 @@
 --- 
 layout: post
 title: "Suggest.el: Synthesising Constants"
+tags:
+ - emacs
 ---
 
 [Suggest.el](https://github.com/Wilfred/suggest.el) v0.4 is now out,
@@ -77,8 +79,8 @@ Truncating lists:
 {% endhighlight %}
 
 Choosing good values for constants is difficult, but the current set
-seems to be a good tradeoff between performance and the number of useful
-results.
+seems to be a good tradeoff between performance, the likelihood of
+finding a result, and the number of useful results.
 
 ## Ranking Suggestions
 
@@ -137,9 +139,9 @@ float value, for example:
 {% endhighlight %}
 
 Suggest.el previously considered every single way of generating the
-same value, limiting the search space explored. v0.4 only tries each
-unique value 3 times. This allows us to explore more unique
-possibilities, increasing the likelihood of finding a result.
+same value. v0.4 only tries each unique value 3 times. This allows us
+to explore more unique possibilities, increasing the likelihood of
+finding a result before giving up.
 
 ## Literature Review
 
@@ -152,5 +154,7 @@ has benefited from the comparisons. The Smalltalk Finder, for example,
 also explores bitwise operations, so suggest.el does too!
 
 If there are simple code snippets that you think suggest.el should
-find, please [file a bug](https://github.com/Wilfred/suggest.el/issues/new). I'm routinely surprised by the results it
-finds, but I'm sure it could be smarter still.
+find, please
+[file a bug](https://github.com/Wilfred/suggest.el/issues/new). I'm
+routinely surprised by the results it finds, but I'm sure it could be
+smarter still.
