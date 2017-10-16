@@ -1,9 +1,12 @@
 --- 
 layout: post
 title: "These Weeks in Remacs III"
+tags:
+ - emacs
 ---
 
-Time for another Remacs update!
+Time for another Remacs update: lots of contributions, a wide range of
+features, and even a logo!
 
 ## Contributing
 
@@ -143,14 +146,14 @@ layer assumes that it can mutate hash table keys in place, and
 
 ## Logo
 
-Finally, we've had some great submissions for a Remacs logo.
+Finally, we're discussing a logo for Remacs. We've had some great submissions:
 
 <img src="/assets/remacs1.png">
 <img src="/assets/remacs2.png">
 <img src="/assets/remacs3.png">
 <img src="/assets/remacs4.png">
 
-You can find the logo discussion at [PR #360](https://github.com/Wilfred/remacs/pull/360).
+You can join the logo discussion at [PR #360](https://github.com/Wilfred/remacs/pull/360).
 
-Once again, if you fancy writing some Rust in support of the world's
+As always, if you fancy writing some Rust in support of the world's
 lispiest text editor, you can [join us on GitHub](https://github.com/Wilfred/remacs)!
