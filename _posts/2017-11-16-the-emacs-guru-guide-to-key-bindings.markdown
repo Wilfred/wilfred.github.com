@@ -115,13 +115,21 @@ TODO: prefix universally understood
 With all these key bindings already defined, what bindings should
 you use for your personal favourite commands?
 
-Much like IP addresses `192.168.x.x` is reserved for private use
-
-There's also a range of 
-
-Fn key, C-c
+Much like IP addresses `192.168.x.x` is reserved for private use,
+Emacs has
+[keys that are reserved](https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html) for
+user configuration. All the sequences `C-c LETTER`, such as `C-c a`,
+are reserved for your usage, as are `<F5>` through to `<F9>`.
 
 ## Discoverable
+
+What happens when you press `C-a`? Emacs has a wonderful command
+`describe-key` (bound to `C-h k`) that can tell you exactly what
+happens when you press a key.
+
+Type `C-h k C-a` and Emacs will show you:
+
+
 
 C-h k, view lossage, helpful show all bindings, reminder of
 keybindings, ivy shows keybinding
