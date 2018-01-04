@@ -3,52 +3,77 @@ layout: post
 title: "The Emacs Guru Guide to Key Bindings"
 ---
 
-The Emacs Guru Test is stated as:
+The Emacs Guru Test is:
 
 > Imagine that you hold Control and type your name into Emacs. Can you
 > describe what will happen?
 
-Emacs shortcuts (known as 'key bindings') can seem ridiculous to
+Emacs shortcuts (known as 'keybindings') can seem ridiculous to
 beginners. Some Emacsers even argue you should change them on day one.
 
-There's a method to the madness. In this post, I'll describe the logic
-behind the Emacs key bindings. I believe they're worth using.
+They are wrong. In this post, I'll describe the logic behind the Emacs
+keybindings. Not only will be you be closer to passing the guru test,
+but you might even find you don't want to change them!
 
-Memes? Captions?
-
-## Keybindings are Mnemonic
+## There Are *How* Many?
 
 Emacs has a *ton* of keybindings.
 
     ELISP> (length global-map)
     143
+    
+Emacs is a modal editor, so most keybindings are
+mode-specific. However, but my current Emacs instance has well over a
+hundred global shortcuts that work everywhere.
 
-My current Emacs instance has well over a hundred global key
-bindings. Since keymaps are nested data structures, this doesn't even
-count sequences like `C-h C-h`.
+(Keymaps are nested data structures, so this actually undercounts. For
+example, `C-h C-h` and `C-h f` are not counted separately.)
 
-Let's look at some important basic commands:
+Even that is is drop in the bucket compared with how many commands we
+could define keybindings for.
 
-| Command                  | Key Binding |
-| --                       | --          |
-| eXecute-extended-command | M-x         |
-| Next-line                | C-n         |
-| Previous-line            | C-p         |
-| Forward-char             | C-f         |
-| Backward-car             | C-b         |
-| iSearch-forward          | C-s         |
+ELISP> (let ((total 0)) 
+  (mapatoms 
+   (lambda (sym)
+     (when (commandp sym)
+       (setq total (1+ total))))) 
+  total)
+8612
 
-Mnemonics are a really effective way of memorising things. There are
-so many tools inside Emacs that there's no other approach that scales.
+How can we possibly organise all these commands?
+    
+## Mnemonic Keybindings
 
-A great example of this is the Emacs clipboard. A traditional
-application has three commands: cut, copy and paste. This assumes that
-you only have one item in your clipboard.
+Basic commands are often given keybindings based on their name. You'll
+encounter all of these important commands during the tutorial.
+
+| Command                      | Key Binding |
+| --                           | --          |
+| e**X**ecute-extended-command | M-x         |
+| **N**ext-line                | C-n         |
+| **P**revious-line            | C-p         |
+| **F**orward-char             | C-f         |
+| **B**ackward-car             | C-b         |
+| i**S**earch-forward          | C-s         |
+
+Mnemonics are a really effective way of memorising things.
+
+A common objection at this point is that Emacs keybindings don't match
+user's experience. That's unfortunate, but Emacs has too many powerful
+tools to fit them all into the shortcuts you've seen before. Emacs
+keybindings often predate shortcut conventions you might have learn
+from other tools.
+
+The clipboard is great example of this. You're probably used to `C-x`,
+`C-c` and `C-v` for cut, copy and paste.
+
+Emacs' clipboard is way more general. You can:
 
 Emacs doesn't have this limitation: its clipboard is a linked list (a
 ring). You can:
 
-* `kill`: remove text and insert it into the `kill-ring` (like cut)
+* `kill`: remove text and insert it into the `kill-ring`. This is like
+  cut, but you can do it multiple times and join or multiple.
 * `kill-ring-save`: copy the selected text into the `kill-ring` (like
   copy)
 * `yank`: insert text from the `kill-ring` (like paste)
@@ -82,6 +107,8 @@ Moving to the end of something:
 | move-end-of-line | C-e         |
 | forward-sentence | M-e         |
 | end-of-defun     | C-M-e       |
+
+Transposing!
 
 Deleting characters after the cursor (known as 'point' in Emacs
 terminology):
