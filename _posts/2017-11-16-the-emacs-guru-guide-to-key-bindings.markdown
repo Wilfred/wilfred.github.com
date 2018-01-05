@@ -3,17 +3,17 @@ layout: post
 title: "The Emacs Guru Guide to Key Bindings"
 ---
 
-The Emacs Guru Test is:
-
 > Imagine that you hold Control and type your name into Emacs. Can you
 > describe what will happen?
+>
+> -- The 'Emacs Guru Test'
 
 Emacs shortcuts (known as 'keybindings') can seem ridiculous to
 beginners. Some Emacsers even argue you should change them on day one.
 
 They are wrong. In this post, I'll describe the logic behind the Emacs
-keybindings. Not only will be you be closer to passing the guru test,
-but you might even find you don't want to change them!
+    keybindings. Not only will be you be closer to passing the guru test,
+but you might even find you like some of the defaults!
 
 ## There Are *How* Many?
 
@@ -26,26 +26,26 @@ Emacs is a modal editor, so most keybindings are
 mode-specific. However, but my current Emacs instance has well over a
 hundred global shortcuts that work everywhere.
 
-(Keymaps are nested data structures, so this actually undercounts. For
+(Keymaps are nested data structures, so this actually undercounts! For
 example, `C-h C-h` and `C-h f` are not counted separately.)
 
 Even that is is drop in the bucket compared with how many commands we
 could define keybindings for.
 
-ELISP> (let ((total 0)) 
-  (mapatoms 
-   (lambda (sym)
-     (when (commandp sym)
-       (setq total (1+ total))))) 
-  total)
-8612
-
+    ELISP> (let ((total 0)) 
+      (mapatoms 
+       (lambda (sym)
+         (when (commandp sym)
+           (setq total (1+ total))))) 
+      total)
+    8612
+    
 How can we possibly organise all these commands?
     
 ## Mnemonic Keybindings
 
 Basic commands are often given keybindings based on their name. You'll
-encounter all of these important commands during the tutorial.
+encounter all of these important commands in the Emacs tutorial.
 
 | Command                      | Key Binding |
 | --                           | --          |
@@ -56,39 +56,11 @@ encounter all of these important commands during the tutorial.
 | **B**ackward-car             | C-b         |
 | i**S**earch-forward          | C-s         |
 
-Mnemonics are a really effective way of memorising things.
+Mnemonics are a really effective way of memorising things. If you can
+remember the name of the command, you can probably remember the
+keybinding too.
 
-A common objection at this point is that Emacs keybindings don't match
-user's experience. That's unfortunate, but Emacs has too many powerful
-tools to fit them all into the shortcuts you've seen before. Emacs
-keybindings often predate shortcut conventions you might have learn
-from other tools.
-
-The clipboard is great example of this. You're probably used to `C-x`,
-`C-c` and `C-v` for cut, copy and paste.
-
-Emacs' clipboard is way more general. You can:
-
-Emacs doesn't have this limitation: its clipboard is a linked list (a
-ring). You can:
-
-* `kill`: remove text and insert it into the `kill-ring`. This is like
-  cut, but you can do it multiple times and join or multiple.
-* `kill-ring-save`: copy the selected text into the `kill-ring` (like
-  copy)
-* `yank`: insert text from the `kill-ring` (like paste)
-* ``yank-pop`: replace the previously yanked text with the next item
-  in the kill ring (no equivalent!)
-  
-This just doesn't fit neatly in the conventional cut/copy/paste key
-bindings. The Emacs keybindings (which predate the convention of
-`C-x` as cut) fit the Emacs terminology and ensure each command is
-conveniently accessible.
-
-(If you have your heart set on `C-x`, `C-c`, `C-v`, there's is CUA
-mode. Emacs won't judge you.)
-
-## Organised
+## Organised Keybindings
 
 Many Emacs movement commands are laid out in a consistent pattern. 
 
@@ -108,15 +80,14 @@ Moving to the end of something:
 | forward-sentence | M-e         |
 | end-of-defun     | C-M-e       |
 
-Transposing!
+Transposing, which swaps text either side of the cursor:
 
-Deleting characters after the cursor (known as 'point' in Emacs
-terminology):
+| Command         | Key Binding |
+| --              | --          |
+| transpose-chars | C-t         |
+| transpose-words | M-t         |
+| transpose-sexps | C-M-t       |
 
-| Command     | Key Binding |
-| --          | --          |
-| delete-char | C-d         |
-| delete-word | M-d         |
 
 Killing text:
 
@@ -126,7 +97,9 @@ Killing text:
 | kill-sentence | M-k         |
 | kill-sexp     | C-M-k       |
 
-The general pattern here is that `C-whatever` commands tend to be
+Have you spotted the pattern?
+
+The pattern here is that `C-whatever` commands are usually
 small, dumb text operations. `M-whatever` commands are larger, and
 usually operate on words.
 
@@ -135,7 +108,45 @@ understand the code they're looking at, and operate on whole
 expressions. Emacs uses the term 'sexp' (s-expression), but these
 commands usually work in any programming language!
 
-TODO: prefix universally understood
+## Discovering Keybindings
+
+What happens when you press `C-a`? Emacs can tell you. `C-h k C-a`
+will show you exactly what command is run.
+
+You can also do this backwards. If Emacs has done something
+unexpected, `C-h l` will reveal what the command was, and exactly
+which keys triggered it.
+
+Screenshots.
+
+## Room for Emacs
+
+Why are Emacs keybindings different from conventional shorcuts? Why
+doesn't `C-c` copy text to the clipboard, like many other programs?
+
+Emacs uses mnemonics for its clipboard commands: you 'kill' and 'yank'
+text, so the keybindings are are `C-k` and `C-y`. If you really want,
+you can use
+[cua-mode](https://www.gnu.org/software/emacs/manual/html_node/emacs/CUA-Bindings.html) so
+`C-x` acts as you expect.
+
+The problem is that Emacs commands are too versatile, too general to
+fit in the usual `C-x`, `C-c`, `C-v`. Emacs has *four* clipboard
+commands:
+
+* `kill`: remove text and insert it into the `kill-ring`. This is like
+  clipboard cut, but you can do it multiple times and Emacs will *remember
+  every item in your clipboard*.
+* `kill-ring-save`: copy the selected text into the `kill-ring`. This
+  is like clipboard copy, but you can also do this multiple times.
+* `yank`: insert text from the `kill-ring`. This is like clipboard paste.
+* ``yank-pop`: replace the previously yanked text with the next item
+  in the kill ring. There is no equivalent in a single-item clipboard!
+
+The generality of Emacs means that it's hard to find a keybinding for
+everything. Keybindings tend to be slightly longer as a result:
+opening a file is `C-x C-f`, an additional keystroke over the `C-o` of
+other programs.
 
 ## Room for you
 
@@ -148,26 +159,21 @@ Emacs has
 user configuration. All the sequences `C-c LETTER`, such as `C-c a`,
 are reserved for your usage, as are `<F5>` through to `<F9>`.
 
-## Discoverable
+## You Make The Rules
 
-What happens when you press `C-a`? Emacs has a wonderful command
-`describe-key` (bound to `C-h k`) that can tell you exactly what
-happens when you press a key.
+This doesn't mean that you should never modify keybindings. Emacsers
+create weird and wonderful (evil, hydra, god-mode) ways of mapping
+keys all the time.
 
-Type `C-h k C-a` and Emacs will show you:
+Emacs will even try to accommodate this. If you open the tutorial
+after changing a basic keybinding, it will try to suggest the correct
+keys!
 
+The secret to mastering Emacs is to remember everything is
+self-documenting. Learn the help commands to find out which commands
+are set up by default. Consider *following* the existing patterns when
+you define new commands. `org-mode`, for example, redefines `C-M-t` to
+transpose org elements.
 
-
-C-h k, view lossage, helpful show all bindings, reminder of
-keybindings, ivy shows keybinding
-
-Everything is a keybinding, even normal letters.
-
-## Flexible
-
-Anything can be changed. Emacs tutorial will even update if you change
-keybindings
-
-Ultimately, learn help commands, then learn the patterns. Even as your
-preferences evolve and you tailor Emacs to you, you will benefit
-hugely from organising things into patterns.
+Once you understand the patterns, you'll know when to follow and when
+to break them, and you'll be much closer to passing that guru test.
