@@ -134,13 +134,13 @@ The problem is that Emacs commands are too versatile, too general to
 fit in the usual `C-x`, `C-c`, `C-v`. Emacs has *four* clipboard
 commands:
 
-* `kill`: remove text and insert it into the `kill-ring`. This is like
+1. `kill`: remove text and insert it into the `kill-ring`. This is like
   clipboard cut, but you can do it multiple times and Emacs will *remember
   every item in your clipboard*.
-* `kill-ring-save`: copy the selected text into the `kill-ring`. This
+2. `kill-ring-save`: copy the selected text into the `kill-ring`. This
   is like clipboard copy, but you can also do this multiple times.
-* `yank`: insert text from the `kill-ring`. This is like clipboard paste.
-* ``yank-pop`: replace the previously yanked text with the next item
+3. `yank`: insert text from the `kill-ring`. This is like clipboard paste.
+4. `yank-pop`: replace the previously yanked text with the next item
   in the kill ring. There is no equivalent in a single-item clipboard!
 
 The generality of Emacs means that it's hard to find a keybinding for
