@@ -9,18 +9,21 @@ title: "The Emacs Guru Guide to Key Bindings"
 > -- The 'Emacs Guru Test'
 
 Emacs shortcuts (known as 'key bindings') can seem ridiculous to
-beginners. Some Emacsers even argue you should change them on day one.
+beginners. Some Emacs users even argue you should change them as soon
+as you start using Emacs.
 
 They are wrong. In this post, I'll describe the logic behind the Emacs
-key bindings. Not only will be you be closer to passing the guru test,
+key bindings. Not only will you be closer to passing the guru test,
 but you might even find you like some of the defaults!
 
 ## There Are *How* Many?
 
 Emacs has a *ton* of key bindings.
 
-    ELISP> (length global-map)
-    143
+{% highlight common-lisp %}
+ELISP> (length global-map)
+143
+{% endhighlight %}
     
 Emacs is a modal editor, so most key bindings are
 mode-specific. However, my current Emacs instance has well over a
@@ -29,20 +32,22 @@ hundred global shortcuts that work everywhere.
 (Keymaps are nested data structures, so this actually undercounts! For
 example, `C-h C-h` and `C-h f` are not counted separately.)
 
-Even that is is drop in the bucket compared with how many commands we
+Even that is a drop in the bucket compared with how many commands we
 could define key bindings for.
 
-    ELISP> (let ((total 0)) 
-      (mapatoms 
-       (lambda (sym)
-         (when (commandp sym)
-           (setq total (1+ total))))) 
-      total)
-    8612
+{% highlight common-lisp %}
+ELISP> (let ((total 0))
+  (mapatoms
+   (lambda (sym)
+     (when (commandp sym)
+       (setq total (1+ total)))))
+  total)
+8612
+{% endhighlight %}
     
 How can we possibly organise all these commands?
     
-## Mnemonic Keybindings
+## Mnemonic Key Bindings
 
 Basic commands are often given key bindings based on their name. You'll
 encounter all of these important commands in the Emacs tutorial.
@@ -58,9 +63,9 @@ encounter all of these important commands in the Emacs tutorial.
 
 Mnemonics are a really effective way of memorising things. If you can
 remember the name of the command, you can probably remember the
-keybinding too.
+key binding too.
 
-## Organised Keybindings
+## Organised Key Bindings
 
 Many Emacs movement commands are laid out in a consistent pattern. 
 
@@ -108,7 +113,7 @@ understand the code they're looking at, and operate on whole
 expressions. Emacs uses the term 'sexp' (s-expression), but these
 commands usually work in any programming language!
 
-## Discovering Keybindings
+## Discovering Key Bindings
 
 What happens when you press `C-a`? Emacs can tell you. `C-h k C-a`
 will show you exactly what command is run.
@@ -126,7 +131,7 @@ what the command was, and exactly which keys triggered it.
 
 <img src="/assets/view_lossage.png">
 
-## Room for Emacs
+## Room For Emacs
 
 Why are Emacs key bindings different from conventional shortcuts? Why
 doesn't `C-c` copy text to the clipboard, like many other programs?
@@ -141,21 +146,22 @@ The problem is that Emacs commands are too versatile, too general to
 fit in the usual `C-x`, `C-c`, `C-v`. Emacs has *four* clipboard
 commands:
 
-1. `kill`: remove text and insert it into the `kill-ring`. This is like
-  clipboard cut, but you can do it multiple times and Emacs will *remember
-  every item in your clipboard*.
-2. `kill-ring-save`: copy the selected text into the `kill-ring`. This
+1. `kill`: remove text and insert it into the kill-ring. This is like
+  clipboard cut, but you can do it multiple times and Emacs will
+  *remember every item in your clipboard*.
+2. `kill-ring-save`: copy the selected text into the kill-ring. This
   is like clipboard copy, but you can also do this multiple times.
-3. `yank`: insert text from the `kill-ring`. This is like clipboard paste.
+3. `yank`: insert text from the kill-ring. This is like clipboard
+   paste.
 4. `yank-pop`: replace the previously yanked text with the next item
   in the kill ring. There is no equivalent in a single-item clipboard!
 
-The generality of Emacs means that it's hard to find a keybinding for
-everything. Keybindings tend to be slightly longer as a result:
+The generality of Emacs means that it's hard to find a key binding for
+everything. Key bindings tend to be slightly longer as a result:
 opening a file is `C-x C-f`, an additional keystroke over the `C-o` of
 other programs.
 
-## Room for you
+## Room For You
 
 With all these key bindings already defined, what bindings should
 you use for your personal favourite commands?
@@ -187,9 +193,10 @@ after changing a basic key binding, it will update accordingly!
 
 The secret to mastering Emacs is to remember everything is
 self-documenting. Learn the help commands to find out which commands
-are set up by default. Consider *following* the existing patterns when
-you define new key bindings or override existing ones. `org-mode`, for
-example, redefines `C-M-t` to transpose org elements.
+have default key bindings. Consider *following* the existing patterns
+when you define new key bindings or override existing
+ones. `org-mode`, for example, redefines `C-M-t` to transpose org
+elements.
 
 Once you understand the patterns, you'll know when to follow and when
-to break them, and you'll be much closer to passing that guru test.
+to break them. You'll also be much closer to passing that guru test!
