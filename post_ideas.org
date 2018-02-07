@@ -19,3 +19,26 @@
 ** Recursive search
 
 Can't use Ctrl+F in a settings page, or a search results buffer in your average IDE
+
+* Go: Simple, Not easy
+
+Funky syntax.
+
+Copying gotchas.
+
+OO model is nice.
+
+Amenable to static analysis.
+
+Privacy model is elegant.
+
+* Quantitative Debugging
+
+* Paper review: MS Paper on survey of dev attitudes to static analysis tools
+* Still betting on Jenkins
+
+blue ocean
+
+pipeline ecosystem
+
+plugins are immature
