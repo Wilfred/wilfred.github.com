@@ -1,6 +1,8 @@
 --- 
 layout: post
 title: "The Emacs Guru Guide to Key Bindings"
+tags:
+ - emacs
 ---
 
 > Imagine that you hold Control and type your name into Emacs. Can you
