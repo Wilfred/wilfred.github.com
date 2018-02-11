@@ -25,10 +25,3 @@ GitHub
 so you may find
 [the travis build results](https://travis-ci.org/Wilfred/wilfred.github.com)
 useful.
-
-## Known gotchas
-
-Syntax highlighting fails if `python` doesn't point to a
-Python 2.x executable (see
-[octopress/1028](https://github.com/imathis/octopress/issues/1028),
-amongst others).
