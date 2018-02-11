@@ -20,7 +20,7 @@ The most obvious catnip language
 is [BF](https://en.wikipedia.org/wiki/Brainfuck). Despite
 having
 [many implementations](https://esolangs.org/wiki/Brainfuck_implementations),
-BF programmers [encourage the implementers to actually try using the language](http://www.hevanet.com/cristofd/brainfuck/epistle.html)
+BF programmers have to [encourage the implementers to actually try using the language](http://www.hevanet.com/cristofd/brainfuck/epistle.html).
 
 Scheme is another classic catnip language. Wikipedia
 lists
@@ -34,11 +34,12 @@ though.
 
 The problem seems to be languages **where the implementation is
 interesting**. [Shen](http://www.shenlanguage.org/), is a powerful
-multiparadigm lisp defined in terms of an [elegant base language with
-only 46 system functions](http://www.shenlanguage.org/learn-shen/shendoc.htm#Kl). This
-has resulted in a remarkable
+multiparadigm lisp defined in terms of an
+[elegant base language](http://www.shenlanguage.org/learn-shen/shendoc.htm#Kl) with
+only 46 system functions. This has resulted in a remarkable
 [15 third-party implementations](https://github.com/Shen-Language/wiki/wiki#ports),
-but [only a small number of libraries implemented in the lnaguage](http://www.shenlanguage.org/library.html).
+but
+[only a small number of libraries implemented in the lnaguage](http://www.shenlanguage.org/library.html).
 
 Catnip languages are not limited to lisps. Forth is also a language
 that developers often prefer to implement rather than
