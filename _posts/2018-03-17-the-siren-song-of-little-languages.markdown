@@ -1,6 +1,6 @@
 --- 
 layout: post
-title: "Catnip Programming Languages"
+title: "The Siren Song of Little Languages"
 ---
 
 Some programming languages languish due to obscurity. They lack
