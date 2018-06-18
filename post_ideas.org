@@ -1,3 +1,42 @@
+* elisp-def
+* mypy retrospective
+
+bad state after failed type check
+
+team felt it adds verbosity
+
+the extras package is very important, painful without it
+
+horrible monkey patching in places
+
+driven by dropbox's needs, guido supported
+
+distributing types is still not a solved problem
+
+package coverage is poor (e.g. no mock on python 2)
+
+reveal_type is cool
+
+weird quasi-syntax in comments -- syntax errors stop all progress
+
+limits package usage (e.g. couldn't use sh)
+
+only caught a few bugs
+- mostly None dereferences
+
+lovely for refactoring (adding an extra argument), and ipython/IDEs are gradually taking
+advantage of the annotation info
+
+guarantees are not very strong
+- ~in~ basically ignores typing
+- ~type: ignore~ is dangerous
+- empty functions can be any type!
+- easy to get caught out by unicode/string interpolation differences
+
+optionality is nice
+- choose whether to worry about None
+- don't both annotating types on tests
+
 * Semantic expansion in expand-region
 * Optimising dash.el
 
@@ -11,6 +50,8 @@
    :END:
 
 * Dumb text > Smart IDE
+
+Similarly, dumb-jump is very Emacsy.
 
 ** Poor man's refactoring using iedit and symbol syntax knowledge
 
@@ -42,3 +83,27 @@ blue ocean
 pipeline ecosystem
 
 plugins are immature
+* Type systems don't exist
+
+Better to think about collections of features.
+
+Go-to definition (impossible in Python, e.g. the sh library)
+
+Code completion on typing . (doesn't require type safety, cf Go)
+
+Finding incompatible function composition (common in statically typed languages, but eslint on underscore can do this too)
+
+Requiring local variable annotation (old C++, pre Java 10): enhances
+local reasoning, affects variable names, affects development without
+IDE support, increases verbosity
+
+Requiring function type annotation: aids tooling, prevents surprising
+action at a distance (e.g. Haskell)
+
+Requiring effect annotations (Haskell IO, checked exceptions in Java,
+nothrow in C++, possibly elixir/nim?)
+
+Enabling optimisations (possible in C++, LLVM, Rust, Julia, not
+possible in type-erased Java)
+
+completeness checking with unions / case statements.
