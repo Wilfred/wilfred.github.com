@@ -1,26 +1,22 @@
 --- 
 layout: post
-title: "Helpful v0.11 Released"
+title: "Helpful: One Year On"
 ---
 
-[Helpful](https://github.com/Wilfred/helpful) has benefited from lots
-of users trying it, making suggestions, and filing bugs. It's now an
-indispensable part of my Emacs workflow, and I think you'll like it
-too.
-
-A ton of features have landed since my [last blog
-post](/blog/2017/08/30/helpful-adding-contextual-help-to-emacs/) and
-I'd like to share the highlights with you.
+It's been a year since the first release of
+[Helpful](/blog/2017/08/30/helpful-adding-contextual-help-to-emacs/)!
+It's gained a ton of new features, and I'd love to share the
+highlights with you.
 
 ## Tool Integration
 
 <img src="/assets/helpful_more_debugging.png">
 
 Emacs has some excellent built-in debugging tools that I wanted to
-expose within Helpful. These missed the first release, but I've now
+expose within Helpful. These tools missed the first release, but I've now
 had the chance to build them.
 
-From a Helpful buffer, you can now toggle debugging of a
+From a Helpful buffer, you can now toggle edebug of a
 function. This allows you to easily step through some code.
 
 You can also toggle tracing. Tracing is an underrated built-in feature
@@ -71,7 +67,7 @@ the relevant part of Customize.
 
 Helpful now handles all Emacs docstring syntax. It handles references
 to keybindings, keymaps, and even supports the obscure features like
-`\='` and `\<foo-map>`.
+`\<foo-map>` and `\='`.
 
 <img src="/assets/fortran_mode.png">
 
@@ -96,5 +92,6 @@ helps discoverability.
 
 [Helpful](https://github.com/Wilfred/helpful) is available on
 [MELPA](http://www.melpa.org/#/helpful) and [MELPA
-stable](https://stable.melpa.org/#/helpful), and I'm sure it will be a
-great addition to your Emacs workflow too.
+stable](https://stable.melpa.org/#/helpful). It's become an
+indispensable part of my Emacs workflow, and I'm sure it will benefit
+you too.
