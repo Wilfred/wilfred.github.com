@@ -18,13 +18,13 @@ Emacs has some excellent built-in debugging tools that I wanted to
 expose within Helpful. These tools missed the first release, but I've now
 had the chance to build them.
 
-From a Helpful buffer, you can now toggle edebug of a
-function. This allows you to easily step through some code.
+From a Helpful buffer, you can now toggle edebug on a function. This
+allows you to easily step through code.
 
 You can also toggle tracing. Tracing is an underrated built-in feature
 of Emacs. You can use it to confirm functions have the inputs and
-outputs you're expecting. It's also really useful for exploring
-unfamiliar code.
+outputs you're expecting. It's really useful when exploring unfamiliar
+code.
 
 <img src="/assets/emacs_trace.png">
 
