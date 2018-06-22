@@ -1,6 +1,8 @@
 --- 
 layout: post
 title: "Helpful: One Year On"
+tags:
+ - emacs
 ---
 
 It's been a year since the first release of
