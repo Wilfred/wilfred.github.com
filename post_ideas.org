@@ -107,3 +107,95 @@ Enabling optimisations (possible in C++, LLVM, Rust, Julia, not
 possible in type-erased Java)
 
 completeness checking with unions / case statements.
+* Ocaml: first impressions
+
+** Tooling
+
+Generally excellent.
+
+Compiles are fast. opam is good. Community has standardised around
+jbuilder/dune. Merlin is excellent, and I hear good things about
+lsp-server-ocaml too. utop is great.
+
+Emacs tooling is good, but Stefan Monnier (sp?) has worked on it, so
+not a great surprise!
+
+Could use more linting.
+
+** Syntax
+
+A whole different family (ML), so experience isn't always sufficient.
+
+let foo = 1 (* value *)
+let foo x = ... (* fn *)
+
+let bar x y z = ...
+let baz = bar x y (* also fn *)
+
+let () = ... (* used for side effects! *)
+
+Community is very helpful when you get stuck.
+
+Needing let rec is a gotcha.
+
+Some gotchas around nested match statements.
+
+Surprising [1,2] in lists.
+
+The reasonml page gives a good overview of gotchas in its comparison
+page: https://reasonml.github.io/docs/en/comparison-to-ocaml
+
+** Type system
+
+Generally works nicely.
+
+Very little type annotation. Use merlin when you want to know the
+type.
+
+Lazy!
+
+Printf.printf "%a" [1;2;3]
+
+shows 'a list rather than int list
+
+Structural!
+
+Structs are just bundles of fields, not nominally typed.
+
+** Functional
+
+Pushes you to use immutable vars and recursion.
+
+Having refs is nice, as you can use a few mutable variables if it
+suits you.
+
+#+BEGIN_SRC ocaml
+(* Read all the lines from stdin until EOF. No concern given to
+   efficiency. *)
+let read_all_stdin () =
+  let text = ref "" in
+  (try
+     while true do
+       text := !text ^ input_line stdin
+     done
+   with
+     End_of_file -> ());
+  !text
+#+END_SRC
+
+Syntax again here: ~!~ means deref and and ~^~ means string append.
+
+** Surprises
+
+OCaml has a GIL.
+
+** Unexpected issues
+
+Printing arbitrary types.
+
+Picking libraries (github stars are a poor signal). Good set of
+choices though.
+
+** Unexpected non-issues
+
+Different types of let were no issue at all.
