@@ -28,17 +28,17 @@ not to mention the many toy implementations. Writing a Scheme is a
 great introduction to interpreters,
 especially
 [once you get beyond the minimal lisp featureset](http://axisofeval.blogspot.co.uk/2011/01/more-fully-featured-modern-lisps.html).
-It's a little harder to find actively developed Scheme applications
-(though they certainly exist).
+I've certainly written more implementation code than Scheme code.
 
 The problem seems to be languages with a small, well written
 specification. [Shen](http://www.shenlanguage.org/) is a
 multiparadigm lisp defined in terms of an
-[elegant base language](http://www.shenlanguage.org/learn-shen/shendoc.htm#Kl) with
+[elegant base language](http://shenlanguage.org/shendoc.htm#Kl) with
 only 46 system functions. This has resulted in a remarkable
 [15 third-party implementations](https://github.com/Shen-Language/wiki/wiki#ports),
 but
-[only a small number of libraries implemented in the language](http://www.shenlanguage.org/library.html).
+[only a small number of libraries implemented in the
+language](http://www.shenlanguage.org/library.htm).
 
 This phenomenon is not limited to lisps. Forth is also a language
 that developers often prefer to implement rather than
