@@ -1,3 +1,20 @@
+* pharo experiences
+
+Avoids ~if~, prefers dispatch! E.g. CommandLineHandler, True/False.
+
+Often invalid types: add a method call, implement it from the debugger.
+
+TDD is integrated and delightful.
+
+Refactoring is very good: rename method, extract method, move methods
+around. No static typing, but method names are often unique.
+
+Code is pretty readable due to aggressive use of keyword
+parameters. No positional function calls!
+
+Searching is incredibly good. Finder can search for examples. Spotter
+can even search for text in open windows!
+
 * elisp-def
 * mypy retrospective
 
