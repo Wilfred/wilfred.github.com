@@ -1,10 +1,24 @@
+* why merging is scary
+
+Dumb text analysis: Clean merges might be broken.
+
+Many VCS consider adjacent lines to be conflicting.
+
+No great tools.
+
+Merge time matters hugely (cf Bors/Homu in Rust).
+
+Patch algebras don't necessarily produce better results (see
+discussion with Pijul and Darcs).
+
 * pharo experiences
 
 Avoids ~if~, prefers dispatch! E.g. CommandLineHandler, True/False.
 
 Often invalid types: add a method call, implement it from the debugger.
 
-TDD is integrated and delightful.
+TDD is integrated and delightful. Persistent test state is really
+valuable when working.
 
 Refactoring is very good: rename method, extract method, move methods
 around. No static typing, but method names are often unique.
@@ -14,6 +28,8 @@ parameters. No positional function calls!
 
 Searching is incredibly good. Finder can search for examples. Spotter
 can even search for text in open windows!
+
+Debugger is excellent. Restarting is very useful.
 
 * elisp-def
 * mypy retrospective
