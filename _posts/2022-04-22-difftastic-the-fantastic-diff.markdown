@@ -1,40 +1,56 @@
 --- 
 layout: post
-title: "Difftastic, The Fantastic Diff"
+title: "Difftastic: The Fantastic Diff"
 ---
 
-Writing a diff is one of the most fascinating and frustrating programs
+Diff tools are dumb. They have no understanding of the syntax they're
+comparing. I set out to write a syntactic diff tool, which I called
+[difftastic](https://github.com/wilfred/difftastic).
+
+It proved to be the most fascinating and most frustrating program that
 I've ever written.
 
-## The Concept
+## The Lisp Perspective
 
-Diffing lisp should be trivial. A few other lispers have had a go at
-it. Autochrome is by far the best today.
+Writing code in Lisp is a lot like writing code in JSON. Every program
+is just a list of stuff.
 
-Some academics have explore this space too. They've taken a different
-approach: focusing on performance and 'optimality'.
+There's already a tool called
+[json-diff](https://github.com/andreyvit/json-diff), which is
+excellent. I really wanted something similar for at least my Lisp
+programs.
 
-Turns out that being optimal isn't sufficient. More on that later.
+How hard could it be? Why doesn't this already exist?
 
-## Hard Problems
+Turns out it's really hard.
 
-* Parsing the code
-* Calculating changes
-* Displaying the changes
+## The Challenges
+
+I started playing with some code in Christmas 2018. After a ton of
+expreriments and dead ends, I realised there were three hard problems
+I needed to solve.
+
+**Parsing.** I needed the ability to recognise the programming
+language and parse it. I needed at least an accurate lexer and matched
+delimiters, as well as preserving omments.
+
+**Tree Diffing.** I tried really hard to make a lexical diff tool
+work. It didn't.
+
+**Display.** It's amazingly hard to display diff results in a
+comprehensible way. This is just as complex as tree diffing.
+
+In the rest of this post, I will talk about the high level details of
+difftastic. I will then devote a separate blog post discussing each of
+these challenges in more depth.
 
 ## Choosing Tools
 
-I decided to use Rust. I eventually needed a language that I could
-optimise heavily, but more on that later.
+I decided to use Rust. Cyclic graphs take a little fiddling with
+lifetimes, but it turned out to be a good decision overall. 
 
-## Parsing
-
-Wrote some lexers with minimal parsers based on Comby. Writing a
-correct lexer alone is a ton of work. tree-sitter was great.
-
-tree-sitter paresrs are imprecise, but they're brilliant. There's a
-ton of languages available, and someone else (often a neovim
-enthsusiast or GH employee) has done the hard work already.
+I eventually needed a language that I could optimise heavily. More
+on that later.
 
 ## Diffing Ideas
 
