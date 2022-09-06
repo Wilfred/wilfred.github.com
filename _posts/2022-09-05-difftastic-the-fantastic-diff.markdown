@@ -22,7 +22,7 @@ JSON. Everything is basically a list.
 </figure>
 
 [json-diff](https://github.com/andreyvit/json-diff) already exists,
-and it's pretty darn good. I wanted something similar for programming
+and it's pretty good. I wanted something similar for programming
 languages.
 
 After an absolute ton of experimentation, I have something that
@@ -118,7 +118,7 @@ worked example.
 
 <figure>
     <img src="/assets/autochrome.png">
-    <figcaption>Autochrome example</figcaption>
+    <figcaption>Autochrome output example</figcaption>
 </figure>
 
 Autochrome and difftastic represent diffing as a **shortest path
@@ -136,7 +136,7 @@ For example, suppose you're comparing the program `A` with `X A`.
 START
 +---------------------+
 | Left: A  Right: X A |
-|      ^         ^    |
+|       ^         ^   |
 +---------------------+
 
 END
@@ -159,14 +159,14 @@ the right-hand side is an <span style="color: green">addition</span>.
             START
             +---------------------+
             | Left: A  Right: X A |
-            |      ^         ^    |
+            |       ^         ^   |
             +---------------------+
                    /       \
      Novel atom L /         \ Novel atom R
 1                v       2   v
 +---------------------+  +---------------------+
 | Left: A  Right: X A |  | Left: A  Right: X A |
-|        ^       ^    |  |      ^           ^  |
+|        ^        ^   |  |       ^           ^ |
 +---------------------+  +---------------------+
 ```
 
@@ -179,14 +179,14 @@ the route with the most unchanged edges.
             2
             +---------------------+
             | Left: A  Right: X A |
-            |      ^           ^  |
+            |       ^           ^ |
             +---------------------+
                    /    |   \
      Novel atom L /     |    \ Novel atom R
-3                v      | 4   v
+                 v      |     v
 +---------------------+ | +---------------------+
 | Left: A  Right: X A | | | Left: A  Right: X A |
-|        ^         ^  | | |      ^             ^|
+|        ^          ^ | | |       ^            ^|
 +---------------------+ | +---------------------+
   |                     |                    |
   | Novel atom R        | Nodes match        | Novel atom L
@@ -206,7 +206,7 @@ Unchanged]`.
 Difftastic and Autochrome both use Dijkstra's algorithm. Unfortunately
 the size of the graph is quadratic: it's `O(Left * Right)`, the number
 of items in the left-hand side s-expression multiplied by the number
-of nodes on the right-hand side expression.
+of nodes on the right-hand side s-expression.
 
 I made performance bearable by aggressively discarded obviously
 unchanged s-expressions at the beginning, middle and end of the
@@ -227,13 +227,70 @@ is vertex construction, so smarter algorithms like A* didn't offer a
 speedup.
 
 Even with this, difftastic sometimes struggles with performance. I've
-profiled and optimised everything I can think of (using Rust helped
-here). If the graph is just too big, difftastic falls back to a
+profiled and optimised everything I can think of (using Rust really
+helped here). If the graph is just too big, difftastic falls back to a
 conventional line-oriented diff.
 
 ## What About Nesting?
 
+When incrementing positions during graph traversal, I needed to be
+careful with entering and leaving delimiters.
 
+
+```
+;; Before
+(x y)
+
+;; After
+(x) y
+```
+
+The desired result here is 
+<code>(x <span style="background-color: Salmon">y</span>)</code>
+and 
+<code>(x) <span style="background-color: PaleGreen">y</span></code>.
+
+When the AST position is on a delimiter, difftastic can either
+consider the delimiter novel, or unchanged. This is similar to the AST atom case.
+
+```
+               START
+               +---------------------------+
+               | Left: (x y)  Right: (x) y |
+               |       ^             ^     |
+               +---------------------------+
+                     /        |     \
+  Novel delimiter L /         |      \ Novel delimiter R
+                   v          |       v
++---------------------------+ | +---------------------------+
+| Left: (x y)  Right: (x) y | | | Left: (x y)  Right: (x) y |
+|        ^            ^     | | |       ^             ^     |
++---------------------------+ | +---------------------------+
+                              |
+                              | Unchanged delimiters
+                              v
+               +---------------------------+
+               | Left: (x y)  Right: (x) y |
+               |        ^             ^    |
+               +---------------------------+
+```
+
+What happens when the position is at the end of the list? If
+difftastic entered the delimiters together, it must exit them
+together. Otherwise it would consider `y` to be unchanged in this
+example.
+
+This means that graph vertices are really a tuple of three items:
+(left-hand side position, right-hand side position,
+list_of_parents_to_exit_together).
+
+This exponentially increases the size of the graph, `O(2 ^ N)` where N
+is the highest list nesting level in either input.
+
+I solved this by only considering at most two graph vertices for each
+position pair. The diff is no longer the absolute most minimal in
+these cases. In practice this seems to explore enough of the graph
+that the results are consistently great.
 
 ## Building The Interface
 
@@ -252,10 +309,10 @@ This means there is no guarantee there are any lines in common between
 the two files. It's also possible that a line in the first file might
 have matches in zero, one or many lines in the second file.
 
-The display logic iterates through all the paired lines, and tries to
-align as many as possible. It uses a two-column display, so you could
-reformat the entire file and it will still produce a sensible
-alignment.
+The display logic iterates through all the matched lines, and tries to
+align as many as possible. It uses a two-column display by default, so
+you can reformat the entire file and it will still produce a sensible
+output.
 
 <figure>
     <img src="/assets/difftastic_align.png">
@@ -291,7 +348,7 @@ This exposed a bunch of subtle issues with structural diffing.
 ```
 
 Diff algorithms are described in the literature as "finding a minimal
-edit script", where the edit script is the adding/removals required to
+edit script", where the edit script is the additions/removals required to
 turn the input file into the output file.
 
 In this example, <code>(foo (<span style="background-color:PaleGreen">novel</span>)
@@ -304,19 +361,37 @@ This isn't what the user wants though. They'd rather see <code>(foo <span style=
 even though it's equally minimal.
 
 I solved this by adjusting the graph edge cost model to produce nicer
-results. I also added a secondary pass on the diff result to choose a more
-aesthetically pleasing result with the same edge cost.
+results. I also added a secondary pass on the diff result to check for more
+aesthetically pleasing results with the same edge cost.
 
 (I encountered a bunch more of challenging issues, see the [Tricky
 Cases chapter in the
 manual](https://difftastic.wilfred.me.uk/tricky_cases.html) for more details.)
 
-
 ## Future Work
 
-I use difftastic daily, but it's still not perfect. Performance
-remains a challenge. It still fails in interesting ways.
+Difftastic is fantastic when it works, and I use it daily. It's still
+not perfect though.
 
-pic: String Literals
+Difftastic still has complicated failure modes. Changing large string
+literals is a challenge (syntactically they're single atoms, but users
+*sometimes* want a word-level diff).
 
-pic: A little bit in common.
+<figure>
+    <img src="/assets/typescript_literal.png">
+    <figcaption>The string literals have changed, but it's hard to spot where.</figcaption>
+</figure>
+
+The minimal diff isn't always helpful either. Sometimes difftastic goes too far.
+
+<figure>
+    <img src="/assets/cpp_similar.png">
+    <figcaption>Sure, there's a = on both sides, but it's distracting.</figcaption>
+</figure>
+
+## Conclusion
+
+Difftastic is [available on all major
+platforms](https://difftastic.wilfred.me.uk/installation.html). It may
+not be good enough to meet all your diffing needs, but I highly
+recommend adding it as a tool to help you understand code changes.
