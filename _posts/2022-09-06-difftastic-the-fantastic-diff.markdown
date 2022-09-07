@@ -336,9 +336,9 @@ building the UI would be straightforward. I was wrong.
 Difftastic knows which s-expression nodes are unchanged. It completely
 ignores whitespace.
 
-This means there is no guarantee there are any lines in common between
-the two files. It's also possible that a line in the first file might
-have matches in zero, one or many lines in the second file.
+However, there is no guarantee that there are any lines in common
+between the two files. It's also possible that a line in the first
+file might have matches in zero, one or many lines in the second file.
 
 The display logic iterates through all the matched lines, and tries to
 align as many as possible. It uses a two-column display by default, so
@@ -386,7 +386,7 @@ In this example, <code>(foo (<span style="background-color:PaleGreen">novel</spa
 <span style="background-color:PaleGreen">(</span>bar<span
 style="background-color:PaleGreen">)</span>)</code> would be a totally
 valid, minimal diff. It's adding the symbol `novel` and adding one
-set of parentheses.
+pair of parentheses.
 
 This isn't what the user wants though. They'd rather see <code>(foo <span style="background-color:PaleGreen">(novel)</span> (bar))</code>
 even though it's equally minimal.
@@ -395,9 +395,10 @@ I solved this by adjusting the graph edge cost model to produce nicer
 results. I also added a secondary pass on the diff result to check for more
 aesthetically pleasing results with the same edge cost.
 
-(I encountered many more challenging issues, see the [Tricky
-Cases page in the
-manual](https://difftastic.wilfred.me.uk/tricky_cases.html) for more details.)
+(I encountered several more cases that structural diffs struggle with,
+see the [Tricky Cases page in the
+manual](https://difftastic.wilfred.me.uk/tricky_cases.html) for more
+details.)
 
 ## Future Work
 
