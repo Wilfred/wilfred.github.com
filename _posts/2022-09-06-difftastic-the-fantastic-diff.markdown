@@ -426,8 +426,8 @@ The minimal diff isn't always helpful either. Sometimes difftastic goes too far.
 I had no idea what I was getting into when I started working on this.
 
 I'd been wondering why this type of tool is so rare. Now I know: it's
-extremely challenging to build. Despite its limitation, I'm still
-surprised at how often it works fantastically.
+extremely challenging to build. Despite its limitations, I'm surprised
+at how often it works *fantastically*.
 
 Difftastic is OSS under a MIT license, so I hope it enables more diff
 tools that can understand structure. If you're feeling brave, you can
