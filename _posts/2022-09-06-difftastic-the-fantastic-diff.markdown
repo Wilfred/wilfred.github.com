@@ -420,7 +420,7 @@ The minimal diff isn't always helpful either. Sometimes difftastic goes too far.
     <figcaption>Sure, there's a = on both sides, but it's distracting.</figcaption>
 </figure>
 
-## Conclusion
+## Closing Thoughts
 
 I had no idea what I was getting into when I started working on this.
 
