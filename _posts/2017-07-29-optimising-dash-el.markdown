@@ -87,7 +87,7 @@ peformance we want:
 ([Full benchmark code here](https://gist.github.com/Wilfred/3ee025116cff82169435262f44bffb0c).)
 
 For shame! Our alias still isn't as fast as using the primitive. Let's
-compare the disassembly using `M-x disasemble`.
+compare the disassembly using `M-x disassemble`.
 
 {% highlight common-lisp %}
 (defalias 'car-alias 'car)
@@ -213,7 +213,7 @@ squeeze every last drop of performance from your elisp, you can follow
 what we've done here:
 
 * benchmark your code (with `benchmark-run` or `profiler-start`)
-* disassemble your functions (with `diassemble`)
+* disassemble your functions (with `disassemble`)
 * ask some friendly Emacsers
   (e.g. the [Emacs Stack Exchange](https://emacs.stackexchange.com/))
   
