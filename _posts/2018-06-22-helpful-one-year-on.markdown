@@ -93,7 +93,7 @@ helps discoverability.
 ## Installing It
 
 [Helpful](https://github.com/Wilfred/helpful) is available on
-[MELPA](http://www.melpa.org/#/helpful) and [MELPA
+[MELPA](http://melpa.org/#/helpful) and [MELPA
 stable](https://stable.melpa.org/#/helpful). It's become an
 indispensable part of my Emacs workflow, and I'm sure it will benefit
 you too.
