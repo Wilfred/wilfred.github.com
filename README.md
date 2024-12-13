@@ -21,7 +21,4 @@ Note that changes to `_config.yml` may require restarting the server.
 ### Catching Markdown Errors
 
 GitHub
-[documents how to set up travis to test the build](https://help.github.com/articles/pages-don-t-build-unable-to-run-jekyll),
-so you may find
-[the travis build results](https://travis-ci.org/Wilfred/wilfred.github.com)
-useful.
+[documents how to set up travis to test the build](https://help.github.com/articles/pages-don-t-build-unable-to-run-jekyll).
