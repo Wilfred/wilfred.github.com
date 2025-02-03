@@ -1,8 +1,6 @@
 This git respository houses the static blog content of the
 wilfred.me.uk blog. All content is under the GFDL 1.3.
 
-[![Build Status](https://travis-ci.org/Wilfred/wilfred.github.com.png?branch=master)](https://travis-ci.org/Wilfred/wilfred.github.com)
-
 Styling is based on [pixyll](https://github.com/johnotander/pixyll)
 
 ## Running the server
