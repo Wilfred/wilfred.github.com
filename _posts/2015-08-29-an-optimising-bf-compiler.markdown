@@ -280,7 +280,7 @@ call void @llvm.memset.p0i8.i32(i8* %offset_cell_ptr, i8 1, i32 3, i32 1, i1 tru
 %offset_cell_ptr1 = getelementptr i8* %cells, i32 3
 call void @llvm.memset.p0i8.i32(i8* %offset_cell_ptr1, i8 2, i32 1, i32 1, i1 true)
 
-; Intialise cell #4 to 0.
+; Initialise cell #4 to 0.
 %offset_cell_ptr2 = getelementptr i8* %cells, i32 4
 call void @llvm.memset.p0i8.i32(i8* %offset_cell_ptr2, i8 0, i32 1, i32 1, i1 true)
 

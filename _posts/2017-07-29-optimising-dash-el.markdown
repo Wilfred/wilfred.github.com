@@ -76,7 +76,7 @@ with calling `car` directly. Instead, dash.el does this:
 {% endhighlight %}
 
 Let's do a small benchmark, to ensure that `defalias` giving us the
-peformance we want:
+performance we want:
 
 | Approach         | time (seconds) |
 | :----------      |       -------: |

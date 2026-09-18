@@ -82,7 +82,7 @@ produce more predictable, debug-friendly, testing friendly code. This
 is a perspective that has improved my code in impure languages.
 
 Here's an example from the bot. I originally dealt cards by randomly
-chosing cards one-by-one from the deck:
+choosing cards one-by-one from the deck:
 
 {% highlight haskell %}
 dealOneCard [] = error "No cards left in deck"

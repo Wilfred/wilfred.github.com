@@ -9,7 +9,7 @@ the truth: Scheme programmers of use mutable variables, some Common
 Lisp implementations offer compilation, and all non-trivial lisp
 languages offer a variety of data types.
 
-Saying 'lisp language' is analagous to saying 'curly-brace language'
+Saying 'lisp language' is analogous to saying 'curly-brace language'
 or 'significant whitespace language' -- lisp is just a language family
 with common syntax. Lisp means that all function definitions, function
 calls, variable definitions etc are written as nested lists.

@@ -140,17 +140,17 @@ you can focus on the rest of your code.
 
 <figure>
     <img src="/assets/rainbow_delimeters.png">
-    <figcaption>rainbow-delimeters</figcaption>
+    <figcaption>rainbow-delimiters</figcaption>
 </figure>
 
-[rainbow-delimeters](https://github.com/jlr/rainbow-delimiters) takes
+[rainbow-delimiters](https://github.com/jlr/rainbow-delimiters) takes
 the opposite approach. Each level of brackets is assigned a unique face,
 enabling you give each one a different colour. This works particularly
 well when using `cond`, as it's easy to spot the different boolean
 expressions.
 
 By default it allows nine levels of nesting before cycling colours
-(see `rainbow-delimeters-max-face-count`) but you will have to choose
+(see `rainbow-delimiters-max-face-count`) but you will have to choose
 a tradeoff between more levels and contrast between the colours of the
 different levels. I settled for six levels that are very distinct (the
 defaults are rather subtle).
@@ -160,7 +160,7 @@ defaults are rather subtle).
     <figcaption>rainbow-blocks</figcaption>
 </figure>
 
-If you like rainbow-delimeters,
+If you like rainbow-delimiters,
 [rainbow-blocks](https://github.com/istib/rainbow-blocks) applies the
 same technique, but colours everything according to the nesting
 depth. It's fantastic for seeing nesting, but it does limit how much

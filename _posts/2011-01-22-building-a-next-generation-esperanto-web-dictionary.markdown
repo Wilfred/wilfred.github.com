@@ -144,7 +144,7 @@ remarks on definitions.
 
 My approach for data extraction is an XML tree walker (using
 the <a href="http://lxml.de/">lxml Python library</a>) that
-flattens tree branches whilst allowing specifc subtrees to be
+flattens tree branches whilst allowing specific subtrees to be
 excluded. My initial approach was more complex but it gradually became
 clear that most of my methods were some variation upon this theme.
 
@@ -268,7 +268,7 @@ _fromaĝo, fromaĝon, fromaĝoj, fromaĝojn,
 fromagxo, fromagxon, fromagxoj, fromagxojn,
 fromagho, fromaghon, fromaghoj, fromaghojn_
 
-This final list became the list of possibilites for the spell checker.
+This final list became the list of possibilities for the spell checker.
 
 ## Compound Word Analysis
 
@@ -443,7 +443,7 @@ group of affixes that may be used to change the compound word's
 meaning. These affixes are very flexible and frequently used, so their
 presence makes a given parse more likely. Common affixes include _-ig_
 (similar to '-ify' in English e.g. _beligi_ signifies 'beautify') and
-_-in_ (similar to '-ess' in English e.g. _leonino_ signfies
+_-in_ (similar to '-ess' in English e.g. _leonino_ signifies
 'lioness').
 
 As a result, reducing the badness score for words with affixes enabled
