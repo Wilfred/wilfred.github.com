@@ -102,7 +102,7 @@ redcarpet:
 permalink: /blog/:year/:month/:day/:title/
 paginate:     4
 sass:
-  compressed: true
+  style: compressed
 gems:
   - jekyll-paginate
   - jekyll-sitemap
