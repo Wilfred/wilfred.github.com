@@ -59,7 +59,7 @@ desc 'preview the site with drafts'
 task :preview do
   puts "## Generating site"
   puts "## Stop with ^C ( <CTRL>+C )"
-  system "jekyll serve --watch --drafts"
+  system "bundle exec jekyll serve --watch --drafts"
 end
 
 desc 'list tasks'

@@ -4,23 +4,26 @@ layout: null
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Wilfred Hughes::Blog</title>
-    <link>http://www.wilfred.me.uk/</link>
-    <description>High signal, low noise technology blogging</description>
+    <title>{{ site.title | xml_escape }} (Emacs)</title>
+    <link>{{ site.url }}{{ site.baseurl }}/</link>
+    <atom:link href="{{ "/emacs_rss.xml" | prepend: site.baseurl | prepend: site.url }}" rel="self" type="application/rss+xml" />
+    <description>{{ site.description | xml_escape }}</description>
     <language>en-gb</language>
     <pubDate>{{ site.time | date: "%a, %d %b %Y %H:%M:%S %z" }}</pubDate>
     <lastBuildDate>{{ site.time | date: "%a, %d %b %Y %H:%M:%S %z" }}</lastBuildDate>
 
     {% for post in site.tags.emacs %}
     <item>
-      <title>{{ post.title }}</title>
-      <link>http://wilfred.me.uk{{ post.url }}</link>
+      <title>{{ post.title | xml_escape }}</title>
+      <link>{{ post.url | prepend: site.baseurl | prepend: site.url }}</link>
       <pubDate>{{ post.date | date: "%a, %d %b %Y %H:%M:%S %z" }}</pubDate>
-      <author>me@wilfred.me.uk (Wilfred Hughes)</author>
-      <guid>http://wilfred.me.uk{{ post.url }}</guid>
+      <author>{{ site.email }} ({{ site.author }})</author>
+      <!-- guids are opaque ids, so they keep their original http form.
+           Changing them would make feed readers show old posts as new. -->
+      <guid isPermaLink="false">http://wilfred.me.uk{{ post.url }}</guid>
       <description>{{ post.content | xml_escape }}</description>
     </item>
     {% endfor %}
 
-  </channel> 
+  </channel>
 </rss>

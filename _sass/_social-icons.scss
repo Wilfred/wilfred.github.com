@@ -1,25 +1,26 @@
-.social-icons-left, .social-icons-right {
+.social-icons-right {
   text-align: center;
   float: none;
 }
 
 .social-icons {
-  font-size: 1.25rem;
   padding: 0.5em 0 0 0;
   width: 100%;
 }
 
-.social-icons a.fa {
-  cursor: pointer;
+.social-icons a {
+  display: inline-block;
   opacity: 0.8;
   padding: 0.2em;
 }
 
-.social-icons a.fa:hover {
+.social-icons a:hover {
   opacity: 1;
 }
 
-.social-icons iframe[title=Flattr] {
-  position: relative;
-  top: 0.1em;
+.social-icons svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: currentColor;
+  vertical-align: middle;
 }
