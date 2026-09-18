@@ -1,4 +1,4 @@
-This git respository houses the static blog content of the
+This git repository houses the static blog content of the
 wilfred.me.uk blog. All content is under the GFDL 1.3.
 
 Styling is based on [pixyll](https://github.com/johnotander/pixyll)
