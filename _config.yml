@@ -4,7 +4,7 @@ email:       me@wilfred.me.uk
 author:      Wilfred Hughes
 description: "programming, language design, and human factors"
 baseurl:     ""
-url:         "http://www.wilfred.me.uk"
+url:         "https://www.wilfred.me.uk"
 date_format: "%e %B %Y"
 future: true
 
