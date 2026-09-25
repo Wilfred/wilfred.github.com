@@ -6,12 +6,16 @@ tags: header
 ---
 
 <div class="py2">
-  <form action="https://formspree.io/{{ site.email }}" method="POST" class="form-stacked">
-    <input type="text" name="email" class="field-light" placeholder="{{ site.text.contact.email }}">
-    <textarea type="text" name="content" class="field-light" rows="5" placeholder="{{ site.text.contact.content }}"></textarea>
-    <input type="hidden" name="_next" value="{{ site.baseurl }}/thanks/" />
-    <input type="hidden" name="_subject" value="{{ site.text.contact.subject }}" />
-    <input type="text" name="_gotcha" style="display:none" />
-    <input type="submit" class="button button-blue button-big mobile-block" value="{{ site.text.contact.submit }}">
-  </form>
+  {% if site.formspree_form_id %}
+    <form action="https://formspree.io/f/{{ site.formspree_form_id }}" method="POST" class="form-stacked">
+      <input type="email" name="email" class="field-light" placeholder="{{ site.text.contact.email }}">
+      <textarea name="content" class="field-light" rows="5" placeholder="{{ site.text.contact.content }}"></textarea>
+      <input type="hidden" name="_next" value="{{ "/thanks/" | prepend: site.baseurl | prepend: site.url }}" />
+      <input type="hidden" name="_subject" value="{{ site.text.contact.subject }}" />
+      <input type="text" name="_gotcha" style="display:none" />
+      <input type="submit" class="button button-blue button-big mobile-block" value="{{ site.text.contact.submit }}">
+    </form>
+  {% else %}
+    <p>Email me at <a href="mailto:{{ site.email }}">{{ site.email }}</a>.</p>
+  {% endif %}
 </div>

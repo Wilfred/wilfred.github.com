@@ -12,6 +12,11 @@ future: true
 google_verification:
 bing_verification:
 
+# The form ID from https://formspree.io/forms, used by the contact
+# page. Formspree is phasing out the old formspree.io/<email> URLs.
+# While this is blank the contact page shows a mailto link instead.
+formspree_form_id:
+
 # Optional features
 animated:           true
 show_related_posts: true

@@ -36,3 +36,10 @@ Drafts live in `_drafts` and are shown by `jekyll serve --drafts`.
 used by the charts in the four brainfuck/bigint posts. Bower itself is
 long dead; the files are checked in and need no tooling, so leave them
 be unless those posts change.
+
+## Contact form
+
+The contact page posts to [Formspree](https://formspree.io). Set
+`formspree_form_id` in `_config.yml` to the ID of the form in the
+Formspree dashboard; the page falls back to a mailto link while it is
+blank.
